@@ -20,6 +20,12 @@
     </properties>
 
     <build>
+To Do | correct
+---|---
+at least 8 commits|
+isEmailValid|
+withdraw|
+isamountValid|
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

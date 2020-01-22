@@ -23,8 +23,27 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse( BankAccount.isEmailValid(""));
+        // Prefix Tests
+        assertFalse(BankAccount.isEmailValid("xxx-@yyyy.com"));
+        assertFalse(BankAccount.isEmailValid("xx..xxx@yyyy.com"));
+        assertFalse(BankAccount.isEmailValid(".xxx@yyyy.com"));
+        assertFalse(BankAccount.isEmailValid("xxx#xxx@yyyy.com"));
+
+        assertTrue(BankAccount.isEmailValid("xxx-x@yyyy.com"));
+        assertTrue(BankAccount.isEmailValid("xxx.xxx@yyyy.com"));
+        assertTrue(BankAccount.isEmailValid("xxx@yyyy.com"));
+        assertTrue(BankAccount.isEmailValid("xxx_xxx@yyyy.com"));
+
+        // Suffix Tests
+        assertFalse(BankAccount.isEmailValid("xxx.xxx@yyyy.c"));
+        assertFalse(BankAccount.isEmailValid("xxx.xxx@yyyy#yyyyyyy.com"));
+        assertFalse(BankAccount.isEmailValid("xxx.xxx@yyyy"));
+        assertFalse(BankAccount.isEmailValid("xxx.xxx@yyyy..com"));
+
+        assertTrue(BankAccount.isEmailValid("xxx.xxx@yyyy.cc"));
+        assertTrue(BankAccount.isEmailValid("xxx.xxx@yyyy-yyyyyyy.com"));
+        assertTrue(BankAccount.isEmailValid("xxx.xxx@yyyy.org"));
+        assertTrue(BankAccount.isEmailValid("xxx.xxx@yyyy.com"));
     }
 
     @Test
