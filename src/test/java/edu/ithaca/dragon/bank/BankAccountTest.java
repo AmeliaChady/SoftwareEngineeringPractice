@@ -16,9 +16,21 @@ class BankAccountTest {
     @Test
     void withdrawTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-        bankAccount.withdraw(100);
 
+        // Normal Withdrawl
+        bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
+
+        // Zero Withdrawl
+        bankAccount.withdraw(0);
+        assertEquals(100, bankAccount.getBalance());
+
+        // Negative Withdrawl
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-1));
+
+        // Overdraw
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(5000));
+
     }
 
     @Test
