@@ -29,7 +29,7 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-1));
 
         // Overdraw
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(5000));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(5000));
 
     }
 
