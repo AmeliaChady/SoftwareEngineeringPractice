@@ -36,11 +36,72 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email){
-        if (email.indexOf('@') == -1){
+        char first = email.charAt(0);
+        char last = email.charAt(email.length()-1);
+        int atSymbol = email.indexOf('@');
+        boolean findPeriod = false;
+
+
+        //PREFIX TESTS
+
+        //if there is no "@"
+        if (atSymbol == -1){
             return false;
         }
+        //else if the character before "@" is "-" or "."
+        else if (email.charAt(atSymbol - 1) == '-' || email.charAt(atSymbol - 1) == '.'){
+            return false;
+        }
+        //else if the first character in the address is "."
+        else if (first == '.'){
+            return false;
+        }
+        //else if the character before the last character is "."
+        else if (email.charAt(email.length() - 2) == '.'){
+            return false;
+        }
+
         else {
-            return true;
+            //go through each character in the email before the "@" symbol
+            for (int x=0; x < atSymbol; x++) {
+                //if there are two "." in a row
+                if (email.charAt(x) == '.' && email.charAt(x + 1) == '.') {
+                    return false;
+                }
+                //if "#" is a character
+                else if (email.charAt(x) == '#') {
+                    return false;
+                }
+            }
+
+            //SUFFIX TESTS
+
+            //for every character after the "@" symbol
+            for (int x=atSymbol; x < email.length(); x++){
+                //if there is a "#" character
+                if (email.charAt(x) == '#'){
+                    return false;
+                }
+                //else if there are two "." characters in a row
+                else if (email.charAt(x) == '.' && email.charAt(x - 1) == '.'){
+                    return false;
+                }
+                //else if there has been a "." found somewhere in the suffix
+                else if (email.charAt(x) == '.'){
+                    findPeriod = true;
+                }
+
+            }
+            //if no "." is found
+            if(!findPeriod){
+                return false;
+            }
+            //else, email is valid
+            else {
+                return true;
+            }
         }
     }
 }
+
+
