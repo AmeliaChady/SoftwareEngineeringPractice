@@ -30,17 +30,31 @@ public class BankAccount {
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
     public void withdraw (double amount)  {
-        balance -=   amount;
+        //if user tries to withdraw negative amount
+        if (amount < 0){
+            throw new IllegalArgumentException("ERROR: Cannot withdraw from negative balance.");
+        }
+
+        //if amount trying to withdraw is greater than balance
+        if (balance < amount){
+            throw new IllegalArgumentException("ERROR: Not enough funds to withdraw that amount.");
+
+        }
+        balance -= amount;
 
     }
 
 
     public static boolean isEmailValid(String email){
+        //if email is empty
+        if (email.length() ==0){
+            return false;
+        }
+
         char first = email.charAt(0);
         char last = email.charAt(email.length()-1);
         int atSymbol = email.indexOf('@');
         boolean findPeriod = false;
-
 
         //PREFIX TESTS
 
