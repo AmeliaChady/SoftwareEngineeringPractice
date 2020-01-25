@@ -2,6 +2,8 @@ package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
 
+import javax.swing.plaf.basic.BasicLookAndFeel;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTest {
@@ -45,8 +47,40 @@ class BankAccountTest {
 
     }
 
+
+    public static final String allowedNormalCharacters = "abcdefghijklmnopqrstuvwxyz" +
+                                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                                                         "0123456789";
+    public static final String prefixAllowedSpecialCharacters = "-_.";
+    public static final String suffixAllowedSpecialCharacters = ".";
+
     @Test
     void isEmailValidTest(){
+    // PREFIX - Allowed Special Cases Tests
+
+
+        // Test Each Special Character
+
+    // PREFIX - Not Allowed Special Character Tests
+
+        //
+        //assertFalse();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // Prefix Tests
 
         //this is a border test, as it only has one "-" before the "@"
@@ -111,6 +145,32 @@ class BankAccountTest {
         //border test with the occurence of "."
         //equivalence class with test above
         assertTrue(BankAccount.isEmailValid("xxx.xxx@yyyy.com"));
+    }
+
+    void prefixAllowedSpecialCharacterTesting(String asc){
+        // Locations - Assumption: All Allowed Special Cases Tests are tested
+        //      only on one case and assuming all others will work similarly
+
+        // Left Edge
+        assertFalse(BankAccount.isEmailValid(""+asc+"xxx@yyyy.com"), "Failed With "+asc+""); // Boundary (Single Case)
+
+        // Right Edge
+        assertFalse(BankAccount.isEmailValid("xxx"+asc+"@yyyy.com"), "Failed With "+asc+""); // Boundary (Single Case)
+
+        // Inside
+        assertTrue(BankAccount.isEmailValid("x"+asc+"xxx@yyyy.com"), "Failed With "+asc+""); // Boundary (Left Edge)
+        assertTrue(BankAccount.isEmailValid("xx"+asc+"xx@yyyy.com"), "Failed With "+asc+""); // Equivalence
+        assertTrue(BankAccount.isEmailValid("xxx"+asc+"x@yyyy.com"), "Failed With "+asc+""); // Boundary (Right Edge)
+
+        // Next To Each Other
+        assertFalse(BankAccount.isEmailValid("xx"+asc+""+asc+"xx@yyyy.com"), "Failed With "+asc+""); // Boundary (2 special characters)
+        assertFalse(BankAccount.isEmailValid("xx"+asc+""+asc+""+asc+"xx@yyyy.com"), "Failed With "+asc+""); // Equivalence
+
+        // Multiple, but Spaced Apart
+        assertTrue(BankAccount.isEmailValid("xx"+asc+"x"+asc+"x@yyyy.com"), "Failed With "+asc+""); // Boundary (2 Characters, 1 Space)
+        assertTrue(BankAccount.isEmailValid("x"+asc+"xx"+asc+"x@yyyy.com"), "Failed With "+asc+""); // Equivalence for Space
+        assertTrue(BankAccount.isEmailValid("x"+asc+"x"+asc+"x"+asc+"x@yyyy.com"), "Failed With "+asc+""); // Equivalence for Numbers
+        assertTrue(BankAccount.isEmailValid("x"+asc+"xx"+asc+"xx"+asc+"x@yyyy.com"), "Failed With "+asc+""); // Equivalence for Space & Numbers (Needed?)
     }
 
 
