@@ -10,18 +10,27 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
+
+
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
-        assertEquals(200, bankAccount.getBalance());
+        assertEquals(200, bankAccount.getBalance()); // Equivalence
+
     }
 
     @Test
     void withdrawTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        // Note, Testing to 3 decimal places accuracy
+        BankAccount bankAccount;
 
         // Normal Withdrawl
+        bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.withdraw(.001);
+        assertEquals(199.999, bankAccount.getBalance());
+
         //this is an equivalent class with zero withdraw that produces the same result
         //this withdrawl is within the border of allowed transactions
+        bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance());
 
@@ -31,15 +40,20 @@ class BankAccountTest {
         bankAccount.withdraw(0);
         assertEquals(100, bankAccount.getBalance());
 
+        BankAccount throwsAccount = new BankAccount("a@b.com", 100);
         // Negative Withdrawl
         //this withdrawl amount is right outside the border of allowed numbers
         //there is no equivalence class for this test
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(-1));
+        assertThrows(IllegalArgumentException.class, () -> throwsAccount.withdraw(-1));
+        assertThrows(IllegalArgumentException.class, () -> throwsAccount.withdraw(-.001));
+
 
         // Overdraw
         //this withdrawl is far outside of the border of allowed withdrawls for current account balance
         //there is no equivalence class for this test
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(5000));
+        assertThrows(IllegalArgumentException.class, () -> throwsAccount.withdraw(5000));
+        assertThrows(IllegalArgumentException.class, () -> throwsAccount.withdraw(100.001));
+
 
         //an equivalence class for negative amount transaction does not exist
         //there is no border case for withdrawing right outside the balance (201)
