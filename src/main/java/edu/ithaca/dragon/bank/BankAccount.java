@@ -56,32 +56,25 @@ public class BankAccount {
         char last = email.charAt(email.length()-1);
         int atSymbol = email.indexOf('@');
         boolean findPeriod = false;
-        int atInstances = 0;
 
         //PREFIX TESTS
 
         //if there is no "@"
-        if (atSymbol == -1){
-            return false;
-        }
-        if (email.indexOf('@') == -1){
+        if (atSymbol == -1 || email.indexOf('@') == -1){
             return false;
         }
         //else if the character before "@" is "-" or "."
         else if (email.charAt(atSymbol - 1) == '-' || email.charAt(atSymbol - 1) == '.' || email.charAt(atSymbol - 1) == '_'){
             return false;
         }
-
         //else if the first character in the address is "."
         else if (first == '.' || first == '-' || first == '_'){
             return false;
         }
-
         //else if the character before the last character is "."
         else if (email.charAt(email.length() - 2) == '.'){
             return false;
         }
-
         else {
             //go through each character in the email before the "@" symbol
             for (int x=0; x < atSymbol; x++) {
@@ -126,20 +119,22 @@ public class BankAccount {
                     findPeriod = true;
                     period += 1;
                 }
-                else if(!"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@.".contains(String.valueOf(x))){
+                else if(!"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@.-".contains(email.charAt(x) + "")){
                     return false;
                 }
                 else if (email.charAt(x) == ' '){
                     return false;
                 }
-                else if (email.charAt(x) == '.' && email.charAt(x+1) == '-')
+                else if (email.charAt(x) == '-' && email.charAt(x-1) == '@'){
+                    return false;
+                }
+                else if (email.charAt(x) == '.' && email.charAt(x+1) == '-'){
+                    return false;
+                }
                 //if more than one period in suffix
                 if(period > 1){
                     return false;
                 }
-
-
-
             }
             //if no "." is found
             if(!findPeriod){

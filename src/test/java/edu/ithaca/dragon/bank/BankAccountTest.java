@@ -10,12 +10,8 @@ class BankAccountTest {
 
     @Test
     void getBalanceTest() {
-
-
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
-
         assertEquals(200, bankAccount.getBalance()); // Equivalence
-
     }
 
     @Test
@@ -151,19 +147,15 @@ class BankAccountTest {
     }
 
     void suffixAllowedSpecialCharacterTesting(String asc){
-        assertTrue(BankAccount.isEmailValid("xxx@"+asc+"yy.com"),"Failed On: "+"xxx@"+asc+"yy.com"); // Boundary
+        assertFalse(BankAccount.isEmailValid("xxx@"+asc+"yy.com"),"Failed On: "+"xxx@"+asc+"yy.com"); // Boundary
         assertTrue(BankAccount.isEmailValid("xxx@y"+asc+"y.com"),"Failed On: "+"xxx@y"+asc+"y.com"); // Equivalence
         assertTrue(BankAccount.isEmailValid("xxx@yy"+asc+".com"),"Failed On: "+"xxx@yy"+asc+".com"); // Boundary
-        assertTrue(BankAccount.isEmailValid("xxx@"+asc+"y"+asc+".com"),"Failed On: "+"xxx@"+asc+"y"+asc+".com"); // Boundary
-        assertTrue(BankAccount.isEmailValid("xxx@"+asc+"yy"+asc+".com"),"Failed On: "+"xxx@"+asc+"yy"+asc+".com"); // Equivalence
+        assertFalse(BankAccount.isEmailValid("xxx@"+asc+"y"+asc+".com"),"Failed On: "+"xxx@"+asc+"y"+asc+".com"); // Boundary
+        assertFalse(BankAccount.isEmailValid("xxx@"+asc+"yy"+asc+".com"),"Failed On: "+"xxx@"+asc+"yy"+asc+".com"); // Equivalence
 
         assertFalse(BankAccount.isEmailValid("xxx@yy"+asc+asc+".com"),"Failed On: "+"xxx@yy"+asc+asc+".com"); // Boundary
         assertFalse(BankAccount.isEmailValid("xxx@yy"+asc+asc+asc+".com"),"Failed On: "+"xxx@yy"+asc+asc+asc+".com"); // Equivalence
-        //assertFalse(BankAccount.isEmailValid("xxx@yyy."+asc+"om"),"Failed On: "+"xxx@yyy."+asc+"om"); // Boundary
-        //assertFalse(BankAccount.isEmailValid("xxx@yyy.c"+asc+"m"),"Failed On: "+"xxx@yyy.c"+asc+"m"); // Equivalence
-        //assertFalse(BankAccount.isEmailValid("xxx@yyy.co"+asc),"Failed On: "+"xxx@yyy.co"+asc); // Boundary
-        //assertFalse(BankAccount.isEmailValid("xxx@yyy.c"+asc+asc),"Failed On: "+"xxx@yyy.c"+asc+asc); // Equivalence
-        //assertFalse(BankAccount.isEmailValid("xxx@yyy."+asc+"o"+asc),"Failed On: "+"xxx@yyy."+asc+"o"+asc); // Equivalence
+
     }
 
     void suffixNotAllowedSpecialCharacterTesting(String asc){
