@@ -51,7 +51,6 @@ public class BankAccount {
         if (email.length() ==0){
             return false;
         }
-
         char first = email.charAt(0);
         char last = email.charAt(email.length()-1);
         int atSymbol = email.indexOf('@');
@@ -78,22 +77,15 @@ public class BankAccount {
         else {
             //go through each character in the email before the "@" symbol
             for (int x=0; x < atSymbol; x++) {
-                //if there are two "." in a row
+                //if there are two ".", "-", or "_" in a row
                 if (email.charAt(x) == '.' && email.charAt(x + 1) == '.' || email.charAt(x) == '-' && email.charAt(x + 1) == '-'
                 || email.charAt(x) == '_' && email.charAt(x + 1) == '_') {
                     return false;
                 }
                 //if there's a special character
-                else if (email.charAt(x) == '#' || email.charAt(x) == ' ' || email.charAt(x) == ',' || email.charAt(x) == '<'
-                || email.charAt(x) == '>' || email.charAt(x) == '$' || email.charAt(x) == '/' || email.charAt(x) == '|'
-                || email.charAt(x) == '~' || email.charAt(x) == '=' || email.charAt(x) == ';' || email.charAt(x) == ':'
-                || email.charAt(x) == '[' || email.charAt(x) == ']' || email.charAt(x) == '%' || email.charAt(x) == '?'
-                || email.charAt(x) == '"' || email.charAt(x) == '{' || email.charAt(x) == '}' || email.charAt(x) == '!'
-                || email.charAt(x) == '@' || email.charAt(x) == '^' || email.charAt(x) == '&' || email.charAt(x) == '*'
-                || email.charAt(x) == '+' ){
+                else if(!"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@.-_".contains(email.charAt(x) + "")){
                     return false;
                 }
-
             }
 
             //SUFFIX TESTS
@@ -101,12 +93,9 @@ public class BankAccount {
             //for every character after the "@" symbol
             for (int x=atSymbol; x < email.length(); x++){
                 int period = 0;
-                //if there is a "#" character
-                if (email.charAt(x) == '#'){
-                    return false;
-                }
+
                 //if the last character is "."
-                else if (last == '.'){
+                if (last == '.' || last == '-' || last == '_'){
                     return false;
                 }
                 //else if there are two "." characters in a row
@@ -122,15 +111,11 @@ public class BankAccount {
                 else if(!"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@.-".contains(email.charAt(x) + "")){
                     return false;
                 }
-                else if (email.charAt(x) == ' '){
+
+                else if (email.charAt(x) == '-' && email.charAt(x-1) == '@' || email.charAt(x) == '.' && email.charAt(x+1) == '-'){
                     return false;
                 }
-                else if (email.charAt(x) == '-' && email.charAt(x-1) == '@'){
-                    return false;
-                }
-                else if (email.charAt(x) == '.' && email.charAt(x+1) == '-'){
-                    return false;
-                }
+
                 //if more than one period in suffix
                 if(period > 1){
                     return false;
