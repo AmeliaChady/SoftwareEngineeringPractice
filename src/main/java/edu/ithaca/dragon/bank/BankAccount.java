@@ -45,6 +45,14 @@ public class BankAccount {
 
     }
 
+    /**
+     * Takes value and decides if it is a valid amount of money
+     * @param value a double
+     * @return true if positive and <=2 decimal places, false otherwise
+     */
+    public static boolean isAmountValid(double value){
+        return false;
+    }
 
     public static boolean isEmailValid(String email){
         //if email is empty
