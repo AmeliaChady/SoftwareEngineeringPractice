@@ -30,19 +30,16 @@ public class BankAccount {
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * @throws IllegalArgumentException when the amount is too large or negative
      */
-    public void withdraw (double amount)  {
-        //if user tries to withdraw negative amount
-        if (amount < 0){
-            throw new IllegalArgumentException("ERROR: Cannot withdraw from negative balance.");
+    public void withdraw (double amount) throws InsufficientFundsException{
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Argument isn't non-negative with at max 2 decimal points");
         }
-
         //if amount trying to withdraw is greater than balance
         if (balance < amount){
-            throw new IllegalArgumentException("ERROR: Not enough funds to withdraw that amount.");
+            throw new InsufficientFundsException("ERROR: Not enough funds to withdraw that amount.");
 
         }
         balance -= amount;
-
     }
 
     /**
@@ -51,7 +48,12 @@ public class BankAccount {
      * @return true if positive and <=2 decimal places, false otherwise
      */
     public static boolean isAmountValid(double value){
-        return false;
+        if(value<=0){
+            return false;
+        }else if(value != Math.round(value*100)/100.0){
+            return false;
+        }
+        return true;
     }
 
     public static boolean isEmailValid(String email){
