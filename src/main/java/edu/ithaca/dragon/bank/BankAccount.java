@@ -27,6 +27,17 @@ public class BankAccount {
      * @throws IllegalArgumentException if amount is negative or has more than 2 decimals
      */
     public void transfer(BankAccount transferTo, double amount) throws InsufficientFundsException{
+        if(!isAmountValid(amount)) {
+            throw new IllegalArgumentException("Invalid Amount");
+        }else if (transferTo == this) {
+            throw new IllegalArgumentException("Cannot transfer to self");
+        }else if (transferTo == null) {
+            throw new IllegalArgumentException("Cannot transfer to nothing");
+        }else if(amount > balance){
+            throw new InsufficientFundsException("Not Enough Funds");
+        }
+        this.balance -= amount;
+        transferTo.balance += amount;
 
     }
 
@@ -65,7 +76,7 @@ public class BankAccount {
     public String getEmail(){
         return email;
     }
-    
+
     /**
      * Takes value and decides if it is a valid amount of money
      * @param value a double

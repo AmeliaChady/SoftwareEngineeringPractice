@@ -256,8 +256,8 @@ class BankAccountTest {
         // AMOUNT INVALID
         assertThrows(IllegalArgumentException.class, () -> ef.transfer(toAccount, -1)); // Boundary
         assertThrows(IllegalArgumentException.class, () -> ef.transfer(toAccount, -.001)); // Equivalence
-        assertThrows(IllegalArgumentException.class, () -> ef.transfer(toAccount, 1000.1)); // Boundary
-        assertThrows(IllegalArgumentException.class, () -> ef.transfer(toAccount, 10000)); // Equivalence
+        assertThrows(InsufficientFundsException.class, () -> ef.transfer(toAccount, 1000.1)); // Boundary
+        assertThrows(InsufficientFundsException.class, () -> ef.transfer(toAccount, 10000)); // Equivalence
 
     }
 
