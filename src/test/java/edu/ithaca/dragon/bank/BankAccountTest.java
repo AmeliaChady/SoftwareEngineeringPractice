@@ -12,13 +12,11 @@ class BankAccountTest {
     void getBalanceTest() {
         // Valid Tests
         BankAccount bankAccount = new BankAccount("a@b.com", .01);
-        assertEquals(.01, bankAccount.getBalance());
+        assertEquals(.01, bankAccount.getBalance()); // Boundary
 
         bankAccount = new BankAccount("a@b.com", 200);
         assertEquals(200, bankAccount.getBalance()); // Equivalence
 
-        // Invalid Tests
-        //BankAccount bankAccount_ef = new BankAccount()
     }
 
     @Test
@@ -200,12 +198,29 @@ class BankAccountTest {
 
     @Test
     void constructorTest() {
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        // PLEASE NOTE:
+        // These tests assume that functions
+        // isEmailValid & isAmountValid
+        // are used in implementation.
+        // This means we are only testing for
+        // number of errors as specific errors
+        // are handled by those functions.
+        // (otherwise each test in those needs to be here)
 
-        assertEquals("a@b.com", bankAccount.getEmail());
-        assertEquals(200, bankAccount.getBalance());
-        //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        // EMAIL
+        BankAccount emailAcct = new BankAccount("ab@cd.com", 1);
+        assertEquals("ab@cd.com", emailAcct.getEmail()); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount(".@a.com", 1)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount(".@.com", 1)); // Equivalence
+
+        // Account
+        BankAccount numberAccount = new BankAccount("a@b.com", .01);
+        assertEquals(.01, numberAccount.getBalance()); // Boundary
+        numberAccount = new BankAccount("a@b.com", 1);
+        assertEquals(1, numberAccount.getBalance()); // Equivalence
+
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -.01)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -.001)); // Equivalence
     }
 
 }
