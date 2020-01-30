@@ -36,7 +36,10 @@ public class BankAccount {
      * @throws IllegalArgumentException if amount has more than 2 decimals or is negative
      */
     public void deposit(double amount){
-
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Invalid Argument");
+        }
+        balance += amount;
     }
 
     /**
@@ -62,8 +65,7 @@ public class BankAccount {
     public String getEmail(){
         return email;
     }
-
-
+    
     /**
      * Takes value and decides if it is a valid amount of money
      * @param value a double
