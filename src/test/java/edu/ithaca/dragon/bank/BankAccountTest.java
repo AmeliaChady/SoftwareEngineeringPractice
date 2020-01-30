@@ -225,15 +225,39 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest(){
-        assertEquals(true, false, "!!not implemented!!");
-
+    void transferTest() throws InsufficientFundsException{
         // NOTE:
         // Tests assuming that
         // a. isAmountValid is in use
         // b. isAmountValid does all errors
         // All tests that would go with isAmountValid are assumed to be correct as we are showing we are using
 
+        // NORMAL TESTS
+        BankAccount fromAccount = new BankAccount("a@b.com", 1000);
+        BankAccount toAccount = new BankAccount("a@b.com", 1000);
+
+        fromAccount.transfer(toAccount, .01); // Boundary
+        assertEquals(999.99, fromAccount.getBalance());
+        assertEquals(1000.01, toAccount.getBalance());
+
+        fromAccount.transfer(toAccount, 499.99); // Equivalence
+        assertEquals(500, fromAccount.getBalance());
+        assertEquals(1500, toAccount.getBalance());
+
+        fromAccount.transfer(toAccount, 500); // Boundary
+        assertEquals(0, fromAccount.getBalance());
+        assertEquals(2000, toAccount.getBalance());
+
+        // BANK ACCOUNT INVALID
+        BankAccount ef = new BankAccount("a@b.com", 1000);
+        assertThrows(IllegalArgumentException.class, () -> ef.transfer(null, 100));
+        assertThrows(IllegalArgumentException.class, () -> ef.transfer(ef, 100));
+
+        // AMOUNT INVALID
+        assertThrows(IllegalArgumentException.class, () -> ef.transfer(toAccount, -1)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> ef.transfer(toAccount, -.001)); // Equivalence
+        assertThrows(IllegalArgumentException.class, () -> ef.transfer(toAccount, 1000.1)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> ef.transfer(toAccount, 10000)); // Equivalence
 
     }
 
