@@ -30,6 +30,30 @@ public class UtilitiesTest {
         assertEquals(false, isAmountValid(-1.001)); // Equivalence (Moving Negative)
     }
 
+    @Test
+    void isAccountIDValidTest(){
+
+        // Length Tests
+        assertEquals(true, isAccountIDValid("0000000000")); // Boundary (Single Case)
+
+        assertEquals(false, isAccountIDValid("000000000")); // Boundary (Smaller)
+        assertEquals(false, isAccountIDValid("00000000")); // Equivalence (Smaller)
+
+        assertEquals(false, isAccountIDValid("00000000000")); // Boundary (Larger)
+        assertEquals(false, isAccountIDValid("000000000000")); // Equivalence (Larger)
+
+        // Character Tests
+        // Note: Assuming that it will work against all not allowed characters, only testing against two
+        assertEquals(true, isAccountIDValid("0123456789")); // Boundary
+
+        assertEquals(false, isAccountIDValid("01234.6789")); // Boundary
+        assertEquals(false, isAccountIDValid("0.234.6789")); // Equivalence
+        assertEquals(false, isAccountIDValid("01f3456789")); // Equivalence
+        assertEquals(false, isAccountIDValid("01f34.6789")); // Equivalence
+
+
+    }
+
 
 }
 

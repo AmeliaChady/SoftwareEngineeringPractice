@@ -5,17 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BankAccountTests {
 
-    @Test
-    void getBalanceTest() {
-        // Valid Tests
-        CheckingAccount bankAccount = new CheckingAccount("a@b.com", .01);
-        assertEquals(.01, bankAccount.getBalance()); // Boundary
-
-        bankAccount = new CheckingAccount("a@b.com", 200);
-        assertEquals(200, bankAccount.getBalance()); // Equivalence
-
-    }
-
+    // Base BankAccount Tests
+    // Note: Due to BankAccount being abstract, a CheckingAccount object which implements
+    // BankAccount will be created. CheckingAccount does not override any classes defined
+    // in BankAccount.
     @Test
     void withdrawTest() throws InsufficientFundsException{
         // Basic Testing
@@ -67,24 +60,25 @@ class BankAccountTests {
     }
 
     @Test
-    void constructorTest() {
-        // PLEASE NOTE:
-        // These tests assume that functions
-        // isEmailValid & isAmountValid
-        // are used in implementation.
-        // This means we are only testing for
-        // number of errors as specific errors
-        // are handled by those functions.
-        // (otherwise each test in those needs to be here)
+    void depositTest(){
+        // NOTE:
+        // Tests assuming that
+        // a. isAmountValid is in use
+        // b. isAmountValid does all errors
+        // All tests that would go with isAmountValid are assumed to be correct as we are showing we are using
 
-        // Account
-        CheckingAccount numberAccount = new CheckingAccount("a@b.com", .01);
-        assertEquals(.01, numberAccount.getBalance()); // Boundary
-        numberAccount = new CheckingAccount("a@b.com", 1);
-        assertEquals(1, numberAccount.getBalance()); // Equivalence
+        CheckingAccount ba = new CheckingAccount("a@b.com", 100);
 
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("a@b.com", -.01)); // Boundary
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("a@b.com", -.001)); // Equivalence
+        ba.deposit(1);
+        assertEquals(101, ba.getBalance()); // Equivalence
+        ba.deposit(.01);
+        assertEquals(101.01, ba.getBalance()); // Boundary
+
+        // Errors
+        assertThrows(IllegalArgumentException.class, () -> ba.deposit(-1));
+        assertThrows(IllegalArgumentException.class, () -> ba.deposit(-.001));
+
+
     }
 
     @Test
@@ -125,25 +119,53 @@ class BankAccountTests {
     }
 
     @Test
-    void depositTest(){
-        // NOTE:
-        // Tests assuming that
-        // a. isAmountValid is in use
-        // b. isAmountValid does all errors
-        // All tests that would go with isAmountValid are assumed to be correct as we are showing we are using
-
-        CheckingAccount ba = new CheckingAccount("a@b.com", 100);
-
-        ba.deposit(1);
-        assertEquals(101, ba.getBalance()); // Equivalence
-        ba.deposit(.01);
-        assertEquals(101.01, ba.getBalance()); // Boundary
-
-        // Errors
-        assertThrows(IllegalArgumentException.class, () -> ba.deposit(-1));
-        assertThrows(IllegalArgumentException.class, () -> ba.deposit(-.001));
-
+    void getAccountIDTest(){
 
     }
+
+    @Test
+    void getBalanceTest() {
+        // Valid Tests
+        CheckingAccount bankAccount = new CheckingAccount("a@b.com", .01);
+        assertEquals(.01, bankAccount.getBalance()); // Boundary
+
+        bankAccount = new CheckingAccount("a@b.com", 200);
+        assertEquals(200, bankAccount.getBalance()); // Equivalence
+
+    }
+
+    @Test
+    void getHistoryTest(){
+
+    }
+
+    // Checking Account Tests
+    // Only testing constructor & overridden methods
+    @Test
+    void constructorCheckingAccountTest() {
+        // PLEASE NOTE:
+        // These tests assume that functions
+        // isEmailValid & isAmountValid
+        // are used in implementation.
+        // This means we are only testing for
+        // number of errors as specific errors
+        // are handled by those functions.
+        // (otherwise each test in those needs to be here)
+
+        // Account
+        CheckingAccount numberAccount = new CheckingAccount("a@b.com", .01);
+        assertEquals(.01, numberAccount.getBalance()); // Boundary
+        numberAccount = new CheckingAccount("a@b.com", 1);
+        assertEquals(1, numberAccount.getBalance()); // Equivalence
+
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("a@b.com", -.01)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("a@b.com", -.001)); // Equivalence
+    }
+
+    @Test
+    void updateCheckingAccountTest(){
+
+    }
+
 
 }

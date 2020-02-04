@@ -15,4 +15,15 @@ public class Utilities {
         }
         return true;
     }
+
+    /**
+     * Takes a string and evaluates if it is a valid account id
+     * account ids are 10 characters with the only allowed characters
+     * being digits (0 through 9)
+     * @param id the possible id
+     * @return true if it is valid, otherwise false
+     */
+    public static boolean isAccountIDValid(String id){
+        return false;
+    }
 }
