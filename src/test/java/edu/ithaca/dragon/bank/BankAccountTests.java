@@ -10,9 +10,19 @@ class BankAccountTests {
     // BankAccount will be created. CheckingAccount does not override any classes defined
     // in BankAccount.
     @Test
+    void getBalanceTest() {
+        // Valid Tests
+        BankAccount bankAccount = new CheckingAccount("0123456789", .01);
+        assertEquals(.01, bankAccount.getBalance()); // Boundary
+
+        bankAccount = new CheckingAccount("0123456789", 200);
+        assertEquals(200, bankAccount.getBalance()); // Equivalence
+    }
+
+    @Test
     void withdrawTest() throws InsufficientFundsException{
         // Basic Testing
-        CheckingAccount tester = new CheckingAccount("a@b.cc", 100);
+        BankAccount tester = new CheckingAccount("a@b.cc", 100);
         tester.withdraw(.01);
         assertEquals(99.99, tester.getBalance());
 
@@ -25,7 +35,7 @@ class BankAccountTests {
         assertEquals(0, tester.getBalance());
 
         // Decimal Tests
-        CheckingAccount tester_ef = new CheckingAccount("a@b.cc", 100);
+        BankAccount tester_ef = new CheckingAccount("a@b.cc", 100);
         assertThrows(IllegalArgumentException.class, () -> tester_ef.withdraw(.001));
         assertThrows(IllegalArgumentException.class, () -> tester_ef.withdraw(.0001));
 
@@ -51,7 +61,7 @@ class BankAccountTests {
         assertThrows(IllegalArgumentException.class, () -> tester_ef.withdraw(0));
 
         // Balance 0 Testing
-        CheckingAccount tester_0 = new CheckingAccount("a@b.cc", 1);
+        BankAccount tester_0 = new CheckingAccount("a@b.cc", 1);
         tester_0.withdraw(1);
 
         assertThrows(IllegalArgumentException.class, () -> tester_0.withdraw(0));
@@ -67,7 +77,7 @@ class BankAccountTests {
         // b. isAmountValid does all errors
         // All tests that would go with isAmountValid are assumed to be correct as we are showing we are using
 
-        CheckingAccount ba = new CheckingAccount("a@b.com", 100);
+        BankAccount ba = new CheckingAccount("a@b.com", 100);
 
         ba.deposit(1);
         assertEquals(101, ba.getBalance()); // Equivalence
@@ -77,8 +87,6 @@ class BankAccountTests {
         // Errors
         assertThrows(IllegalArgumentException.class, () -> ba.deposit(-1));
         assertThrows(IllegalArgumentException.class, () -> ba.deposit(-.001));
-
-
     }
 
     @Test
@@ -90,8 +98,8 @@ class BankAccountTests {
         // All tests that would go with isAmountValid are assumed to be correct as we are showing we are using
 
         // NORMAL TESTS
-        CheckingAccount fromAccount = new CheckingAccount("a@b.com", 1000);
-        CheckingAccount toAccount = new CheckingAccount("a@b.com", 1000);
+        BankAccount fromAccount = new CheckingAccount("a@b.com", 1000);
+        BankAccount toAccount = new CheckingAccount("a@b.com", 1000);
 
         fromAccount.transfer(toAccount, .01); // Boundary
         assertEquals(999.99, fromAccount.getBalance());
@@ -106,7 +114,7 @@ class BankAccountTests {
         assertEquals(2000, toAccount.getBalance());
 
         // BANK ACCOUNT INVALID
-        CheckingAccount ef = new CheckingAccount("a@b.com", 1000);
+        BankAccount ef = new CheckingAccount("a@b.com", 1000);
         assertThrows(IllegalArgumentException.class, () -> ef.transfer(null, 100));
         assertThrows(IllegalArgumentException.class, () -> ef.transfer(ef, 100));
 
@@ -120,18 +128,10 @@ class BankAccountTests {
 
     @Test
     void getAccountIDTest(){
-
-    }
-
-    @Test
-    void getBalanceTest() {
-        // Valid Tests
-        CheckingAccount bankAccount = new CheckingAccount("a@b.com", .01);
-        assertEquals(.01, bankAccount.getBalance()); // Boundary
-
-        bankAccount = new CheckingAccount("a@b.com", 200);
-        assertEquals(200, bankAccount.getBalance()); // Equivalence
-
+        BankAccount ba = new CheckingAccount("0000000000", 100); // Boundary
+        assertEquals("0000000000", ba.getAccountID());
+        ba = new CheckingAccount("0123456789", 100); // Equivalence
+        assertEquals("0123456789", ba.getAccountID());
     }
 
     @Test
