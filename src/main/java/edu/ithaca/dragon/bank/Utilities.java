@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.regex.Pattern;
+
 public class Utilities {
 
     /**
@@ -24,6 +26,6 @@ public class Utilities {
      * @return true if it is valid, otherwise false
      */
     public static boolean isAccountIDValid(String id){
-        return false;
+        return Pattern.matches("\\d{10}", id) ;
     }
 }
