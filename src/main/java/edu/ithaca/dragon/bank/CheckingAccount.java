@@ -7,14 +7,10 @@ public class CheckingAccount extends BankAccount{
     /**
      * @throws IllegalArgumentException if email or balance is invalid
      */
-    public CheckingAccount(String email, double startingBalance){
-        if (!isEmailValid(email)){
-            throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
-        }
-        else if(!isAmountValid(startingBalance)){
+    public CheckingAccount(String accountID, double startingBalance){
+        if(!isAmountValid(startingBalance)){
             throw new IllegalArgumentException("Balance: " + startingBalance + " is invalid, cannot create account");
         }
-        this.email = email;
         this.balance = startingBalance;
     }
 

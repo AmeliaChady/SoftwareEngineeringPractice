@@ -3,7 +3,7 @@ package edu.ithaca.dragon.bank;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CheckingAccountTest {
+class BankAccountTests {
 
     @Test
     void getBalanceTest() {
@@ -67,30 +67,6 @@ class CheckingAccountTest {
     }
 
     @Test
-    void isAmountValidTest(){
-        // Valid Tests
-        assertEquals(true, CheckingAccount.isAmountValid(.01)); // Boundary
-        assertEquals(true, CheckingAccount.isAmountValid(10)); // Equivalence (Normal Cases)
-
-        // Invalid Tests
-        // Zero Case
-        assertEquals(false, CheckingAccount.isAmountValid(0)); // Boundary
-
-        // Decimal
-        assertEquals(false, CheckingAccount.isAmountValid(.001)); // Boundary
-        assertEquals(false, CheckingAccount.isAmountValid(.0001)); // Equivalence (Decimals)
-
-        // Negative
-        assertEquals(false, CheckingAccount.isAmountValid(-.01)); // Boundary
-        assertEquals(false, CheckingAccount.isAmountValid(-1)); // Equivalence (Negatives)
-
-        // Decimal & Negative
-        assertEquals(false, CheckingAccount.isAmountValid(-.001)); // Boundary
-        assertEquals(false, CheckingAccount.isAmountValid(-.0001)); // Equivalence (Moving Decimal)
-        assertEquals(false, CheckingAccount.isAmountValid(-1.001)); // Equivalence (Moving Negative)
-    }
-
-    @Test
     void constructorTest() {
         // PLEASE NOTE:
         // These tests assume that functions
@@ -100,12 +76,6 @@ class CheckingAccountTest {
         // number of errors as specific errors
         // are handled by those functions.
         // (otherwise each test in those needs to be here)
-
-        // EMAIL
-        CheckingAccount emailAcct = new CheckingAccount("ab@cd.com", 1);
-        assertEquals("ab@cd.com", emailAcct.getEmail()); // Boundary
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount(".@a.com", 1)); // Boundary
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount(".@.com", 1)); // Equivalence
 
         // Account
         CheckingAccount numberAccount = new CheckingAccount("a@b.com", .01);

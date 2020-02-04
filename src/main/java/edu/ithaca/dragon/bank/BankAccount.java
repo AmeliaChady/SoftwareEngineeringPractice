@@ -30,6 +30,10 @@ public abstract class BankAccount {
     public String getAccountID(){
         return accountID;
     };
-    public double getBalance();
-    public List<Double> getHistory();
+    public double getBalance(){
+        return -1;
+    };
+    public List<Double> getHistory(){
+        return null;
+    };
 }
