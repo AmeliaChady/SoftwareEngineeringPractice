@@ -47,7 +47,7 @@ public abstract class BankAccount {
         return accountID;
     };
     public double getBalance(){
-        return -1;
+        return balance;
     };
 
     /**
