@@ -175,8 +175,8 @@ class BankAccountTests {
         // (otherwise each test in those needs to be here)
 
         // Correct
-        CheckingAccount numberAccount = new CheckingAccount("0123456789", .01);
-        assertEquals("000000000", numberAccount.getAccountID()); // Boundary
+        CheckingAccount numberAccount = new CheckingAccount("0000000000", .01);
+        assertEquals("0000000000", numberAccount.getAccountID()); // Boundary
         assertEquals(.01, numberAccount.getBalance()); // Boundary
         numberAccount = new CheckingAccount("0123456789", 1);
         assertEquals("0123456789", numberAccount.getAccountID()); // Boundary
