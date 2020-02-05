@@ -10,13 +10,19 @@ class BankAccountTests {
     // BankAccount will be created. CheckingAccount does not override any classes defined
     // in BankAccount.
     @Test
-    void getBalanceTest() {
+    void getBalanceTest() throws InsufficientFundsException{
         // Valid Tests
         BankAccount bankAccount = new CheckingAccount("0123456789", .01);
         assertEquals(.01, bankAccount.getBalance()); // Boundary
 
-        bankAccount = new CheckingAccount("0123456789", 200);
-        assertEquals(200, bankAccount.getBalance()); // Equivalence
+        BankAccount bankAccount2 = new CheckingAccount("0123456789", 200);
+        assertEquals(200, bankAccount2.getBalance()); // Equivalence
+
+        bankAccount2.withdraw(200);
+        assertEquals(0, bankAccount.getBalance());
+
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(.0001));
+        assertEquals(0, bankAccount.getBalance());
     }
 
     @Test
@@ -180,13 +186,18 @@ class BankAccountTests {
 
 
         // AccountID Wrong
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("012345678", -.01)); // Boundary
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("01234567a", -.001)); // Equivalence
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("012345678", 1)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("01234567a", 1)); // Equivalence
 
 
         // Balance Wrong
         assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("0123456789", -.01)); // Boundary
         assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("0123456789", -.001)); // Equivalence
+
+        //both
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("01234567w9", -.01)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("0sdfa3456789", -.001)); // Equivalence
+
     }
 
     @Test
