@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+import static edu.ithaca.dragon.bank.Utilities.isAccountIDValid;
 import static edu.ithaca.dragon.bank.Utilities.isAmountValid;
 
 public class CheckingAccount extends BankAccount{
@@ -12,6 +13,10 @@ public class CheckingAccount extends BankAccount{
             throw new IllegalArgumentException("Balance: " + startingBalance + " is invalid, cannot create account");
         }
         this.balance = startingBalance;
+        if(!isAccountIDValid(accountID)){
+            throw new IllegalArgumentException("Balance: " + startingBalance + " is invalid, cannot create account");
+        }
+        this.accountID = accountID;
     }
 
     @Override
