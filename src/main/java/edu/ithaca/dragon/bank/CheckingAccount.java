@@ -1,7 +1,6 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.LinkedList;
-
 import static edu.ithaca.dragon.bank.Utilities.isAccountIDValid;
 import static edu.ithaca.dragon.bank.Utilities.isAmountValid;
 
