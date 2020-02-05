@@ -135,8 +135,24 @@ class BankAccountTests {
     }
 
     @Test
-    void getHistoryTest(){
+    void historyTest(){
+        BankAccount ba = new CheckingAccount("0000000000", 1000);
 
+        // No History
+        assertEquals(0, ba.getHistory().size());
+
+        // History
+        ba.deposit(10);
+        assertEquals(1, ba.getHistory().size());
+        assertEquals(10, ba.getHistory().get(0).doubleValue());
+
+        ba.deposit(20);
+        assertEquals(1, ba.getHistory().size());
+        assertEquals(10, ba.getHistory().get(0).doubleValue());
+        assertEquals(20, ba.getHistory().get(1).doubleValue());
+
+        // Cannot Modify History
+        assertThrows(UnsupportedOperationException.class, () -> ba.getHistory().add(1d));
     }
 
     // Checking Account Tests
@@ -145,25 +161,58 @@ class BankAccountTests {
     void constructorCheckingAccountTest() {
         // PLEASE NOTE:
         // These tests assume that functions
-        // isEmailValid & isAmountValid
+        // isAccountID & isAmountValid
         // are used in implementation.
         // This means we are only testing for
         // number of errors as specific errors
         // are handled by those functions.
         // (otherwise each test in those needs to be here)
 
-        // Account
-        CheckingAccount numberAccount = new CheckingAccount("a@b.com", .01);
+        // Correct
+        CheckingAccount numberAccount = new CheckingAccount("0123456789", .01);
         assertEquals(.01, numberAccount.getBalance()); // Boundary
-        numberAccount = new CheckingAccount("a@b.com", 1);
+        numberAccount = new CheckingAccount("0123456789", 1);
         assertEquals(1, numberAccount.getBalance()); // Equivalence
 
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("a@b.com", -.01)); // Boundary
-        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("a@b.com", -.001)); // Equivalence
+
+        // AccountID Wrong
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("012345678", -.01)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("01234567a", -.001)); // Equivalence
+
+
+        // Balance Wrong
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("0123456789", -.01)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("0123456789", -.001)); // Equivalence
     }
 
     @Test
     void updateCheckingAccountTest(){
+        // Nothing should happen.
+        CheckingAccount ca = new CheckingAccount("000000000", .01); // Boundary
+        ca.update();
+        assertEquals("000000000", ca.getAccountID());
+        assertEquals(.01, ca.getBalance());
+
+        ca = new CheckingAccount("012345679", .01); // Boundary
+        ca.update();
+        assertEquals("012345679", ca.getAccountID());
+        assertEquals(.01, ca.getBalance());
+
+        ca = new CheckingAccount("0001112223", 50); // Equivalence
+        ca.update();
+        assertEquals("0001112223", ca.getAccountID());
+        assertEquals(50, ca.getBalance());
+    }
+
+    // Savings Account Tests
+    // Only testing constructor & overridden methods
+    @Test
+    void constructorSavingsAccountTest(){
+
+    }
+
+    @Test
+    void updateSavingsAccountTest(){
 
     }
 

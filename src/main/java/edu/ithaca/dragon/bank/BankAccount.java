@@ -49,6 +49,10 @@ public abstract class BankAccount {
     public double getBalance(){
         return -1;
     };
+
+    /**
+     * @return A read-only version of getHistory
+     */
     public List<Double> getHistory(){
         return null;
     };

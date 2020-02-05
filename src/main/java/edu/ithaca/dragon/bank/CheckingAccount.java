@@ -5,7 +5,7 @@ import static edu.ithaca.dragon.bank.Utilities.isAmountValid;
 public class CheckingAccount extends BankAccount{
 
     /**
-     * @throws IllegalArgumentException if email or balance is invalid
+     * @throws IllegalArgumentException if accountID or balance is invalid
      */
     public CheckingAccount(String accountID, double startingBalance){
         if(!isAmountValid(startingBalance)){
