@@ -170,9 +170,13 @@ class BankAccountTests {
 
         // Correct
         CheckingAccount numberAccount = new CheckingAccount("0123456789", .01);
+        assertEquals("000000000", numberAccount.getAccountID()); // Boundary
         assertEquals(.01, numberAccount.getBalance()); // Boundary
         numberAccount = new CheckingAccount("0123456789", 1);
+        assertEquals("0123456789", numberAccount.getAccountID()); // Boundary
         assertEquals(1, numberAccount.getBalance()); // Equivalence
+        numberAccount = new CheckingAccount("0102030405", 1);
+        assertEquals("0102030405", numberAccount.getAccountID()); // Equivalence
 
 
         // AccountID Wrong
@@ -205,15 +209,110 @@ class BankAccountTests {
     }
 
     // Savings Account Tests
-    // Only testing constructor & overridden methods
+    // Only testing constructor, overridden methods, & own methods
     @Test
     void constructorSavingsAccountTest(){
+        // PLEASE NOTE:
+        // These tests assume that functions
+        // isAccountID & isAmountValid & isInterestValid
+        // are used in implementation.
+        // This means we are only testing for
+        // number of errors as specific errors
+        // are handled by those functions.
+        // (otherwise each test in those needs to be here)
 
+        // Correct
+        SavingsAccount numberAccount = new SavingsAccount("0000000000", .01, 0);
+        assertEquals("000000000", numberAccount.getAccountID()); // Boundary
+        assertEquals(.01, numberAccount.getBalance()); // Boundary
+        assertEquals(0, numberAccount.getInterest()); // Boundary
+        numberAccount = new SavingsAccount("0123456789", 1, .0001);
+        assertEquals("0123456789", numberAccount.getAccountID()); // Boundary
+        assertEquals(1, numberAccount.getBalance()); // Equivalence
+        assertEquals(.102, numberAccount.getInterest()); // Boundary
+        numberAccount = new SavingsAccount("0102030405", 1, .102);
+        assertEquals("0102030405", numberAccount.getAccountID()); // Equivalence
+        assertEquals(.102, numberAccount.getInterest());
+
+
+
+        // AccountID Wrong
+        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("012345678", -.01, 1)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("01234567a", -.001, 1)); // Equivalence
+
+
+        // Balance Wrong
+        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("0123456789", -.01, 1)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("0123456789", -.001, 1)); // Equivalence
+
+        // Interest Wrong
+        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("0123456789", 10, .00001)); // Boundary
+        assertThrows(IllegalArgumentException.class, () -> new SavingsAccount("0123456789", 10, -.00001)); // Equivalence
     }
 
     @Test
     void updateSavingsAccountTest(){
+        // Balance will increase by interest, nothing else changes
+        SavingsAccount sa = new SavingsAccount("0123456789", 100, 0); // Boundary
+        sa.update();
+        assertEquals("0123456789", sa.getAccountID());
+        assertEquals(100, sa.getBalance());
+        assertEquals(0, sa.getInterest());
 
+        sa = new SavingsAccount("0123456789", 100, .0001); // Boundary
+        sa.update();
+        assertEquals("0123456789", sa.getAccountID());
+        assertEquals(100.01, sa.getBalance());
+        assertEquals(.0001, sa.getInterest());
+
+        sa = new SavingsAccount("0000000000", 100, .1); // Equivalence
+        sa.update();
+        assertEquals("0000000000", sa.getAccountID());
+        assertEquals(110, sa.getBalance());
+        assertEquals(.1, sa.getInterest());
+
+    }
+
+    @Test
+    void getInterestSavingsAccountTest(){
+        SavingsAccount sa = new SavingsAccount("0123456789", 1, 0); // Boundary
+        assertEquals(0, sa.getInterest());
+        sa = new SavingsAccount("0123456789", 1, .0001); // Boundary
+        assertEquals(.0001, sa.getInterest());
+        sa = new SavingsAccount("0123456789", 1, 1);
+        assertEquals(1, sa.getInterest());
+    }
+
+    @Test
+    void setInterestSavingsAccountTest(){
+        // Assuming using isInterestValid so  only testing if it goes
+        SavingsAccount sa = new SavingsAccount("0000000000", 1, 10);
+        sa.setInterest(.0001); // Boundary
+        assertEquals(.0001, sa.getInterest());
+        sa.setInterest(1); // Equivalence
+        assertEquals(1, sa.getInterest());
+
+        assertThrows(IllegalArgumentException.class, () -> sa.setInterest(.00001));
+        assertThrows(IllegalArgumentException.class, () -> sa.setInterest(-.00001));
+    }
+
+    @Test
+    void isInterestValidSavingsAccountTest(){
+        // Correct
+        assertEquals(true, SavingsAccount.isInterestValid(0)); // Boundary
+        assertEquals(true, SavingsAccount.isInterestValid(.0001)); // Boundary
+        assertEquals(true, SavingsAccount.isInterestValid(1)); // Equivalence
+
+        // Decimal Invalid
+        assertEquals(false, SavingsAccount.isInterestValid(.00001)); // Boundary
+        assertEquals(false, SavingsAccount.isInterestValid(.000001)); // Equivalence
+
+        // Negative Invalid
+        assertEquals(false, SavingsAccount.isInterestValid(-.0001)); // Boundary
+        assertEquals(false, SavingsAccount.isInterestValid(-1)); // Equivalence
+
+        // Together
+        assertEquals(false, SavingsAccount.isInterestValid(-.00001)); // Equivalence
     }
 
 

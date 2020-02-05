@@ -14,4 +14,24 @@ public class SavingsAccount extends BankAccount{
         // Does Savings Account Interest
 
     }
+
+    public double getInterest(){
+        return -1;
+    }
+
+    /**
+     * @throws IllegalArgumentException if interest invalid
+     */
+    public void setInterest(double interest){
+
+    }
+
+    /**
+     * checks if interest is valid
+     * @param interest possible valid interest
+     * @return false if has more than 4 decimal points or <0. Otherwise true
+     */
+    public static boolean isInterestValid(double interest){
+        return false;
+    }
 }
