@@ -19,10 +19,7 @@ class BankAccountTests {
         assertEquals(200, bankAccount2.getBalance()); // Equivalence
 
         bankAccount2.withdraw(200);
-        assertEquals(0, bankAccount.getBalance());
-
-        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(.0001));
-        assertEquals(0, bankAccount.getBalance());
+        assertEquals(0, bankAccount2.getBalance()); // Boundary (not feasible by constructor to get 0 value)
     }
 
     @Test
