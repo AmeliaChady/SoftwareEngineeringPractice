@@ -10,7 +10,7 @@ class BankAccountTests {
     // BankAccount will be created. CheckingAccount does not override any classes defined
     // in BankAccount.
     @Test
-    void getBalanceTest() throws InsufficientFundsException{
+    void getBalanceTest() throws InsufficientFundsException, AccountFrozenException{
         // Valid Tests
         BankAccount bankAccount = new CheckingAccount("0123456789", .01);
         assertEquals(.01, bankAccount.getBalance()); // Boundary
@@ -23,7 +23,7 @@ class BankAccountTests {
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
         // Basic Testing
         BankAccount tester = new CheckingAccount("0000000000", 100);
         tester.withdraw(.01);
@@ -73,7 +73,7 @@ class BankAccountTests {
     }
 
     @Test
-    void depositTest(){
+    void depositTest() throws AccountFrozenException{
         // NOTE:
         // Tests assuming that
         // a. isAmountValid is in use
@@ -93,7 +93,7 @@ class BankAccountTests {
     }
 
     @Test
-    void transferTest() throws InsufficientFundsException{
+    void transferTest() throws InsufficientFundsException, AccountFrozenException{
         // NOTE:
         // Tests assuming that
         // a. isAmountValid is in use
@@ -138,7 +138,7 @@ class BankAccountTests {
     }
 
     @Test
-    void historyTest(){
+    void historyTest() throws AccountFrozenException{
         BankAccount ba = new CheckingAccount("0000000000", 1000);
 
         // No History
@@ -157,6 +157,60 @@ class BankAccountTests {
         // Cannot Modify History
         assertThrows(UnsupportedOperationException.class, () -> ba.getHistory().add(1d));
     }
+
+    @Test
+    public void frozenBankAccountTest() throws InsufficientFundsException{
+        BankAccount ba = new CheckingAccount("0123456789", 100);
+
+        // Accounts don't start frozen
+        assertEquals(false, ba.isAccountFrozen());
+
+        // Freezeing account changes status
+        ba.freezeAccount();
+        assertEquals(true, ba.isAccountFrozen());
+
+        // While frozen, account can not be withdrawn or deposited from.
+        assertThrows(AccountFrozenException.class, () -> ba.withdraw(10));
+        assertThrows(AccountFrozenException.class, () -> ba.deposit(10));
+        BankAccount ba2 = new CheckingAccount("0123456789", 100);
+        // Throws when transferring to unfrozen account
+        assertThrows(AccountFrozenException.class, () -> ba.transfer(ba2, 10));
+        // Throws when transferring to frozen account
+        ba2.freezeAccount();
+        assertThrows(AccountFrozenException.class, () -> ba.transfer(ba2, 10));
+
+        // Unfreezing Account works
+        ba.unfreezeAccount();
+        assertEquals(false, ba.isAccountFrozen());
+
+        // Can Withdraw or Deposit
+        try{
+            ba.withdraw(10);
+        }catch (AccountFrozenException afe){
+            fail("threw exception");
+        }
+
+        try{
+            ba.deposit(10);
+        }catch (AccountFrozenException afe){
+            fail("threw exception");
+        }
+
+
+        BankAccount ba3 = new CheckingAccount("0123456789", 100);
+        try{
+            ba.transfer(ba3, 10);
+        }catch (AccountFrozenException afe){
+            fail("threw exception");
+        }
+
+        // Transfer fails to frozen account
+        ba3.freezeAccount();
+        assertThrows(AccountFrozenException.class, () -> ba.transfer(ba3, 10));
+    }
+
+
+
 
     // Checking Account Tests
     // Only testing constructor & overridden methods

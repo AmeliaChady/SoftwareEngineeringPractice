@@ -17,8 +17,10 @@ public abstract class BankAccount {
      * @throws InsufficientFundsException if account doesn't hold enough money
      * @throws AccountFrozenException if account is frozen
      */
-    public void withdraw(double amount) throws InsufficientFundsException{
-
+    public void withdraw(double amount) throws InsufficientFundsException, AccountFrozenException{
+        if (isAccountFrozen()){
+            throw new AccountFrozenException("Account is frozen");
+        }
     };
 
     /**
@@ -27,8 +29,10 @@ public abstract class BankAccount {
      * @throws IllegalArgumentException if not a valid amount
      * @throws AccountFrozenException if account is frozen
      */
-    public void deposit(double amount){
-
+    public void deposit(double amount) throws AccountFrozenException{
+        if(isAccountFrozen()){
+            throw new AccountFrozenException("Account is frozen");
+        }
     };
 
     /**
@@ -39,8 +43,12 @@ public abstract class BankAccount {
      * @throws InsufficientFundsException if account doesn't hold enough money.
      * @throws AccountFrozenException if either account are frozen
      */
-    public void transfer(BankAccount transferTo, double amount) throws InsufficientFundsException{
-
+    public void transfer(BankAccount transferTo, double amount) throws InsufficientFundsException, AccountFrozenException{
+        if(isAccountFrozen()){
+            throw new AccountFrozenException("Cannot transfer from frozen account");
+        }else if(transferTo.isAccountFrozen()){
+            throw new AccountFrozenException("Cannot transfer to frozen account");
+        }
     };
 
     /**
