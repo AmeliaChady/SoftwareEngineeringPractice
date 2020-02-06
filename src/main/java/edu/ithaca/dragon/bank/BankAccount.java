@@ -18,6 +18,7 @@ public abstract class BankAccount {
      * @throws AccountFrozenException if account is frozen
      */
     public void withdraw(double amount) throws InsufficientFundsException, AccountFrozenException{
+        // Please Keep First - Account Freeze has priority
         if (isAccountFrozen()){
             throw new AccountFrozenException("Account is frozen");
         }
@@ -30,6 +31,7 @@ public abstract class BankAccount {
      * @throws AccountFrozenException if account is frozen
      */
     public void deposit(double amount) throws AccountFrozenException{
+        // Please Keep First - Account Freeze has priority
         if(isAccountFrozen()){
             throw new AccountFrozenException("Account is frozen");
         }
@@ -44,6 +46,7 @@ public abstract class BankAccount {
      * @throws AccountFrozenException if either account are frozen
      */
     public void transfer(BankAccount transferTo, double amount) throws InsufficientFundsException, AccountFrozenException{
+        // Please Keep First - Account Freeze has priority
         if(isAccountFrozen()){
             throw new AccountFrozenException("Cannot transfer from frozen account");
         }else if(transferTo.isAccountFrozen()){
