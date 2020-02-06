@@ -1,16 +1,8 @@
 package edu.ithaca.dragon.bank;
 
-import java.util.List;
+
+import java.util.Map;
 
 public class AccountLibrary {
-    private List<BankAccount> accounts;
-
-    /**
-     * @param accountID id of a bank account
-     * @return the bank account associated with the id
-     * @throws IllegalArgumentException if accountID DNE
-     */
-    public BankAccount findID(String accountID){
-
-    }
+    private Map<String, BankAccount> accounts;
 }
