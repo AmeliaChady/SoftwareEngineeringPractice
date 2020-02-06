@@ -198,6 +198,8 @@ class BankAccountTests {
         assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("01234567w9", -.01)); // Boundary
         assertThrows(IllegalArgumentException.class, () -> new CheckingAccount("0sdfa3456789", -.001)); // Equivalence
 
+        // History exists
+        assertNotNull(numberAccount.getHistory());
     }
 
     @Test

@@ -25,7 +25,8 @@ public class CheckingAccount extends BankAccount{
 
     @Override
     public void update() {
-
+        // Is nothing, as it is not needed for specific class usage.
+        // Needed to allow for usability
     }
 }
 
