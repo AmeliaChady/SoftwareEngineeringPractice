@@ -205,7 +205,7 @@ class BankAccountTests {
     @Test
     void updateCheckingAccountTest(){
         // Nothing should happen.
-        CheckingAccount ca = new CheckingAccount("000000000", .01); // Boundary
+        CheckingAccount ca = new CheckingAccount("0000000000", .01); // Boundary
         ca.update();
         assertEquals("000000000", ca.getAccountID());
         assertEquals(.01, ca.getBalance());
