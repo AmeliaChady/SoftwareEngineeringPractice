@@ -60,4 +60,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
+    //----------------- DaemonAPI methods -------------------------//
+
+    public void accountUpdate(){
+
+    }
+
 }
