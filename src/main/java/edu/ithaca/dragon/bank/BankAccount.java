@@ -22,7 +22,14 @@ public abstract class BankAccount {
         if (isAccountFrozen()){
             throw new AccountFrozenException("Account is frozen");
         }
-    };
+        if(!Utilities.isAmountValid(amount)){
+            throw new IllegalArgumentException("ERROR: invalid amount");
+        }
+        if(amount > balance){
+            throw new InsufficientFundsException("ERROR: You do not have enough funds to withdraw that amount.");
+        }
+        balance -= amount;
+    }
 
     /**
      * Deposits money into the account
