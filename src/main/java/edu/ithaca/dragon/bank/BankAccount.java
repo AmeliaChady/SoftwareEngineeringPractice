@@ -1,12 +1,13 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class BankAccount {
 
     protected String accountID;
     protected double balance;
-    protected List<String> history;
+    protected List<Double> history;
 
     protected boolean accountFrozen;
 
@@ -29,6 +30,7 @@ public abstract class BankAccount {
             throw new InsufficientFundsException("ERROR: You do not have enough funds to withdraw that amount.");
         }
         balance -= amount;
+        updateHistory(amount, false);
     }
 
     /**
@@ -46,6 +48,7 @@ public abstract class BankAccount {
             throw new IllegalArgumentException("ERROR: invalid amount");
         }
         balance += amount;
+        updateHistory(amount, true);
     };
 
     /**
@@ -81,7 +84,8 @@ public abstract class BankAccount {
      * @return A read-only version of getHistory
      */
     public List<Double> getHistory(){
-        return null;
+        List<Double> historyReturn = Collections.unmodifiableList(history);
+        return historyReturn;
     };
 
     /**
@@ -105,5 +109,17 @@ public abstract class BankAccount {
      */
     public boolean isAccountFrozen(){
         return accountFrozen;
+    }
+
+    public void updateHistory(Double amount, boolean isDeposit) { //true means deposit, false means withdraw
+        if(!Utilities.isAmountValid(amount)){
+            throw new IllegalArgumentException("ERROR: invalid amount");
+        }
+        if (isDeposit){
+            history.add(amount);
+        }
+        else{
+            history.add(-1 * amount);
+        }
     }
 }
