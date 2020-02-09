@@ -60,12 +60,32 @@ public abstract class BankAccount {
      * @throws AccountFrozenException if either account are frozen
      */
     public void transfer(BankAccount transferTo, double amount) throws InsufficientFundsException, AccountFrozenException{
+        //a bank account must not be null in order to check if it's frozen or not (see below comment)
+        if (transferTo == null){
+            throw new IllegalArgumentException("ERROR: Must pass bank account");
+        }
+
         // Please Keep First - Account Freeze has priority
         if(isAccountFrozen()){
             throw new AccountFrozenException("Cannot transfer from frozen account");
         }else if(transferTo.isAccountFrozen()){
             throw new AccountFrozenException("Cannot transfer to frozen account");
         }
+
+        if(balance < amount){
+            throw new InsufficientFundsException("ERROR: Not enough funds");
+        }
+        if (!Utilities.isAmountValid(amount)){
+            throw new IllegalArgumentException("ERROR: Invalid amount");
+        }
+        if (transferTo == this){
+            throw new IllegalArgumentException("ERROR: Must pass two bank accounts");
+        }
+        balance -= amount;
+        updateHistory(amount, false);
+
+        transferTo.balance += amount;
+        transferTo.updateHistory(amount, true);
     };
 
     /**
