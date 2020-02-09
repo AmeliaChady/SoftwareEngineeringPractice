@@ -42,6 +42,10 @@ public abstract class BankAccount {
         if(isAccountFrozen()){
             throw new AccountFrozenException("Account is frozen");
         }
+        if(!Utilities.isAmountValid(amount)){
+            throw new IllegalArgumentException("ERROR: invalid amount");
+        }
+        balance += amount;
     };
 
     /**
