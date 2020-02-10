@@ -138,6 +138,34 @@ class BankAccountTests {
     }
 
     @Test
+    void updateHistoryTest(){
+        BankAccount ba =  new CheckingAccount("0000000000", 100);
+        assertEquals(0, ba.getHistory().size());
+
+        ba.updateHistory(10.0, true);
+        assertEquals(1, ba.getHistory().size());
+        double val = ba.getHistory().get(0);
+        assertEquals(10.0, val);
+
+        ba.updateHistory(10.0, false);
+        assertEquals(2, ba.getHistory().size());
+        val = ba.getHistory().get(1);
+        assertEquals(-10.0, val);
+
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.0, true));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.001, true));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(-0.001, true));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.00005, true));
+
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.0, false));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.001, false));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(-0.001, false));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.00005, false));
+
+
+    }
+
+    @Test
     void historyTest() throws AccountFrozenException{
         BankAccount ba = new CheckingAccount("0000000000", 1000);
 
@@ -150,7 +178,7 @@ class BankAccountTests {
         assertEquals(10, ba.getHistory().get(0).doubleValue());
 
         ba.deposit(20);
-        assertEquals(1, ba.getHistory().size());
+        assertEquals(2, ba.getHistory().size());
         assertEquals(10, ba.getHistory().get(0).doubleValue());
         assertEquals(20, ba.getHistory().get(1).doubleValue());
 

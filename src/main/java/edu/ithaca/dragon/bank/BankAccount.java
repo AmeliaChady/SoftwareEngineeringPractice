@@ -1,12 +1,13 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class BankAccount {
 
     protected String accountID;
     protected double balance;
-    protected List<String> history;
+    protected List<Double> history;
 
     protected boolean accountFrozen;
 
@@ -22,7 +23,15 @@ public abstract class BankAccount {
         if (isAccountFrozen()){
             throw new AccountFrozenException("Account is frozen");
         }
-    };
+        if(!Utilities.isAmountValid(amount)){
+            throw new IllegalArgumentException("ERROR: invalid amount");
+        }
+        if(amount > balance){
+            throw new InsufficientFundsException("ERROR: You do not have enough funds to withdraw that amount.");
+        }
+        balance -= amount;
+        updateHistory(amount, false);
+    }
 
     /**
      * Deposits money into the account
@@ -35,6 +44,11 @@ public abstract class BankAccount {
         if(isAccountFrozen()){
             throw new AccountFrozenException("Account is frozen");
         }
+        if(!Utilities.isAmountValid(amount)){
+            throw new IllegalArgumentException("ERROR: invalid amount");
+        }
+        balance += amount;
+        updateHistory(amount, true);
     };
 
     /**
@@ -46,12 +60,32 @@ public abstract class BankAccount {
      * @throws AccountFrozenException if either account are frozen
      */
     public void transfer(BankAccount transferTo, double amount) throws InsufficientFundsException, AccountFrozenException{
+        //a bank account must not be null in order to check if it's frozen or not (see below comment)
+        if (transferTo == null){
+            throw new IllegalArgumentException("ERROR: Must pass bank account");
+        }
+
         // Please Keep First - Account Freeze has priority
         if(isAccountFrozen()){
             throw new AccountFrozenException("Cannot transfer from frozen account");
         }else if(transferTo.isAccountFrozen()){
             throw new AccountFrozenException("Cannot transfer to frozen account");
         }
+
+        if(balance < amount){
+            throw new InsufficientFundsException("ERROR: Not enough funds");
+        }
+        if (!Utilities.isAmountValid(amount)){
+            throw new IllegalArgumentException("ERROR: Invalid amount");
+        }
+        if (transferTo == this){
+            throw new IllegalArgumentException("ERROR: Must pass two bank accounts");
+        }
+        balance -= amount;
+        updateHistory(amount, false);
+
+        transferTo.balance += amount;
+        transferTo.updateHistory(amount, true);
     };
 
     /**
@@ -70,7 +104,8 @@ public abstract class BankAccount {
      * @return A read-only version of getHistory
      */
     public List<Double> getHistory(){
-        return null;
+        List<Double> historyReturn = Collections.unmodifiableList(history);
+        return historyReturn;
     };
 
     /**
@@ -94,5 +129,17 @@ public abstract class BankAccount {
      */
     public boolean isAccountFrozen(){
         return accountFrozen;
+    }
+
+    public void updateHistory(Double amount, boolean isDeposit) { //true means deposit, false means withdraw
+        if(!Utilities.isAmountValid(amount)){
+            throw new IllegalArgumentException("ERROR: invalid amount");
+        }
+        if (isDeposit){
+            history.add(amount);
+        }
+        else{
+            history.add(-1 * amount);
+        }
     }
 }
