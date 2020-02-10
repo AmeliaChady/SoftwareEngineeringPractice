@@ -140,17 +140,26 @@ public class AccountLibraryTests {
     @Test
     public void createCheckingAccountTest() {
         AccountLibrary al = new AccountLibrary();
-
-        BankAccount ba1 = new CheckingAccount("0000000000", 100);
+        al.createCheckingAccount("0000000000", 100);
         assertNotNull(al.accounts.get(0000000000));
     }
 
     @Test
     public void createSavingsAccountTest() {
+        AccountLibrary al = new AccountLibrary();
+        al.createSavingsAccount("0000000000", 100, 0.1);
+        assertNotNull(al.accounts.get(0000000000));
     }
 
     @Test
     public void closeAccountTest() {
+        AccountLibrary al = new AccountLibrary();
+        BankAccount ba1 = new CheckingAccount("0000000000", 100);
+        BankAccount ba2 = new SavingsAccount("0000000001", 100, 0.1);
+        al.closeAccount("0000000000");
+        al.closeAccount("0000000001");
+        assertNull(al.accounts.get("0000000000"));
+        assertNull(al.accounts.get("0000000001"));
     }
 
 

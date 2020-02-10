@@ -26,13 +26,11 @@ public class AccountLibrary {
         CheckingAccount ca = new CheckingAccount(accountID, startingBalance);
     }
 
-    public void closeAccount(String accountID, String accountType){
-        if (accountType != "savings" || accountType != "checking"){
-            throw new IllegalArgumentException("Account must be either 'checking' or 'savings'");
-        }
-        if(!isAccountIDValid(accountID)){
-            throw new IllegalArgumentException("Account ID "+accountID+" is Invalid!");
-        }
+    public void createSavingsAccount(String accountID, double startingBalance, double interest){
+        SavingsAccount sa = new SavingsAccount(accountID, startingBalance, interest);
+    }
+
+    public void closeAccount(String accountID){
 
     }
 
