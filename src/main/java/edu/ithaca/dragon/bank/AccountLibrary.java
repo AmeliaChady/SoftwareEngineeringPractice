@@ -1,16 +1,15 @@
 package edu.ithaca.dragon.bank;
 
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class AccountLibrary {
     protected Map<String, BankAccount> accounts;
+    protected Map<String, Integer> lastCheckedHistory;
 
     public AccountLibrary(){
         accounts = new TreeMap<String, BankAccount>(); // Should look into best one to use!
+        lastCheckedHistory = new TreeMap<String, Integer>();
     }
 
 
@@ -42,7 +41,42 @@ public class AccountLibrary {
             double maxSingleWithdrawl,
             int numberOfWithdrawls,
             double maxTotalWithdrawls){
-        return null;
+
+        Iterator<String> ids = accounts.keySet().iterator();
+        List<String> strings = new LinkedList<>();
+
+        while (ids.hasNext()){
+            String id = ids.next();
+            BankAccount ba = accounts.get(id);
+            Integer index = lastCheckedHistory.get(id);
+            List<Double> history = ba.getHistory();
+            boolean inTrouble = false;
+
+            if(index == null){
+                index = -1;
+            }
+
+            if(history.size() + 1 - index > numberOfWithdrawls){
+                inTrouble = true;
+            }else{
+                double total = 0;
+                for(int i = index + 1; i < history.size(); i++){
+                    double amount = history.get(i);
+                    total += amount;
+                    if(Math.abs(amount) > maxSingleWithdrawl){
+                        inTrouble = true;
+                    }
+                }
+                if(Math.abs(total) > maxTotalWithdrawls){
+                    inTrouble = true;
+                }
+            }
+
+            if(inTrouble){
+                strings.add(id);
+            }
+        }
+        return strings;
     }
 
     /**
