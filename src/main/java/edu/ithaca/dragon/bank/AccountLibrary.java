@@ -1,7 +1,9 @@
 package edu.ithaca.dragon.bank;
 
-
 import java.util.*;
+
+import static edu.ithaca.dragon.bank.Utilities.isAccountIDValid;
+import static edu.ithaca.dragon.bank.Utilities.isAmountValid;
 
 public class AccountLibrary {
     protected Map<String, BankAccount> accounts;
@@ -12,6 +14,26 @@ public class AccountLibrary {
         lastCheckedHistory = new TreeMap<String, Integer>();
     }
 
+
+    public double getBalance(String accountID){
+        BankAccount account = accounts.get(accountID);
+        double balance = account.getBalance();
+        return balance;
+    }
+
+    public void createCheckingAccount(String accountID, double startingBalance){
+        CheckingAccount ca = new CheckingAccount(accountID, startingBalance);
+    }
+
+    public void closeAccount(String accountID, String accountType){
+        if (accountType != "savings" || accountType != "checking"){
+            throw new IllegalArgumentException("Account must be either 'checking' or 'savings'");
+        }
+        if(!isAccountIDValid(accountID)){
+            throw new IllegalArgumentException("Account ID "+accountID+" is Invalid!");
+        }
+
+    }
 
     /**
      * Totals the balances across all accounts.
@@ -111,3 +133,5 @@ public class AccountLibrary {
         }
     }
 }
+
+//when i delete the pair in the map delete
