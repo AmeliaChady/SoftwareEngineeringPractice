@@ -300,6 +300,9 @@ class BankAccountTests {
         assertEquals(50, ca.getBalance());
     }
 
+
+
+
     // Savings Account Tests
     // Only testing constructor, overridden methods, & own methods
     @Test
@@ -315,13 +318,13 @@ class BankAccountTests {
 
         // Correct
         SavingsAccount numberAccount = new SavingsAccount("0000000000", .01, 0);
-        assertEquals("000000000", numberAccount.getAccountID()); // Boundary
+        assertEquals("0000000000", numberAccount.getAccountID()); // Boundary
         assertEquals(.01, numberAccount.getBalance()); // Boundary
         assertEquals(0, numberAccount.getInterest()); // Boundary
         numberAccount = new SavingsAccount("0123456789", 1, .0001);
         assertEquals("0123456789", numberAccount.getAccountID()); // Boundary
         assertEquals(1, numberAccount.getBalance()); // Equivalence
-        assertEquals(.102, numberAccount.getInterest()); // Boundary
+        assertEquals(.0001, numberAccount.getInterest()); // Boundary
         numberAccount = new SavingsAccount("0102030405", 1, .102);
         assertEquals("0102030405", numberAccount.getAccountID()); // Equivalence
         assertEquals(.102, numberAccount.getInterest());

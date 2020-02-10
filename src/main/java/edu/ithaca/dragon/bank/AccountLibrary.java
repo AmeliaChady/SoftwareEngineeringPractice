@@ -3,9 +3,14 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class AccountLibrary {
-    private Map<String, BankAccount> accounts;
+    protected Map<String, BankAccount> accounts;
+
+    public AccountLibrary(){
+        accounts = new TreeMap<String, BankAccount>(); // Should look into best one to use!
+    }
 
 
     /**
@@ -19,9 +24,9 @@ public class AccountLibrary {
     /**
      * Iterates through the library and finds all accounts that have one or more of the following:
      * n : transactions since last time this function was called
-     * if any n withdraws more than x
+     * if any |n| withdraws more than x
      * if length of n > y
-     * if total of n > z
+     * if |total amount of n| > z
      * @param maxSingleWithdrawl x
      * @param maxTotalWithdrawls y
      * @param numberOfWithdrawls z
