@@ -17,7 +17,7 @@ public class AccountLibrary {
         return balance;
     }
 
-    public void createAccount(String accountID, double startingBalance, String accountType){
+    public void createCheckingAccount(String accountID, String password, double startingBalance, String accountType){
         if (accountType != "savings" || accountType != "checking"){
             throw new IllegalArgumentException("Account must be either 'checking' or 'savings'");
         }
@@ -42,3 +42,5 @@ public class AccountLibrary {
 
     }
 }
+
+//when i delete the pair in the map delete
