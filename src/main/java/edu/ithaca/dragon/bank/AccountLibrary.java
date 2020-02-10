@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public class AccountLibrary {
-    private Map<String, BankAccount> accounts;
+    protected Map<String, BankAccount> accounts;
 
 
     /**
@@ -19,9 +19,9 @@ public class AccountLibrary {
     /**
      * Iterates through the library and finds all accounts that have one or more of the following:
      * n : transactions since last time this function was called
-     * if any n withdraws more than x
+     * if any |n| withdraws more than x
      * if length of n > y
-     * if total amount of n > z
+     * if |total amount of n| > z
      * @param maxSingleWithdrawl x
      * @param maxTotalWithdrawls y
      * @param numberOfWithdrawls z
