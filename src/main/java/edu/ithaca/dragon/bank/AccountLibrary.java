@@ -3,13 +3,15 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class AccountLibrary {
     protected Map<String, BankAccount> accounts;
 
     public AccountLibrary(){
-
+        accounts = new TreeMap<String, BankAccount>(); // Should look into best one to use!
     }
+
 
     /**
      * Totals the balances across all accounts.
