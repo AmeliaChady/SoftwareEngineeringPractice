@@ -11,6 +11,10 @@ public class SystemTests {
 
 
     //---------------Amelia---------------//
+    @Test
+    public void suspiciousDayTest(){
+
+    }
 
     //---------------Jolie---------------//
 }
