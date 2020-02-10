@@ -17,7 +17,7 @@ public class AccountLibrary {
      * Totals the balances across all accounts.
      * @return the total
      */
-    public double CalcTotalAssets(){
+    public double calcTotalAssets(){
         Iterator<BankAccount> accountIterator = accounts.values().iterator();
         double total = 0;
         while (accountIterator.hasNext()){

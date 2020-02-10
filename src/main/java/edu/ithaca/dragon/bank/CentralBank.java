@@ -3,6 +3,11 @@ package edu.ithaca.dragon.bank;
 import java.util.Collection;
 
 public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
+    AccountLibrary al;
+
+    public CentralBank(){
+        al = new AccountLibrary();
+    }
 
     //----------------- BasicAPI methods -------------------------//
 
@@ -45,25 +50,25 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
     //------------------ AdminAPI methods -------------------------//
 
     public double calcTotalAssets() {
-        return 0;
+        return al.calcTotalAssets();
     }
 
     public Collection<String> findAcctIdsWithSuspiciousActivity() {
-        return null;
+        return al.findSuspiciousAccounts(1000, 10, 5000);
     }
 
     public void freezeAccount(String acctId) {
-
+        al.freezeAccount(acctId);
     }
 
     public void unfreezeAcct(String acctId) {
-
+        al.unfreezeAccount(acctId);
     }
 
     //----------------- DaemonAPI methods -------------------------//
 
     public void accountUpdate(){
-
+        al.updateAccounts();
     }
 
 }
