@@ -286,12 +286,12 @@ class BankAccountTests {
         // Nothing should happen.
         CheckingAccount ca = new CheckingAccount("0000000000", .01); // Boundary
         ca.update();
-        assertEquals("000000000", ca.getAccountID());
+        assertEquals("0000000000", ca.getAccountID());
         assertEquals(.01, ca.getBalance());
 
-        ca = new CheckingAccount("012345679", .01); // Boundary
+        ca = new CheckingAccount("0123456789", .01); // Boundary
         ca.update();
-        assertEquals("012345679", ca.getAccountID());
+        assertEquals("0123456789", ca.getAccountID());
         assertEquals(.01, ca.getBalance());
 
         ca = new CheckingAccount("0001112223", 50); // Equivalence
