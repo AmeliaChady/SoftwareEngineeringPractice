@@ -7,6 +7,9 @@ import java.util.Map;
 public class AccountLibrary {
     protected Map<String, BankAccount> accounts;
 
+    public AccountLibrary(){
+
+    }
 
     /**
      * Totals the balances across all accounts.
