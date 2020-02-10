@@ -25,7 +25,7 @@ public class SavingsAccount extends BankAccount{
 
     public void update(){
         // Does Savings Account Interest
-
+        balance += balance * interest;
 
     }
 
