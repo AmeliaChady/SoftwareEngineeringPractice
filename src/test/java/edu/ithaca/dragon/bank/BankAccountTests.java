@@ -138,6 +138,34 @@ class BankAccountTests {
     }
 
     @Test
+    void updateHistoryTest(){
+        BankAccount ba =  new CheckingAccount("0000000000", 100);
+        assertEquals(0, ba.getHistory().size());
+
+        ba.updateHistory(10.0, true);
+        assertEquals(1, ba.getHistory().size());
+        double val = ba.getHistory().get(0);
+        assertEquals(10.0, val);
+
+        ba.updateHistory(10.0, false);
+        assertEquals(2, ba.getHistory().size());
+        val = ba.getHistory().get(1);
+        assertEquals(-10.0, val);
+
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.0, true));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.001, true));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(-0.001, true));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.00005, true));
+
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.0, false));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.001, false));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(-0.001, false));
+        assertThrows(IllegalArgumentException.class, () -> ba.updateHistory(0.00005, false));
+
+
+    }
+
+    @Test
     void historyTest() throws AccountFrozenException{
         BankAccount ba = new CheckingAccount("0000000000", 1000);
 
@@ -150,7 +178,7 @@ class BankAccountTests {
         assertEquals(10, ba.getHistory().get(0).doubleValue());
 
         ba.deposit(20);
-        assertEquals(1, ba.getHistory().size());
+        assertEquals(2, ba.getHistory().size());
         assertEquals(10, ba.getHistory().get(0).doubleValue());
         assertEquals(20, ba.getHistory().get(1).doubleValue());
 
@@ -258,12 +286,12 @@ class BankAccountTests {
         // Nothing should happen.
         CheckingAccount ca = new CheckingAccount("0000000000", .01); // Boundary
         ca.update();
-        assertEquals("000000000", ca.getAccountID());
+        assertEquals("0000000000", ca.getAccountID());
         assertEquals(.01, ca.getBalance());
 
-        ca = new CheckingAccount("012345679", .01); // Boundary
+        ca = new CheckingAccount("0123456789", .01); // Boundary
         ca.update();
-        assertEquals("012345679", ca.getAccountID());
+        assertEquals("0123456789", ca.getAccountID());
         assertEquals(.01, ca.getBalance());
 
         ca = new CheckingAccount("0001112223", 50); // Equivalence
@@ -271,6 +299,9 @@ class BankAccountTests {
         assertEquals("0001112223", ca.getAccountID());
         assertEquals(50, ca.getBalance());
     }
+
+
+
 
     // Savings Account Tests
     // Only testing constructor, overridden methods, & own methods
@@ -287,13 +318,13 @@ class BankAccountTests {
 
         // Correct
         SavingsAccount numberAccount = new SavingsAccount("0000000000", .01, 0);
-        assertEquals("000000000", numberAccount.getAccountID()); // Boundary
+        assertEquals("0000000000", numberAccount.getAccountID()); // Boundary
         assertEquals(.01, numberAccount.getBalance()); // Boundary
         assertEquals(0, numberAccount.getInterest()); // Boundary
         numberAccount = new SavingsAccount("0123456789", 1, .0001);
         assertEquals("0123456789", numberAccount.getAccountID()); // Boundary
         assertEquals(1, numberAccount.getBalance()); // Equivalence
-        assertEquals(.102, numberAccount.getInterest()); // Boundary
+        assertEquals(.0001, numberAccount.getInterest()); // Boundary
         numberAccount = new SavingsAccount("0102030405", 1, .102);
         assertEquals("0102030405", numberAccount.getAccountID()); // Equivalence
         assertEquals(.102, numberAccount.getInterest());

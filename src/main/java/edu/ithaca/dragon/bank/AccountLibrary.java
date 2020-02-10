@@ -1,14 +1,19 @@
 package edu.ithaca.dragon.bank;
 
-
 import java.util.LinkedList;
+import java.util.Collection;
 import java.util.Map;
+import java.util.TreeMap;
 
 import static edu.ithaca.dragon.bank.Utilities.isAccountIDValid;
 import static edu.ithaca.dragon.bank.Utilities.isAmountValid;
 
 public class AccountLibrary {
-    private Map<String, BankAccount> accounts;
+    protected Map<String, BankAccount> accounts;
+
+    public AccountLibrary(){
+        accounts = new TreeMap<String, BankAccount>(); // Should look into best one to use!
+    }
 
 
     public double getBalance(String accountID){
@@ -17,19 +22,8 @@ public class AccountLibrary {
         return balance;
     }
 
-    public void createCheckingAccount(String accountID, String password, double startingBalance, String accountType){
-        if (accountType != "savings" || accountType != "checking"){
-            throw new IllegalArgumentException("Account must be either 'checking' or 'savings'");
-        }
-        if(!isAccountIDValid(accountID)){
-            throw new IllegalArgumentException("Account ID "+accountID+" is Invalid!");
-        }
-        if(!isAmountValid(startingBalance)){
-            throw new IllegalArgumentException("Balance: " + startingBalance + " is invalid, cannot create account");
-        }
-        this.accountID = accountID;
-        this.balance = startingBalance;
-        this.history = new LinkedList<>();
+    public void createCheckingAccount(String accountID, double startingBalance){
+        CheckingAccount ca = new CheckingAccount(accountID, startingBalance);
     }
 
     public void closeAccount(String accountID, String accountType){
@@ -41,6 +35,52 @@ public class AccountLibrary {
         }
 
     }
+
+    /**
+     * Totals the balances across all accounts.
+     * @return the total
+     */
+    public double CalcTotalAssets(){
+        return -1;
+    }
+
+    /**
+     * Iterates through the library and finds all accounts that have one or more of the following:
+     * n : transactions since last time this function was called
+     * if any |n| withdraws more than x
+     * if length of n > y
+     * if |total amount of n| > z
+     * @param maxSingleWithdrawl x
+     * @param maxTotalWithdrawls y
+     * @param numberOfWithdrawls z
+     * @return account ids of failed accounts
+     */
+    public Collection<String> findSuspiciousAccounts(
+            double maxSingleWithdrawl,
+            int numberOfWithdrawls,
+            double maxTotalWithdrawls){
+        return null;
+    }
+
+    /**
+     * Freezes account
+     * @param id account id to freeze
+     */
+    public void freezeAccount(String id){
+
+    }
+
+    /**
+     * unfreezes account
+     * @param id account id to unfreeze
+     */
+    public void unfreezeAccount(String id){}
+
+    /**
+     * Calls every accounts update function
+     */
+    public void updateAccounts(){}
+>>>>>>> master
 }
 
 //when i delete the pair in the map delete
