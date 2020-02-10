@@ -21,7 +21,7 @@ public class AccountLibrary {
      * n : transactions since last time this function was called
      * if any n withdraws more than x
      * if length of n > y
-     * if total of n > z
+     * if total amount of n > z
      * @param maxSingleWithdrawl x
      * @param maxTotalWithdrawls y
      * @param numberOfWithdrawls z
