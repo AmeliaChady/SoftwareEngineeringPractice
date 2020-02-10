@@ -31,7 +31,8 @@ public class AccountLibrary {
     }
 
     public void closeAccount(String accountID){
-
+        accounts.remove(accountID);
+        //lastCheckedHistory.remove(accountID);
     }
 
     /**
@@ -78,7 +79,6 @@ public class AccountLibrary {
      * Calls every accounts update function
      */
     public void updateAccounts(){}
->>>>>>> master
+
 }
 
-//when i delete the pair in the map delete
