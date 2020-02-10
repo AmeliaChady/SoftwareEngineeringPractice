@@ -1,9 +1,12 @@
 package edu.ithaca.dragon.bank;
 
-
+import java.util.LinkedList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+
+import static edu.ithaca.dragon.bank.Utilities.isAccountIDValid;
+import static edu.ithaca.dragon.bank.Utilities.isAmountValid;
 
 public class AccountLibrary {
     protected Map<String, BankAccount> accounts;
@@ -12,6 +15,26 @@ public class AccountLibrary {
         accounts = new TreeMap<String, BankAccount>(); // Should look into best one to use!
     }
 
+
+    public double getBalance(String accountID){
+        BankAccount account = accounts.get(accountID);
+        double balance = account.getBalance();
+        return balance;
+    }
+
+    public void createCheckingAccount(String accountID, double startingBalance){
+        CheckingAccount ca = new CheckingAccount(accountID, startingBalance);
+    }
+
+    public void closeAccount(String accountID, String accountType){
+        if (accountType != "savings" || accountType != "checking"){
+            throw new IllegalArgumentException("Account must be either 'checking' or 'savings'");
+        }
+        if(!isAccountIDValid(accountID)){
+            throw new IllegalArgumentException("Account ID "+accountID+" is Invalid!");
+        }
+
+    }
 
     /**
      * Totals the balances across all accounts.
@@ -57,4 +80,7 @@ public class AccountLibrary {
      * Calls every accounts update function
      */
     public void updateAccounts(){}
+>>>>>>> master
 }
+
+//when i delete the pair in the map delete
