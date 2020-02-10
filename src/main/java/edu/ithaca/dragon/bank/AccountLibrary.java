@@ -2,6 +2,7 @@ package edu.ithaca.dragon.bank;
 
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,7 +19,12 @@ public class AccountLibrary {
      * @return the total
      */
     public double CalcTotalAssets(){
-        return -1;
+        Iterator<BankAccount> accountIterator = accounts.values().iterator();
+        double total = 0;
+        while (accountIterator.hasNext()){
+            total += accountIterator.next().getBalance();
+        }
+        return total;
     }
 
     /**
@@ -44,17 +50,30 @@ public class AccountLibrary {
      * @param id account id to freeze
      */
     public void freezeAccount(String id){
-
+        BankAccount ba = accounts.get(id);
+        if(ba != null){
+            ba.freezeAccount();
+        }
     }
 
     /**
      * unfreezes account
      * @param id account id to unfreeze
      */
-    public void unfreezeAccount(String id){}
+    public void unfreezeAccount(String id){
+        BankAccount ba = accounts.get(id);
+        if(ba != null){
+            ba.unfreezeAccount();
+        }
+    }
 
     /**
      * Calls every accounts update function
      */
-    public void updateAccounts(){}
+    public void updateAccounts(){
+        Iterator<BankAccount> accountIterator = accounts.values().iterator();
+        while (accountIterator.hasNext()){
+            accountIterator.next().update();
+        }
+    }
 }
