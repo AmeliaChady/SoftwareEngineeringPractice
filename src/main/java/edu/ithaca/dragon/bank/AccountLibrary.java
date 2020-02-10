@@ -80,7 +80,6 @@ public class AccountLibrary {
      * Calls every accounts update function
      */
     public void updateAccounts(){}
->>>>>>> master
 }
 
 //when i delete the pair in the map delete
