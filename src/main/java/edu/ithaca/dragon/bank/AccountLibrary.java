@@ -14,25 +14,44 @@ public class AccountLibrary {
         lastCheckedHistory = new TreeMap<String, Integer>();
     }
 
-
+    /**
+     * @param accountID
+     * @return balance of account associated with accountID
+     */
     public double getBalance(String accountID){
         BankAccount account = accounts.get(accountID);
         double balance = account.getBalance();
         return balance;
     }
 
+    /**
+     * Creates a checking account with accountID and starting balance given and adds it to account list
+     * @param accountID
+     * @param startingBalance
+     */
     public void createCheckingAccount(String accountID, double startingBalance){
         CheckingAccount ca = new CheckingAccount(accountID, startingBalance);
+        accounts.put(ca.getAccountID(), ca);
     }
 
-    public void closeAccount(String accountID, String accountType){
-        if (accountType != "savings" || accountType != "checking"){
-            throw new IllegalArgumentException("Account must be either 'checking' or 'savings'");
-        }
-        if(!isAccountIDValid(accountID)){
-            throw new IllegalArgumentException("Account ID "+accountID+" is Invalid!");
-        }
+    /**
+     * Creates a savings account with accountID, starting balance, and interest rate given and adds it to account list
+     * @param accountID
+     * @param startingBalance
+     * @param interest
+     */
+    public void createSavingsAccount(String accountID, double startingBalance, double interest){
+        SavingsAccount sa = new SavingsAccount(accountID, startingBalance, interest);
+        accounts.put(sa.getAccountID(), sa);
+    }
 
+    /**
+     * Deletes account associated with accountID given from account list
+     * @param accountID
+     */
+    public void closeAccount(String accountID){
+        accounts.remove(accountID);
+        //lastCheckedHistory.remove(accountID);
     }
 
     /**
@@ -154,6 +173,6 @@ public class AccountLibrary {
         BankAccount ba = accounts.get(acctId);
         return ba.getHistory();
     }
+
 }
 
-//when i delete the pair in the map delete

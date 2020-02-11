@@ -18,9 +18,9 @@ public class SystemTests {
 
         //account creation
         CentralBank centralBank = new CentralBank();
-        centralBank.createAccount("1234567890", 190);
-        centralBank.createAccount("4567890123", 230.60);
-        centralBank.createAccount("7890123456", 509.23);
+        centralBank.createCheckingAccount("1234567890", 190);
+        centralBank.createCheckingAccount("4567890123", 230.60);
+        centralBank.createCheckingAccount("7890123456", 509.23);
 
         //money transfer
         centralBank.deposit("1234567890", 10);
@@ -31,10 +31,10 @@ public class SystemTests {
         assertEquals(200, centralBank.checkBalance("1234567890"));
         assertEquals(200, centralBank.checkBalance("4567890123"));
         assertEquals(500, centralBank.checkBalance("7890123456"));
-        assertEquals(1, centralBank.transactionHistory("1234567890"));
-        assertEquals(1, centralBank.transactionHistory("4567890123"));
-        assertEquals(2, centralBank.transactionHistory("7890123456"));
-        assertEquals(800, centralBank.calcTotalAssets());
+        assertEquals(1, centralBank.transactionHistory("1234567890").size());
+        assertEquals(1, centralBank.transactionHistory("4567890123").size());
+        assertEquals(2, centralBank.transactionHistory("7890123456").size());
+        assertEquals(900, centralBank.calcTotalAssets());
 
         //money transfer
         centralBank.withdraw("1234567890", 50);
@@ -83,10 +83,10 @@ public class SystemTests {
 
         CentralBank cb = new CentralBank();
         // Pretend Beforehand
-        cb.createAccount("4528177224", 171);
-        cb.createAccount("5712345456", 172);
-        cb.createAccount("2222222222", 220);
-        cb.createAccount("7824247312", 345);
+        cb.createCheckingAccount("4528177224", 171);
+        cb.createCheckingAccount("5712345456", 172);
+        cb.createCheckingAccount("2222222222", 220);
+        cb.createCheckingAccount("7824247312", 345);
 
         BasicAPI atm = cb;
         AdvancedAPI teller = cb;
@@ -95,7 +95,7 @@ public class SystemTests {
 
         // Day 1
 
-        teller.createAccount("9182355567", 210);
+        teller.createCheckingAccount("9182355567", 210);
         teller.deposit("2222222222", 40);
         atm.transfer("9182355567", "4528177224", 10);
         atm.withdraw("7824247312", 100);

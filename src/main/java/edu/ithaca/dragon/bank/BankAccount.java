@@ -30,6 +30,7 @@ public abstract class BankAccount {
             throw new InsufficientFundsException("ERROR: You do not have enough funds to withdraw that amount.");
         }
         balance -= amount;
+        balance = Math.round(balance *100.0)/100.0;
         updateHistory(amount, false);
     }
 
@@ -48,6 +49,7 @@ public abstract class BankAccount {
             throw new IllegalArgumentException("ERROR: invalid amount");
         }
         balance += amount;
+        balance = Math.round(balance *100.0)/100.0;
         updateHistory(amount, true);
     };
 
@@ -82,9 +84,11 @@ public abstract class BankAccount {
             throw new IllegalArgumentException("ERROR: Must pass two bank accounts");
         }
         balance -= amount;
+        balance = Math.round(balance *100.0)/100.0;
         updateHistory(amount, false);
 
         transferTo.balance += amount;
+        transferTo.balance = Math.round(transferTo.balance *100.0)/100.0;
         transferTo.updateHistory(amount, true);
     };
 
