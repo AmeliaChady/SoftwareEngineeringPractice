@@ -110,6 +110,10 @@ public class SystemTests {
         teller.deposit("2222222222", 10);
         atm.transfer("9182355567", "4528177224", 10);
         atm.transfer("9182355567", "4528177224", 10);
+        atm.transfer("9182355567", "4528177224", 10);
+        atm.transfer("9182355567", "4528177224", 10);
+        atm.transfer("9182355567", "4528177224", 10);
+        atm.transfer("9182355567", "4528177224", 10);
 
         daemon.accountUpdate();
         Collection<String> day1SuspiciousAccounts = admin.findAcctIdsWithSuspiciousActivity();
@@ -119,11 +123,12 @@ public class SystemTests {
 
         Collection<String> day1CorrectSuspiciousAccounts = new LinkedList<String>();
         day1CorrectSuspiciousAccounts.add("4528177224");
-        assertEquals(231, teller.checkBalance("4528177224"));
+        day1CorrectSuspiciousAccounts.add("9182355567");
+        assertEquals(271, teller.checkBalance("4528177224"));
         assertEquals(252, teller.checkBalance("5712345456"));
         assertEquals(290, teller.checkBalance("2222222222"));
         assertEquals(45, teller.checkBalance("7824247312"));
-        assertEquals(150, teller.checkBalance("9182355567"));
+        assertEquals(110, teller.checkBalance("9182355567"));
         assertEquals(day1CorrectSuspiciousAccounts, day1SuspiciousAccounts);
 
         // Day 2
@@ -140,12 +145,12 @@ public class SystemTests {
         // Day 2 End Asserts
 
         Collection<String> day2CorrectSuspiciousAccounts = new LinkedList<String>();
-        day2CorrectSuspiciousAccounts.add("4528177224");
-        assertEquals(231, teller.checkBalance("4528177224"));
+        day2CorrectSuspiciousAccounts.add("9182355567");
+        assertEquals(271, teller.checkBalance("4528177224"));
         assertEquals(242, teller.checkBalance("5712345456"));
         assertEquals(280, teller.checkBalance("2222222222"));
         assertEquals(45, teller.checkBalance("7824247312"));
-        assertEquals(10150, teller.checkBalance("9182355567"));
+        assertEquals(10110, teller.checkBalance("9182355567"));
         assertEquals(day2CorrectSuspiciousAccounts, day2SuspiciousAccounts);
 
 
