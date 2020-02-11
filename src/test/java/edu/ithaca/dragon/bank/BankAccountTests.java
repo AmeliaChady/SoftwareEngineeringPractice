@@ -22,6 +22,14 @@ class BankAccountTests {
         assertEquals(0, bankAccount2.getBalance()); // Boundary (not feasible by constructor to get 0 value)
     }
 
+    void checkCredentialTest() {
+        BankAccount bankAccount = new CheckingAccount("1234567890", 100, "abcde");
+        assertEquals("abcde", bankAccount.getPassword());
+
+        BankAccount bankAccount1 = new SavingsAccount("0987654321", 100,"12345", 0.1);
+        assertEquals("12345", bankAccount1.getPassword());
+    }
+
     @Test
     void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
         // Basic Testing
