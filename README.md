@@ -7,6 +7,6 @@ Conceptual Class Diagram: https://drive.google.com/file/d/1-8vrkotPWfbkepJKL33Nb
 ## Sequence Diagrams
 Amelia's: https://drive.google.com/file/d/1vxQPW2L9yldBYlDCEq0Gr0x24UdWCJny/view?usp=sharing
 
-Kerry Anne's: **!!!**
+Kerry Anne's: https://drive.google.com/file/d/1NxUagKy9gujcRqrQnJN-cxKxp9fTZP7o/view?usp=sharing
 
 Jolie's: **!!!**
