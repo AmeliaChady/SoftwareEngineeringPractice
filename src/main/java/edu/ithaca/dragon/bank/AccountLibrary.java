@@ -97,6 +97,7 @@ public class AccountLibrary {
             if(inTrouble){
                 strings.add(id);
             }
+            lastCheckedHistory.put(id, history.size()-1);
         }
         return strings;
     }
