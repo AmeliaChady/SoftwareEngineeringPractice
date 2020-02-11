@@ -18,57 +18,57 @@ public class SystemTests {
 
         //account creation
         CentralBank centralBank = new CentralBank();
-        centralBank.createAccount("123", 190);
-        centralBank.createAccount("456", 230.60);
-        centralBank.createAccount("789", 509.23);
+        centralBank.createAccount("1234567890", 190);
+        centralBank.createAccount("4567890123", 230.60);
+        centralBank.createAccount("7890123456", 509.23);
 
         //money transfer
-        centralBank.deposit("123", 10);
-        centralBank.transfer("456", "789", 30.60);
-        centralBank.withdraw("789", 39.83);
+        centralBank.deposit("1234567890", 10);
+        centralBank.transfer("4567890123", "7890123456", 30.60);
+        centralBank.withdraw("7890123456", 39.83);
 
         //assertions
-        assertEquals(200, centralBank.checkBalance("123"));
-        assertEquals(200, centralBank.checkBalance("456"));
-        assertEquals(500, centralBank.checkBalance("789"));
-        assertEquals(1, centralBank.transactionHistory("123"));
-        assertEquals(1, centralBank.transactionHistory("456"));
-        assertEquals(2, centralBank.transactionHistory("789"));
+        assertEquals(200, centralBank.checkBalance("1234567890"));
+        assertEquals(200, centralBank.checkBalance("4567890123"));
+        assertEquals(500, centralBank.checkBalance("7890123456"));
+        assertEquals(1, centralBank.transactionHistory("1234567890"));
+        assertEquals(1, centralBank.transactionHistory("4567890123"));
+        assertEquals(2, centralBank.transactionHistory("7890123456"));
         assertEquals(800, centralBank.calcTotalAssets());
 
         //money transfer
-        centralBank.withdraw("123", 50);
-        centralBank.transfer("789", "123", 100);
-        centralBank.deposit("456", 50.99);
+        centralBank.withdraw("1234567890", 50);
+        centralBank.transfer("7890123456", "1234567890", 100);
+        centralBank.deposit("4567890123", 50.99);
 
         //assertions
-        assertEquals(250, centralBank.checkBalance("123"));
-        assertEquals(250.99, centralBank.checkBalance("456"));
-        assertEquals(400, centralBank.checkBalance("789"));
-        assertEquals(3, centralBank.transactionHistory("123").size());
-        assertEquals(2, centralBank.transactionHistory("456").size());
-        assertEquals(3, centralBank.transactionHistory("789").size());
+        assertEquals(250, centralBank.checkBalance("1234567890"));
+        assertEquals(250.99, centralBank.checkBalance("4567890123"));
+        assertEquals(400, centralBank.checkBalance("7890123456"));
+        assertEquals(3, centralBank.transactionHistory("1234567890").size());
+        assertEquals(2, centralBank.transactionHistory("4567890123").size());
+        assertEquals(3, centralBank.transactionHistory("7890123456").size());
         assertEquals(900.99, centralBank.calcTotalAssets());
 
         //freeze account
-        centralBank.freezeAccount("123");
-        assertThrows(AccountFrozenException.class, () -> centralBank.deposit("123", 50));
-        assertEquals(250, centralBank.checkBalance("123"));
-        assertThrows(AccountFrozenException.class, () -> centralBank.withdraw("123", 50));
-        assertEquals(250, centralBank.checkBalance("123"));
-        assertEquals(3, centralBank.transactionHistory("123").size());
+        centralBank.freezeAccount("1234567890");
+        assertThrows(AccountFrozenException.class, () -> centralBank.deposit("1234567890", 50));
+        assertEquals(250, centralBank.checkBalance("1234567890"));
+        assertThrows(AccountFrozenException.class, () -> centralBank.withdraw("1234567890", 50));
+        assertEquals(250, centralBank.checkBalance("1234567890"));
+        assertEquals(3, centralBank.transactionHistory("1234567890").size());
 
         //unfreeze
-        centralBank.unfreezeAcct("123");
-        centralBank.deposit("123", 10);
-        assertEquals(260, centralBank.checkBalance("123"));
-        centralBank.withdraw("123", 10);
-        assertEquals(250, centralBank.checkBalance("123"));
+        centralBank.unfreezeAcct("1234567890");
+        centralBank.deposit("1234567890", 10);
+        assertEquals(260, centralBank.checkBalance("1234567890"));
+        centralBank.withdraw("1234567890", 10);
+        assertEquals(250, centralBank.checkBalance("1234567890"));
 
 
         assertEquals(0, centralBank.findAcctIdsWithSuspiciousActivity().size());
-        centralBank.deposit("123", 100000);
-        centralBank.withdraw("123", 100000);
+        centralBank.deposit("1234567890", 100000);
+        centralBank.withdraw("1234567890", 100000);
         assertEquals(1, centralBank.findAcctIdsWithSuspiciousActivity().size());
 
 
@@ -83,10 +83,10 @@ public class SystemTests {
 
         CentralBank cb = new CentralBank();
         // Pretend Beforehand
-        cb.createAccount("act0", 171);
-        cb.createAccount("act1", 172);
-        cb.createAccount("act2", 220);
-        cb.createAccount("act3", 345);
+        cb.createAccount("4528177224", 171);
+        cb.createAccount("5712345456", 172);
+        cb.createAccount("2222222222", 220);
+        cb.createAccount("7824247312", 345);
 
         BasicAPI atm = cb;
         AdvancedAPI teller = cb;
@@ -95,57 +95,57 @@ public class SystemTests {
 
         // Day 1
 
-        teller.createAccount("act4", 210);
-        teller.deposit("act2", 40);
-        atm.transfer("act4", "act0", 10);
-        atm.withdraw("act3", 100);
-        teller.deposit("act1", 100);
-        teller.transfer("act1", "act2", 20);
-        atm.transfer("act4", "act0", 10);
-        atm.withdraw("act3", 200);
-        teller.checkBalance("act0");
-        atm.transfer("act4", "act0", 10);
+        teller.createAccount("9182355567", 210);
+        teller.deposit("2222222222", 40);
+        atm.transfer("9182355567", "4528177224", 10);
+        atm.withdraw("7824247312", 100);
+        teller.deposit("5712345456", 100);
+        teller.transfer("5712345456", "2222222222", 20);
+        atm.transfer("9182355567", "4528177224", 10);
+        atm.withdraw("7824247312", 200);
+        teller.checkBalance("4528177224");
+        atm.transfer("9182355567", "4528177224", 10);
         admin.calcTotalAssets();
-        atm.transfer("act4", "act0", 10);
-        teller.deposit("act2", 10);
-        atm.transfer("act4", "act0", 10);
-        atm.transfer("act4", "act0", 10);
+        atm.transfer("9182355567", "4528177224", 10);
+        teller.deposit("2222222222", 10);
+        atm.transfer("9182355567", "4528177224", 10);
+        atm.transfer("9182355567", "4528177224", 10);
 
         daemon.accountUpdate();
         Collection<String> day1SuspiciousAccounts = admin.findAcctIdsWithSuspiciousActivity();
-        admin.freezeAccount("act0");
+        admin.freezeAccount("4528177224");
 
         // Day 1 End Asserts
 
         Collection<String> day1CorrectSuspiciousAccounts = new LinkedList<String>();
-        day1CorrectSuspiciousAccounts.add("act0");
-        assertEquals(231, teller.checkBalance("act0"));
-        assertEquals(252, teller.checkBalance("act1"));
-        assertEquals(290, teller.checkBalance("act2"));
-        assertEquals(45, teller.checkBalance("act3"));
-        assertEquals(150, teller.checkBalance("act4"));
+        day1CorrectSuspiciousAccounts.add("4528177224");
+        assertEquals(231, teller.checkBalance("4528177224"));
+        assertEquals(252, teller.checkBalance("5712345456"));
+        assertEquals(290, teller.checkBalance("2222222222"));
+        assertEquals(45, teller.checkBalance("7824247312"));
+        assertEquals(150, teller.checkBalance("9182355567"));
         assertEquals(day1CorrectSuspiciousAccounts, day1SuspiciousAccounts);
 
         // Day 2
-        atm.deposit("act4", 10000);
-        teller.withdraw("act1", 10);
+        atm.deposit("9182355567", 10000);
+        teller.withdraw("5712345456", 10);
         admin.calcTotalAssets();
-        teller.withdraw("act3", 10);
-        atm.transfer("act2", "act3", 10);
+        teller.withdraw("7824247312", 10);
+        atm.transfer("2222222222", "7824247312", 10);
 
         daemon.accountUpdate();
         Collection<String> day2SuspiciousAccounts = admin.findAcctIdsWithSuspiciousActivity();
-        admin.freezeAccount("act4");
+        admin.freezeAccount("9182355567");
 
         // Day 2 End Asserts
 
         Collection<String> day2CorrectSuspiciousAccounts = new LinkedList<String>();
-        day2CorrectSuspiciousAccounts.add("act0");
-        assertEquals(231, teller.checkBalance("act0"));
-        assertEquals(242, teller.checkBalance("act1"));
-        assertEquals(280, teller.checkBalance("act2"));
-        assertEquals(45, teller.checkBalance("act3"));
-        assertEquals(10150, teller.checkBalance("act4"));
+        day2CorrectSuspiciousAccounts.add("4528177224");
+        assertEquals(231, teller.checkBalance("4528177224"));
+        assertEquals(242, teller.checkBalance("5712345456"));
+        assertEquals(280, teller.checkBalance("2222222222"));
+        assertEquals(45, teller.checkBalance("7824247312"));
+        assertEquals(10150, teller.checkBalance("9182355567"));
         assertEquals(day2CorrectSuspiciousAccounts, day2SuspiciousAccounts);
 
 
