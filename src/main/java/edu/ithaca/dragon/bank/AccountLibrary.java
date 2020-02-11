@@ -15,21 +15,39 @@ public class AccountLibrary {
         accounts = new TreeMap<String, BankAccount>(); // Should look into best one to use!
     }
 
-
+    /**
+     * @param accountID
+     * @return balance of account associated with accountID
+     */
     public double getBalance(String accountID){
         BankAccount account = accounts.get(accountID);
         double balance = account.getBalance();
         return balance;
     }
 
+    /**
+     * Creates a checking account with accountID and starting balance given and adds it to account list
+     * @param accountID
+     * @param startingBalance
+     */
     public void createCheckingAccount(String accountID, double startingBalance){
         CheckingAccount ca = new CheckingAccount(accountID, startingBalance);
     }
 
+    /**
+     * Creates a savings account with accountID, starting balance, and interest rate given and adds it to account list
+     * @param accountID
+     * @param startingBalance
+     * @param interest
+     */
     public void createSavingsAccount(String accountID, double startingBalance, double interest){
         SavingsAccount sa = new SavingsAccount(accountID, startingBalance, interest);
     }
 
+    /**
+     * Deletes account associated with accountID given from account list
+     * @param accountID
+     */
     public void closeAccount(String accountID){
         accounts.remove(accountID);
         //lastCheckedHistory.remove(accountID);
