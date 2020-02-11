@@ -2,6 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class AccountLibraryTests {
         ba = new CheckingAccount("0000000002", 300);
         al.accounts.put("0000000002", ba);
 
-        assertEquals(600, al.CalcTotalAssets());
+        assertEquals(600, al.calcTotalAssets());
     }
 
     @Test
@@ -76,13 +77,14 @@ public class AccountLibraryTests {
         ba.deposit(201);
         al.accounts.put("0000000004", ba);
 
-        List<String> suspicious = new LinkedList<>();
+        Collection<String> suspicious = new LinkedList<>();
         suspicious.add("0000000001");
         suspicious.add("0000000002");
         suspicious.add("0000000003");
         suspicious.add("0000000004");
 
-        assertEquals(suspicious, al.findSuspiciousAccounts(1001, 5, 1004));
+        Collection<String> alfind = al.findSuspiciousAccounts(1000, 5, 1004);
+        assertEquals(suspicious, alfind);
 
     }
 
@@ -140,15 +142,21 @@ public class AccountLibraryTests {
     @Test
     public void createCheckingAccountTest() {
         AccountLibrary al = new AccountLibrary();
+
         al.createCheckingAccount("0000000000", 100);
-        assertNotNull(al.accounts.get(0000000000));
+        assertNotNull(al.accounts.get("0000000000"));
+
+        BankAccount ba1 = new CheckingAccount("0000000000", 100);
+        al.accounts.put("0000000000", ba1);
+        assertNotNull(al.accounts.get("0000000000"));
     }
+
 
     @Test
     public void createSavingsAccountTest() {
         AccountLibrary al = new AccountLibrary();
         al.createSavingsAccount("0000000000", 100, 0.1);
-        assertNotNull(al.accounts.get(0000000000));
+        assertNotNull(al.accounts.get("0000000000"));
     }
 
     @Test

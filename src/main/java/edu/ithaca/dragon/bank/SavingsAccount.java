@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.LinkedList;
+
 import static edu.ithaca.dragon.bank.Utilities.*;
 
 public class SavingsAccount extends BankAccount{
@@ -20,6 +22,7 @@ public class SavingsAccount extends BankAccount{
 
         this.accountID = accountid;
         this.balance = startingBalance;
+        this.history = new LinkedList<>();
         this.interest = interest;
     }
 

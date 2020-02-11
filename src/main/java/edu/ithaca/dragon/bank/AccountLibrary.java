@@ -1,18 +1,17 @@
 package edu.ithaca.dragon.bank;
 
-import java.util.LinkedList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static edu.ithaca.dragon.bank.Utilities.isAccountIDValid;
 import static edu.ithaca.dragon.bank.Utilities.isAmountValid;
 
 public class AccountLibrary {
     protected Map<String, BankAccount> accounts;
+    protected Map<String, Integer> lastCheckedHistory;
 
     public AccountLibrary(){
         accounts = new TreeMap<String, BankAccount>(); // Should look into best one to use!
+        lastCheckedHistory = new TreeMap<String, Integer>();
     }
 
     /**
@@ -32,6 +31,7 @@ public class AccountLibrary {
      */
     public void createCheckingAccount(String accountID, double startingBalance){
         CheckingAccount ca = new CheckingAccount(accountID, startingBalance);
+        accounts.put(ca.getAccountID(), ca);
     }
 
     /**
@@ -42,6 +42,7 @@ public class AccountLibrary {
      */
     public void createSavingsAccount(String accountID, double startingBalance, double interest){
         SavingsAccount sa = new SavingsAccount(accountID, startingBalance, interest);
+        accounts.put(sa.getAccountID(), sa);
     }
 
     /**
@@ -57,8 +58,13 @@ public class AccountLibrary {
      * Totals the balances across all accounts.
      * @return the total
      */
-    public double CalcTotalAssets(){
-        return -1;
+    public double calcTotalAssets(){
+        Iterator<BankAccount> accountIterator = accounts.values().iterator();
+        double total = 0;
+        while (accountIterator.hasNext()){
+            total += accountIterator.next().getBalance();
+        }
+        return total;
     }
 
     /**
@@ -76,7 +82,43 @@ public class AccountLibrary {
             double maxSingleWithdrawl,
             int numberOfWithdrawls,
             double maxTotalWithdrawls){
-        return null;
+
+        Iterator<String> ids = accounts.keySet().iterator();
+        List<String> strings = new LinkedList<>();
+
+        while (ids.hasNext()){
+            String id = ids.next();
+            BankAccount ba = accounts.get(id);
+            Integer index = lastCheckedHistory.get(id);
+            List<Double> history = ba.getHistory();
+            boolean inTrouble = false;
+
+            if(index == null){
+                index = -1;
+            }
+
+            if(history.size() + 1 - index > numberOfWithdrawls){
+                inTrouble = true;
+            }else{
+                double total = 0;
+                for(int i = index + 1; i < history.size(); i++){
+                    double amount = history.get(i);
+                    total += amount;
+                    if(Math.abs(amount) > maxSingleWithdrawl){
+                        inTrouble = true;
+                    }
+                }
+                if(Math.abs(total) > maxTotalWithdrawls){
+                    inTrouble = true;
+                }
+            }
+
+            if(inTrouble){
+                strings.add(id);
+            }
+            lastCheckedHistory.put(id, history.size()-1);
+        }
+        return strings;
     }
 
     /**
@@ -84,19 +126,53 @@ public class AccountLibrary {
      * @param id account id to freeze
      */
     public void freezeAccount(String id){
-
+        BankAccount ba = accounts.get(id);
+        if(ba != null){
+            ba.freezeAccount();
+        }
     }
 
     /**
      * unfreezes account
      * @param id account id to unfreeze
      */
-    public void unfreezeAccount(String id){}
+    public void unfreezeAccount(String id){
+        BankAccount ba = accounts.get(id);
+        if(ba != null){
+            ba.unfreezeAccount();
+        }
+    }
 
     /**
      * Calls every accounts update function
      */
-    public void updateAccounts(){}
+    public void updateAccounts(){
+        Iterator<BankAccount> accountIterator = accounts.values().iterator();
+        while (accountIterator.hasNext()){
+            accountIterator.next().update();
+        }
+    }
+
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountFrozenException {
+        BankAccount ba = accounts.get(acctId);
+        ba.withdraw(amount);
+    }
+
+    public void deposit(String acctId, double amount) throws AccountFrozenException{
+        BankAccount ba = accounts.get(acctId);
+        ba.deposit(amount);
+    }
+
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountFrozenException {
+        BankAccount ba1 = accounts.get(acctIdToWithdrawFrom);
+        BankAccount ba2 = accounts.get(acctIdToDepositTo);
+        ba1.transfer(ba2, amount);
+    }
+
+    public List<Double> transactionHistory(String acctId) {
+        BankAccount ba = accounts.get(acctId);
+        return ba.getHistory();
+    }
 
 }
 
