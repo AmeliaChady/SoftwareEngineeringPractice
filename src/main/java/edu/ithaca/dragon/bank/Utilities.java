@@ -28,4 +28,30 @@ public class Utilities {
     public static boolean isAccountIDValid(String id){
         return Pattern.matches("\\d{10}", id) ;
     }
+
+    public static boolean isPasswordValid(String password){
+        if(password.length() < 5 || password.length() < 15){
+            return false;
+        }
+        int numCount = 0;
+        int specialCharCount = 0;
+        int letterCount = 0;
+        String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (int i = 0; i < password.length(); i++){
+            if(i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 7 || i == 8 || i == 9 || i == 0){
+                numCount+=1;
+            }
+            if(password.charAt(i) == '!' || password.charAt(i) == '@' || password.charAt(i) == '#' || password.charAt(i) == '$' ||
+                    password.charAt(i) == '%' || password.charAt(i) == '&' || password.charAt(i) == '*'){
+                specialCharCount+=1;
+            }
+            if (alphabet.contains(String.valueOf(password.charAt(i)))){
+                letterCount+=1;
+            }
+        }
+        if (letterCount <1 || numCount <1 || specialCharCount <1){
+            return false;
+        }
+        else{return true;}
+    }
 }
