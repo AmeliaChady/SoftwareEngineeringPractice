@@ -17,7 +17,16 @@ public abstract class BankAccount {
         if(!password.equals(this.password)){
             return false;
         }
+        login();
         return true;
+    }
+
+    private void login() {
+        loggedIn = false;
+    }
+
+    private void logout() {
+        loggedIn = false;
     }
 
     public String getPassword(){
