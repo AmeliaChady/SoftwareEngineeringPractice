@@ -29,6 +29,7 @@ public class SavingsAccount extends BankAccount{
     public void update(){
         // Does Savings Account Interest
         balance += balance * interest;
+        balance = Math.round(balance *100.0)/100.0;
 
     }
 

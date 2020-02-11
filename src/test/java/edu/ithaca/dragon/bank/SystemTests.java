@@ -189,9 +189,13 @@ public class SystemTests {
 
         //interest update check
         assertEquals(330, teller.checkBalance("0000000000"));
-        assertEquals(525.5, teller.checkBalance("1234567890"));
+        assertEquals(525.53, teller.checkBalance("1234567890"));
         assertEquals(1140, teller.checkBalance("0987654321"));
         assertEquals(562.5, teller.checkBalance("1111111111"));
+
+        //close account check
+        teller.closeAccount("1234567890");
+        assertNull(cBank.al.accounts.get("1234567890"));
 
     }
 }
