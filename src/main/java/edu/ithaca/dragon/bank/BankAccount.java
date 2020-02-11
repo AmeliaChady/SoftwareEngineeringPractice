@@ -8,6 +8,7 @@ public abstract class BankAccount {
     protected String accountID;
     protected double balance;
     protected List<Double> history;
+    protected boolean loggedIn;
 
     protected boolean accountFrozen;
     protected String password;

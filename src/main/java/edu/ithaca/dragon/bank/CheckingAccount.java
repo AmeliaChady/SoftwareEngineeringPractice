@@ -21,6 +21,7 @@ public class CheckingAccount extends BankAccount{
         this.balance = startingBalance;
         this.history = new LinkedList<>();
         this.password = password;
+        this.loggedIn = false;
 
     }
 

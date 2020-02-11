@@ -25,6 +25,7 @@ public class SavingsAccount extends BankAccount{
         this.history = new LinkedList<>();
         this.interest = interest;
         this.password = password;
+        this.loggedIn = false;
     }
 
     public void update(){
