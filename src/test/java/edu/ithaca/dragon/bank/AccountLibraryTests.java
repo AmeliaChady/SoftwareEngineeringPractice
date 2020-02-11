@@ -35,7 +35,7 @@ public class AccountLibraryTests {
         ba = new CheckingAccount("0000000002", 300);
         al.accounts.put("0000000002", ba);
 
-        assertEquals(600, al.CalcTotalAssets());
+        assertEquals(600, al.calcTotalAssets());
     }
 
     @Test
