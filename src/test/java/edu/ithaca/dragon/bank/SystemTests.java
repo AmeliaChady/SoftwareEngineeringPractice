@@ -17,6 +17,8 @@ public class SystemTests {
     //---------------Amelia---------------//
     @Test
     public void suspiciousDaysTest() throws InsufficientFundsException{
+        // Currently only considering Checking Accounts
+
         CentralBank cb = new CentralBank();
         // Pretend Beforehand
         cb.createAccount("act0", 171);
@@ -38,7 +40,7 @@ public class SystemTests {
         teller.deposit("act1", 100);
         teller.transfer("act1", "act2", 20);
         atm.transfer("act4", "act0", 10);
-        atm.withdraw("act3", 300);
+        atm.withdraw("act3", 200);
         teller.checkBalance("act0");
         atm.transfer("act4", "act0", 10);
         admin.calcTotalAssets();
@@ -55,11 +57,11 @@ public class SystemTests {
 
         Collection<String> day1CorrectSuspiciousAccounts = new LinkedList<String>();
         day1CorrectSuspiciousAccounts.add("act0");
-        assertEquals(, teller.checkBalance("act0"));
-        assertEquals(, teller.checkBalance("act1"));
-        assertEquals(, teller.checkBalance("act2"));
-        assertEquals(, teller.checkBalance("act3"));
-        assertEquals(, teller.checkBalance("act4"));
+        assertEquals(231, teller.checkBalance("act0"));
+        assertEquals(252, teller.checkBalance("act1"));
+        assertEquals(290, teller.checkBalance("act2"));
+        assertEquals(45, teller.checkBalance("act3"));
+        assertEquals(150, teller.checkBalance("act4"));
         assertEquals(day1CorrectSuspiciousAccounts, day1SuspiciousAccounts);
 
         // Day 2
@@ -77,11 +79,11 @@ public class SystemTests {
 
         Collection<String> day2CorrectSuspiciousAccounts = new LinkedList<String>();
         day2CorrectSuspiciousAccounts.add("act0");
-        assertEquals(, teller.checkBalance("act0"));
-        assertEquals(, teller.checkBalance("act1"));
-        assertEquals(, teller.checkBalance("act2"));
-        assertEquals(, teller.checkBalance("act3"));
-        assertEquals(, teller.checkBalance("act4"));
+        assertEquals(231, teller.checkBalance("act0"));
+        assertEquals(242, teller.checkBalance("act1"));
+        assertEquals(280, teller.checkBalance("act2"));
+        assertEquals(45, teller.checkBalance("act3"));
+        assertEquals(10150, teller.checkBalance("act4"));
         assertEquals(day2CorrectSuspiciousAccounts, day2SuspiciousAccounts);
 
 
