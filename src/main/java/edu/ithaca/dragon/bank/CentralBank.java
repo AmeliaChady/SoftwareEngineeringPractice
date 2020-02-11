@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.List;
 
 public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
     AccountLibrary al;
@@ -31,7 +32,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
 
     }
 
-    public String transactionHistory(String acctId) {
+    public List<Double> transactionHistory(String acctId) {
         return null;
     }
 

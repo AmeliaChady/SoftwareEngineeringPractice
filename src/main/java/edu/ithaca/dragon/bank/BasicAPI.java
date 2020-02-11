@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.List;
+
 //API to be used by ATMs
 public interface BasicAPI {
 
@@ -13,6 +15,6 @@ public interface BasicAPI {
 
     void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException;
 
-    String transactionHistory(String acctId);
+    List<Double> transactionHistory(String acctId);
 
 }

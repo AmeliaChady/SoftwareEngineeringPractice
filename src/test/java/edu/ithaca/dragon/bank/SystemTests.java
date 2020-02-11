@@ -14,14 +14,63 @@ public class SystemTests {
     //---------------Kerry---------------//
 
     @Test
-    public void fullDayTest(){
-        AccountLibrary al = new AccountLibrary();
-        BankAccount checkingAccount = new CheckingAccount("0000000001", 200.54);
-        BankAccount savingsAccount = new SavingsAccount("0000000002", 1.00, 0.25);
-        al.accounts.put(checkingAccount.getAccountID(), checkingAccount);
-        al.accounts.put(savingsAccount.getAccountID(), savingsAccount);
+    public void fullDayTest() throws InsufficientFundsException{
 
-        assertEquals(201.54, al.calcTotalAssets());
+        //account creation
+        CentralBank centralBank = new CentralBank();
+        centralBank.createAccount("123", 190);
+        centralBank.createAccount("456", 230.60);
+        centralBank.createAccount("789", 509.23);
+
+        //money transfer
+        centralBank.deposit("123", 10);
+        centralBank.transfer("456", "789", 30.60);
+        centralBank.withdraw("789", 39.83);
+
+        //assertions
+        assertEquals(200, centralBank.checkBalance("123"));
+        assertEquals(200, centralBank.checkBalance("456"));
+        assertEquals(500, centralBank.checkBalance("789"));
+        assertEquals(1, centralBank.transactionHistory("123"));
+        assertEquals(1, centralBank.transactionHistory("456"));
+        assertEquals(2, centralBank.transactionHistory("789"));
+        assertEquals(800, centralBank.calcTotalAssets());
+
+        //money transfer
+        centralBank.withdraw("123", 50);
+        centralBank.transfer("789", "123", 100);
+        centralBank.deposit("456", 50.99);
+
+        //assertions
+        assertEquals(250, centralBank.checkBalance("123"));
+        assertEquals(250.99, centralBank.checkBalance("456"));
+        assertEquals(400, centralBank.checkBalance("789"));
+        assertEquals(3, centralBank.transactionHistory("123").size());
+        assertEquals(2, centralBank.transactionHistory("456").size());
+        assertEquals(3, centralBank.transactionHistory("789").size());
+        assertEquals(900.99, centralBank.calcTotalAssets());
+
+        //freeze account
+        centralBank.freezeAccount("123");
+        assertThrows(AccountFrozenException.class, () -> centralBank.deposit("123", 50));
+        assertEquals(250, centralBank.checkBalance("123"));
+        assertThrows(AccountFrozenException.class, () -> centralBank.withdraw("123", 50));
+        assertEquals(250, centralBank.checkBalance("123"));
+        assertEquals(3, centralBank.transactionHistory("123").size());
+
+        //unfreeze
+        centralBank.unfreezeAcct("123");
+        centralBank.deposit("123", 10);
+        assertEquals(260, centralBank.checkBalance("123"));
+        centralBank.withdraw("123", 10);
+        assertEquals(250, centralBank.checkBalance("123"));
+
+
+        assertEquals(0, centralBank.findAcctIdsWithSuspiciousActivity().size());
+        centralBank.deposit("123", 100000);
+        centralBank.withdraw("123", 100000);
+        assertEquals(1, centralBank.findAcctIdsWithSuspiciousActivity().size());
+
 
 
     }
