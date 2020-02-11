@@ -17,7 +17,8 @@ public class SystemTests {
     //---------------Amelia---------------//
     @Test
     public void suspiciousDaysTest() throws InsufficientFundsException{
-        // Currently only considering Checking Accounts
+        // Currently only considering Checking Accounts, as unable to get to Savings Accounts
+        // Updates needed when possible
 
         CentralBank cb = new CentralBank();
         // Pretend Beforehand
