@@ -84,12 +84,8 @@ public abstract class BankAccount {
             throw new IllegalArgumentException("ERROR: Must pass two bank accounts");
         }
         withdraw(amount);
-        balance = Math.round(balance *100.0)/100.0;
-        updateHistory(amount, false);
-
         transferTo.deposit(amount);
-        transferTo.balance = Math.round(transferTo.balance *100.0)/100.0;
-        transferTo.updateHistory(amount, true);
+
     };
 
     /**
