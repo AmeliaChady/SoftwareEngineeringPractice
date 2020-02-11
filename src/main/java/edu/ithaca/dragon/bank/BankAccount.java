@@ -8,11 +8,26 @@ public abstract class BankAccount {
     protected String accountID;
     protected double balance;
     protected List<Double> history;
+    protected boolean loggedIn;
 
-    protected boolean accountFrozen;protected String password;
+    protected boolean accountFrozen;
+    protected String password;
 
     public boolean confirmCredentials(String password) {
-        return false;
+        if(!password.equals(this.password)){
+            logout();
+            return false;
+        }
+        login();
+        return true;
+    }
+
+    private void login() {
+        loggedIn = true;
+    }
+
+    private void logout() {
+        loggedIn = false;
     }
 
     public String getPassword(){

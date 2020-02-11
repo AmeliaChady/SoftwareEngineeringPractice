@@ -15,7 +15,8 @@ public class AccountLibrary {
     }
 
     public boolean confirmCredentials(String acctId, String password) {
-        return false;
+        BankAccount ba = accounts.get(acctId);
+        return ba.confirmCredentials(password);
     }
 
     /**
