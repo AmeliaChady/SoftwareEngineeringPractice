@@ -17,29 +17,23 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
     }
 
     public double checkBalance(String acctId) {
-        BankAccount ba = al.accounts.get(acctId);
-        return ba.balance;
+        return al.getBalance(acctId);
     }
 
     public void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountFrozenException {
-        BankAccount ba = al.accounts.get(acctId);
-        ba.withdraw(amount);
+        al.withdraw(acctId, amount);
     }
 
     public void deposit(String acctId, double amount) throws AccountFrozenException{
-        BankAccount ba = al.accounts.get(acctId);
-        ba.deposit(amount);
+        al.deposit(acctId, amount);
     }
 
     public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountFrozenException {
-        BankAccount ba1 = al.accounts.get(acctIdToWithdrawFrom);
-        BankAccount ba2 = al.accounts.get(acctIdToDepositTo);
-        ba1.transfer(ba2, amount);
+        al.transfer(acctIdToWithdrawFrom, acctIdToDepositTo, amount);
     }
 
     public List<Double> transactionHistory(String acctId) {
-        BankAccount ba = al.accounts.get(acctId);
-        return ba.getHistory();
+        return al.transactionHistory(acctId);
     }
 
 
