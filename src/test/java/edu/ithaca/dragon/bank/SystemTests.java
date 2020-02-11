@@ -153,4 +153,9 @@ public class SystemTests {
     }
 
     //---------------Jolie---------------//
+
+    @Test
+    public void fullDaySavingsTest() throws InsufficientFundsException, AccountFrozenException{
+
+    }
 }
