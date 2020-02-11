@@ -14,6 +14,10 @@ public class AccountLibrary {
         lastCheckedHistory = new TreeMap<String, Integer>();
     }
 
+    public boolean confirmCredentials(String acctId, String password) {
+        return false;
+    }
+
     /**
      * @param accountID
      * @return balance of account associated with accountID

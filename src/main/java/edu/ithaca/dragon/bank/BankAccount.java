@@ -11,6 +11,10 @@ public abstract class BankAccount {
 
     protected boolean accountFrozen;
 
+    public boolean confirmCredentials(String password) {
+        return false;
+    }
+
     /**
      * Withdraws money from the account
      * @param amount amount to withdraw
