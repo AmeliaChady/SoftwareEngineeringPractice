@@ -158,4 +158,49 @@ public class SystemTests {
     }
 
     //---------------Jolie---------------//
+
+    @Test
+    public void fullDaySavingsTest() throws InsufficientFundsException, AccountFrozenException{
+        CentralBank cBank = new CentralBank();
+
+        cBank.createSavingsAccount("0000000000", 100, 0.1);
+        cBank.createSavingsAccount("1234567890", 500.50, 0.05);
+        cBank.createSavingsAccount("0987654321", 1000, .2);
+
+        BasicAPI atm = cBank;
+        AdvancedAPI teller = cBank;
+        AdminAPI central = cBank;
+        DaemonAPI auto = cBank;
+
+        //day 1
+        teller.createSavingsAccount("1111111111", 400, .25);
+        teller.deposit("1111111111", 100);
+        teller.withdraw("1234567890", 100);
+        teller.transfer("0987654321", "1111111111", 50);
+        assertEquals(100, teller.checkBalance("0000000000"));
+        assertEquals(400.50, teller.checkBalance("1234567890"));
+        assertEquals(950, teller.checkBalance("0987654321"));
+        assertEquals(550, teller.checkBalance("1111111111"));
+        atm.transfer("1111111111", "1234567890", 100);
+        atm.withdraw("0000000000", 100);
+        atm.deposit("0000000000", 300);
+        assertEquals(300, teller.checkBalance("0000000000"));
+        assertEquals(500.50, teller.checkBalance("1234567890"));
+        assertEquals(950, teller.checkBalance("0987654321"));
+        assertEquals(450, teller.checkBalance("1111111111"));
+
+        //update
+        auto.accountUpdate();
+
+        //interest update check
+        assertEquals(330, teller.checkBalance("0000000000"));
+        assertEquals(525.53, teller.checkBalance("1234567890"));
+        assertEquals(1140, teller.checkBalance("0987654321"));
+        assertEquals(562.5, teller.checkBalance("1111111111"));
+
+        //close account check
+        teller.closeAccount("1234567890");
+        assertNull(cBank.al.accounts.get("1234567890"));
+
+    }
 }
