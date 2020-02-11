@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.List;
+
 //API to be used by ATMs
 public interface BasicAPI {
 
@@ -7,12 +9,12 @@ public interface BasicAPI {
 
     double checkBalance(String acctId);
 
-    void withdraw(String acctId, double amount) throws InsufficientFundsException;
+    void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountFrozenException;
 
-    void deposit(String acctId, double amount);
+    void deposit(String acctId, double amount) throws AccountFrozenException;
 
-    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException;
+    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountFrozenException;
 
-    String transactionHistory(String acctId);
+    List<Double> transactionHistory(String acctId);
 
 }

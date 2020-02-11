@@ -133,6 +133,27 @@ public class AccountLibrary {
             accountIterator.next().update();
         }
     }
+
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountFrozenException {
+        BankAccount ba = accounts.get(acctId);
+        ba.withdraw(amount);
+    }
+
+    public void deposit(String acctId, double amount) throws AccountFrozenException{
+        BankAccount ba = accounts.get(acctId);
+        ba.deposit(amount);
+    }
+
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountFrozenException {
+        BankAccount ba1 = accounts.get(acctIdToWithdrawFrom);
+        BankAccount ba2 = accounts.get(acctIdToDepositTo);
+        ba1.transfer(ba2, amount);
+    }
+
+    public List<Double> transactionHistory(String acctId) {
+        BankAccount ba = accounts.get(acctId);
+        return ba.getHistory();
+    }
 }
 
 //when i delete the pair in the map delete

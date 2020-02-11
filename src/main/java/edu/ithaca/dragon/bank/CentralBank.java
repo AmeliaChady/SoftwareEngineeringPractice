@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
+import java.util.List;
 
 public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
     AccountLibrary al;
@@ -16,23 +17,23 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
     }
 
     public double checkBalance(String acctId) {
-        return 0;
+        return al.getBalance(acctId);
     }
 
-    public void withdraw(String acctId, double amount) throws InsufficientFundsException {
-
+    public void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountFrozenException {
+        al.withdraw(acctId, amount);
     }
 
-    public void deposit(String acctId, double amount) {
-
+    public void deposit(String acctId, double amount) throws AccountFrozenException{
+        al.deposit(acctId, amount);
     }
 
-    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException {
-
+    public void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountFrozenException {
+        al.transfer(acctIdToWithdrawFrom, acctIdToDepositTo, amount);
     }
 
-    public String transactionHistory(String acctId) {
-        return null;
+    public List<Double> transactionHistory(String acctId) {
+        return al.transactionHistory(acctId);
     }
 
 

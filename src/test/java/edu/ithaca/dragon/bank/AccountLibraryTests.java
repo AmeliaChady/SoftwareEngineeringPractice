@@ -144,7 +144,8 @@ public class AccountLibraryTests {
         AccountLibrary al = new AccountLibrary();
 
         BankAccount ba1 = new CheckingAccount("0000000000", 100);
-        assertNotNull(al.accounts.get(0000000000));
+        al.accounts.put("0000000000", ba1);
+        assertNotNull(al.accounts.get("0000000000"));
     }
 
     @Test
