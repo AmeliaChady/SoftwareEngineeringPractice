@@ -15,6 +15,7 @@ public abstract class BankAccount {
 
     public boolean confirmCredentials(String password) {
         if(!password.equals(this.password)){
+            logout();
             return false;
         }
         login();
@@ -22,7 +23,7 @@ public abstract class BankAccount {
     }
 
     private void login() {
-        loggedIn = false;
+        loggedIn = true;
     }
 
     private void logout() {

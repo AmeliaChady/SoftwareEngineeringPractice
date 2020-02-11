@@ -25,10 +25,17 @@ class BankAccountTests {
     @Test
     void checkCredentialTest() {
         BankAccount bankAccount = new CheckingAccount("1234567890", 100, "abcde");
-        assertEquals("abcde", bankAccount.getPassword());
+        assertEquals(false, bankAccount.loggedIn);
+        assertTrue(bankAccount.confirmCredentials("abcde"));
+        assertEquals(true, bankAccount.loggedIn);
 
         BankAccount bankAccount1 = new SavingsAccount("0987654321", 100,"12345", 0.1);
-        assertEquals("12345", bankAccount1.getPassword());
+        assertEquals(false, bankAccount1.loggedIn);
+        assertTrue(bankAccount1.confirmCredentials("12345"));
+        assertEquals(true, bankAccount1.loggedIn);
+
+        assertFalse(bankAccount.confirmCredentials("1afsdcac"));
+        assertEquals(false, bankAccount.loggedIn);
     }
 
     @Test
