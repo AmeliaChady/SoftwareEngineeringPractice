@@ -22,6 +22,7 @@ class BankAccountTests {
         assertEquals(0, bankAccount2.getBalance()); // Boundary (not feasible by constructor to get 0 value)
     }
 
+    @Test
     void checkCredentialTest() {
         BankAccount bankAccount = new CheckingAccount("1234567890", 100, "abcde");
         assertEquals("abcde", bankAccount.getPassword());
