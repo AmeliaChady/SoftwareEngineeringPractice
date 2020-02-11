@@ -10,7 +10,7 @@ public class CheckingAccount extends BankAccount{
     /**
      * @throws IllegalArgumentException if accountID or balance is invalid
      */
-    public CheckingAccount(String accountID, double startingBalance){
+    public CheckingAccount(String accountID, double startingBalance, String password){
         if(!isAccountIDValid(accountID)){
             throw new IllegalArgumentException("Account ID "+accountID+" is Invalid!");
         }

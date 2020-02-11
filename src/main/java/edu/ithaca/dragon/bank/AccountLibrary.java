@@ -33,8 +33,8 @@ public class AccountLibrary {
      * @param accountID
      * @param startingBalance
      */
-    public void createCheckingAccount(String accountID, double startingBalance){
-        CheckingAccount ca = new CheckingAccount(accountID, startingBalance);
+    public void createCheckingAccount(String accountID, double startingBalance, String password){
+        CheckingAccount ca = new CheckingAccount(accountID, startingBalance, password);
         accounts.put(ca.getAccountID(), ca);
     }
 
@@ -44,8 +44,8 @@ public class AccountLibrary {
      * @param startingBalance
      * @param interest
      */
-    public void createSavingsAccount(String accountID, double startingBalance, double interest){
-        SavingsAccount sa = new SavingsAccount(accountID, startingBalance, interest);
+    public void createSavingsAccount(String accountID, double startingBalance, String password, double interest){
+        SavingsAccount sa = new SavingsAccount(accountID, startingBalance, password, interest);
         accounts.put(sa.getAccountID(), sa);
     }
 

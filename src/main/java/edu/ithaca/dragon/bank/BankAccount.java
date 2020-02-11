@@ -9,7 +9,7 @@ public abstract class BankAccount {
     protected double balance;
     protected List<Double> history;
 
-    protected boolean accountFrozen;
+    protected boolean accountFrozen;protected String password;
 
     public boolean confirmCredentials(String password) {
         return false;

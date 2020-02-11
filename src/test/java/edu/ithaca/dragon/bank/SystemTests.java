@@ -18,9 +18,9 @@ public class SystemTests {
 
         //account creation
         CentralBank centralBank = new CentralBank();
-        centralBank.createCheckingAccount("1234567890", 190);
-        centralBank.createCheckingAccount("4567890123", 230.60);
-        centralBank.createCheckingAccount("7890123456", 509.23);
+        centralBank.createCheckingAccount("1234567890", 190, "password");
+        centralBank.createCheckingAccount("4567890123", 230.60, "password");
+        centralBank.createCheckingAccount("7890123456", 509.23, "password");
 
         //money transfer
         centralBank.deposit("1234567890", 10);
@@ -83,10 +83,10 @@ public class SystemTests {
 
         CentralBank cb = new CentralBank();
         // Pretend Beforehand
-        cb.createCheckingAccount("4528177224", 171);
-        cb.createCheckingAccount("5712345456", 172);
-        cb.createCheckingAccount("2222222222", 220);
-        cb.createCheckingAccount("7824247312", 345);
+        cb.createCheckingAccount("4528177224", 171, "password");
+        cb.createCheckingAccount("5712345456", 172, "password");
+        cb.createCheckingAccount("2222222222", 220, "password");
+        cb.createCheckingAccount("7824247312", 345, "password");
 
         BasicAPI atm = cb;
         AdvancedAPI teller = cb;
@@ -95,7 +95,7 @@ public class SystemTests {
 
         // Day 1
 
-        teller.createCheckingAccount("9182355567", 210);
+        teller.createCheckingAccount("9182355567", 210, "password");
         teller.deposit("2222222222", 40);
         atm.transfer("9182355567", "4528177224", 10);
         atm.withdraw("7824247312", 100);
@@ -163,9 +163,9 @@ public class SystemTests {
     public void fullDaySavingsTest() throws InsufficientFundsException, AccountFrozenException{
         CentralBank cBank = new CentralBank();
 
-        cBank.createSavingsAccount("0000000000", 100, 0.1);
-        cBank.createSavingsAccount("1234567890", 500.50, 0.05);
-        cBank.createSavingsAccount("0987654321", 1000, .2);
+        cBank.createSavingsAccount("0000000000", 100, "password", 0.1);
+        cBank.createSavingsAccount("1234567890", 500.50, "password", 0.05);
+        cBank.createSavingsAccount("0987654321", 1000, "password", .2);
 
         BasicAPI atm = cBank;
         AdvancedAPI teller = cBank;
@@ -173,7 +173,7 @@ public class SystemTests {
         DaemonAPI auto = cBank;
 
         //day 1
-        teller.createSavingsAccount("1111111111", 400, .25);
+        teller.createSavingsAccount("1111111111", 400, "password", .25);
         teller.deposit("1111111111", 100);
         teller.withdraw("1234567890", 100);
         teller.transfer("0987654321", "1111111111", 50);

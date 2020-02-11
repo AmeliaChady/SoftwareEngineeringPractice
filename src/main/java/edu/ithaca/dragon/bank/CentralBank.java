@@ -39,12 +39,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
 
-    public void createCheckingAccount(String acctId, double startingBalance) {
-        al.createCheckingAccount(acctId, startingBalance);
+    public void createCheckingAccount(String acctId, double startingBalance, String password) {
+        al.createCheckingAccount(acctId, startingBalance, password);
     }
 
-    public void createSavingsAccount(String acctId, double startingBalance, double interestRate) {
-        al.createSavingsAccount(acctId, startingBalance, interestRate);
+    public void createSavingsAccount(String acctId, double startingBalance, String password, double interestRate) {
+        al.createSavingsAccount(acctId, startingBalance, password, interestRate);
     }
 
     public void closeAccount(String acctId) {
