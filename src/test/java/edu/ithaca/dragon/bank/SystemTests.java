@@ -14,7 +14,7 @@ public class SystemTests {
     //---------------Kerry---------------//
 
     @Test
-    public void fullDayTest() throws InsufficientFundsException{
+    public void fullDayTest() throws InsufficientFundsException, AccountFrozenException{
 
         //account creation
         CentralBank centralBank = new CentralBank();
@@ -77,7 +77,7 @@ public class SystemTests {
 
     //---------------Amelia---------------//
     @Test
-    public void suspiciousDaysTest() throws InsufficientFundsException{
+    public void suspiciousDaysTest() throws InsufficientFundsException, AccountFrozenException{
         // Currently only considering Checking Accounts, as unable to get to Savings Accounts
         // Updates needed when possible
 

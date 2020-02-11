@@ -9,11 +9,11 @@ public interface BasicAPI {
 
     double checkBalance(String acctId);
 
-    void withdraw(String acctId, double amount) throws InsufficientFundsException;
+    void withdraw(String acctId, double amount) throws InsufficientFundsException, AccountFrozenException;
 
-    void deposit(String acctId, double amount);
+    void deposit(String acctId, double amount) throws AccountFrozenException;
 
-    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException;
+    void transfer(String acctIdToWithdrawFrom, String acctIdToDepositTo, double amount) throws InsufficientFundsException, AccountFrozenException;
 
     List<Double> transactionHistory(String acctId);
 
