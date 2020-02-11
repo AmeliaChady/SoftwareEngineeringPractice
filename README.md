@@ -1,10 +1,9 @@
-# SoftwareEngineeringPractice
-## grading
+# Diagrams
 
-To Do | correct
----|---
-at least 8 commits|
-isEmailValid|
-withdraw|
-isamountValid|
-constructor & withdraw fix|
+Use Case Diagram: **!!!**
+Conceptual Class Diagram: **!!!**
+
+## Sequence Diagrams
+Amelia's: **!!!**
+Kerry Anne's: **!!!**
+Jolie's: **!!!**
