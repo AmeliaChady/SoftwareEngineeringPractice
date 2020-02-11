@@ -13,7 +13,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
     //----------------- BasicAPI methods -------------------------//
 
     public boolean confirmCredentials(String acctId, String password) {
-        return false;
+        return al.confirmCredentials(acctId, password);
     }
 
     public double checkBalance(String acctId) {

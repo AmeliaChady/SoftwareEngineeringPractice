@@ -12,7 +12,10 @@ public abstract class BankAccount {
     protected boolean accountFrozen;protected String password;
 
     public boolean confirmCredentials(String password) {
-        return false;
+        if(!password.equals(this.password)){
+            return false;
+        }
+        return true;
     }
 
     /**
