@@ -15,6 +15,10 @@ public abstract class BankAccount {
         return false;
     }
 
+    public String getPassword(){
+        return password;
+    }
+
     /**
      * Withdraws money from the account
      * @param amount amount to withdraw
