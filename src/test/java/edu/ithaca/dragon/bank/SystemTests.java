@@ -9,6 +9,10 @@ public class SystemTests {
 
     //---------------Kerry---------------//
 
+    @Test
+    public void fullDayTest(){
+
+    }
 
     //---------------Amelia---------------//
     @Test
