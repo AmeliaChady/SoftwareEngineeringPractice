@@ -23,7 +23,7 @@ class BankAccountTests {
     }
 
     @Test
-    void checkCredentialTest() {
+    void confirmCredentialsTest() {
         BankAccount bankAccount = new CheckingAccount("1234567890", 100, "abcde");
         assertEquals(false, bankAccount.loggedIn);
         assertTrue(bankAccount.confirmCredentials("abcde"));
