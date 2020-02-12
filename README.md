@@ -19,3 +19,5 @@ Kerry Anne -> Adding a 'Loan Account'
 Jolie -> Adding a 'CD Account'
 
 Jolie -> Amelia -> Kerry Anne -> Jolie (repeat)
+
+And Diagram Updates!!!
