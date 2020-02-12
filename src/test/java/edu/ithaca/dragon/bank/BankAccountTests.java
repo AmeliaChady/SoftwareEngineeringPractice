@@ -445,5 +445,41 @@ class BankAccountTests {
         assertEquals(false, SavingsAccount.isInterestValid(-.00001)); // Equivalence
     }
 
+    @Test
+    void loginLogoutFreezeUnfreezeTest() throws AccountFrozenException{
+        BankAccount ba = new CheckingAccount("1234567890",150,  "Pass123!");
+        //not logged in yet
+        assertThrows(IllegalArgumentException.class, () ->ba.deposit(10));
+        assertEquals(150, ba.balance);
+
+        ba.confirmCredentials("Pass123!");
+
+        //logged in
+        ba.deposit(10);
+        assertEquals(160, ba.balance);
+
+        //frozen account
+        ba.freezeAccount();
+        assertThrows(AccountFrozenException.class, () ->ba.deposit(10));
+        assertEquals(160, ba.balance);
+
+        //now unfrozen, should be logged out from freeze
+        ba.unfreezeAccount();
+        assertThrows(IllegalArgumentException.class, () ->ba.deposit(10));
+        assertEquals(160, ba.balance);
+
+        //incorrect login
+        ba.confirmCredentials("pass");
+        assertThrows(IllegalArgumentException.class, () ->ba.deposit(10));
+        assertEquals(160, ba.balance);
+
+        //correct login
+        ba.confirmCredentials("Pass123!");
+        ba.deposit(10);
+        assertEquals(170, ba.balance);
+
+
+    }
+
 
 }
