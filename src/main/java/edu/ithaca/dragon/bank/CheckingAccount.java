@@ -2,8 +2,8 @@ package edu.ithaca.dragon.bank;
 
 
 import java.util.LinkedList;
-import static edu.ithaca.dragon.bank.Utilities.isAccountIDValid;
-import static edu.ithaca.dragon.bank.Utilities.isAmountValid;
+
+import static edu.ithaca.dragon.bank.Utilities.*;
 
 public class CheckingAccount extends BankAccount{
 
@@ -16,6 +16,9 @@ public class CheckingAccount extends BankAccount{
         }
         if(!isAmountValid(startingBalance)){
             throw new IllegalArgumentException("Balance: " + startingBalance + " is invalid, cannot create account");
+        }
+        if(!isPasswordValid(password)){
+            throw new IllegalArgumentException("Password invalid");
         }
         this.accountID = accountID;
         this.balance = startingBalance;

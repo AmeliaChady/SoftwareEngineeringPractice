@@ -26,17 +26,17 @@ class BankAccountTests {
 
     @Test
     void confirmCredentialsTest() throws AccountFrozenException{
-        BankAccount bankAccount = new CheckingAccount("1234567890", 100, "abcde");
+        BankAccount bankAccount = new CheckingAccount("1234567890", 100, "abcde1!");
         assertEquals(false, bankAccount.loggedIn);
-        assertTrue(bankAccount.confirmCredentials("abcde"));
+        assertTrue(bankAccount.confirmCredentials("abcde1!"));
         assertEquals(true, bankAccount.loggedIn);
 
-        BankAccount bankAccount1 = new SavingsAccount("0987654321", 100,"12345", 0.1);
+        BankAccount bankAccount1 = new SavingsAccount("0987654321", 100,"12345a!", 0.1);
         assertEquals(false, bankAccount1.loggedIn);
-        assertTrue(bankAccount1.confirmCredentials("12345"));
+        assertTrue(bankAccount1.confirmCredentials("12345a!"));
         assertEquals(true, bankAccount1.loggedIn);
 
-        assertFalse(bankAccount.confirmCredentials("1afsdcac"));
+        assertFalse(bankAccount.confirmCredentials("1afsdcac!"));
         assertEquals(false, bankAccount.loggedIn);
     }
 

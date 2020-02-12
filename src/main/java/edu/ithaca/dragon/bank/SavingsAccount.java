@@ -18,6 +18,8 @@ public class SavingsAccount extends BankAccount{
             throw new IllegalArgumentException("Balance invalid");
         }else if(!isInterestValid(interest)){
             throw new IllegalArgumentException("Interest invalid");
+        } else if(!isPasswordValid(password)){
+            throw new IllegalArgumentException("Password invalid");
         }
 
         this.accountID = accountid;
