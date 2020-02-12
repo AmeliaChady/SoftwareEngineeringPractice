@@ -10,3 +10,10 @@ Amelia's: https://drive.google.com/file/d/1vxQPW2L9yldBYlDCEq0Gr0x24UdWCJny/view
 Kerry Anne's: https://drive.google.com/file/d/1NxUagKy9gujcRqrQnJN-cxKxp9fTZP7o/view?usp=sharing
 
 Jolie's: https://drive.google.com/file/d/1iz8IxWVHExHY8XBb0ZVIwj9OUq78AQFX/view?usp=sharing
+
+## Upcoming Changes
+Amelia -> Changes Account Library with condensing create account functions
+Jolie -> Adding a 'Loan Account' 
+Kerry Anne -> Adding a 'CD Account'
+
+Jolie -> Amelia -> Kerry Anne -> Jolie (repeat)
