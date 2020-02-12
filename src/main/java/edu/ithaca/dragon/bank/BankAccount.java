@@ -13,7 +13,7 @@ public abstract class BankAccount {
     protected boolean accountFrozen;
     protected String password;
 
-    public boolean confirmCredentials(String password) {
+    public boolean confirmCredentials(String password) throws AccountFrozenException{
         if(!password.equals(this.password)){
             logout();
             return false;
@@ -22,7 +22,10 @@ public abstract class BankAccount {
         return true;
     }
 
-    private void login() {
+    private void login() throws AccountFrozenException{
+        if(isAccountFrozen()){
+            throw new AccountFrozenException("Cannot log in a frozen account");
+        }
         loggedIn = true;
     }
 
@@ -30,7 +33,7 @@ public abstract class BankAccount {
         loggedIn = false;
     }
 
-    public String getPassword(){
+    private String getPassword(){
         return password;
     }
 
@@ -48,6 +51,9 @@ public abstract class BankAccount {
         }
         if(!Utilities.isAmountValid(amount)){
             throw new IllegalArgumentException("ERROR: invalid amount");
+        }
+        if(!loggedIn){
+            throw new IllegalArgumentException("ERROR: must be logged in");
         }
         if(amount > balance){
             throw new InsufficientFundsException("ERROR: You do not have enough funds to withdraw that amount.");
@@ -70,6 +76,9 @@ public abstract class BankAccount {
         }
         if(!Utilities.isAmountValid(amount)){
             throw new IllegalArgumentException("ERROR: invalid amount");
+        }
+        if(!loggedIn){
+            throw new IllegalArgumentException("ERROR: must be logged in");
         }
         balance += amount;
         balance = Math.round(balance *100.0)/100.0;
@@ -95,6 +104,10 @@ public abstract class BankAccount {
             throw new AccountFrozenException("Cannot transfer from frozen account");
         }else if(transferTo.isAccountFrozen()){
             throw new AccountFrozenException("Cannot transfer to frozen account");
+        }
+
+        if(!loggedIn){
+            throw new IllegalArgumentException("ERROR: must be logged in");
         }
 
         if(balance < amount){
@@ -137,6 +150,7 @@ public abstract class BankAccount {
      */
     public void freezeAccount(){
         accountFrozen = true;
+        logout();
     }
 
     /**
@@ -157,6 +171,9 @@ public abstract class BankAccount {
     public void updateHistory(Double amount, boolean isDeposit) { //true means deposit, false means withdraw
         if(!Utilities.isAmountValid(amount)){
             throw new IllegalArgumentException("ERROR: invalid amount");
+        }
+        if(!loggedIn){
+            throw new IllegalArgumentException("ERROR: must be logged in");
         }
         if (isDeposit){
             history.add(amount);

@@ -22,6 +22,11 @@ public class SystemTests {
         centralBank.createCheckingAccount("4567890123", 230.60, "password");
         centralBank.createCheckingAccount("7890123456", 509.23, "password");
 
+        //account login
+        centralBank.confirmCredentials("1234567890", "password");
+        centralBank.confirmCredentials("4567890123", "password");
+        centralBank.confirmCredentials("7890123456", "password");
+
         //money transfer
         centralBank.deposit("1234567890", 10);
         centralBank.transfer("4567890123", "7890123456", 30.60);
@@ -60,6 +65,7 @@ public class SystemTests {
 
         //unfreeze
         centralBank.unfreezeAcct("1234567890");
+        centralBank.confirmCredentials("1234567890", "password");
         centralBank.deposit("1234567890", 10);
         assertEquals(260, centralBank.checkBalance("1234567890"));
         centralBank.withdraw("1234567890", 10);
@@ -88,6 +94,12 @@ public class SystemTests {
         cb.createCheckingAccount("2222222222", 220, "password");
         cb.createCheckingAccount("7824247312", 345, "password");
 
+        //login
+        cb.confirmCredentials("4528177224", "password");
+        cb.confirmCredentials("5712345456", "password");
+        cb.confirmCredentials("2222222222", "password");
+        cb.confirmCredentials("7824247312", "password");
+
         BasicAPI atm = cb;
         AdvancedAPI teller = cb;
         AdminAPI admin = cb;
@@ -96,6 +108,7 @@ public class SystemTests {
         // Day 1
 
         teller.createCheckingAccount("9182355567", 210, "password");
+        teller.confirmCredentials("9182355567","password");
         teller.deposit("2222222222", 40);
         atm.transfer("9182355567", "4528177224", 10);
         atm.withdraw("7824247312", 100);
@@ -167,6 +180,11 @@ public class SystemTests {
         cBank.createSavingsAccount("1234567890", 500.50, "password", 0.05);
         cBank.createSavingsAccount("0987654321", 1000, "password", .2);
 
+        //login
+        cBank.confirmCredentials("0000000000","password");
+        cBank.confirmCredentials("1234567890", "password");
+        cBank.confirmCredentials("0987654321","password");
+
         BasicAPI atm = cBank;
         AdvancedAPI teller = cBank;
         AdminAPI central = cBank;
@@ -174,6 +192,7 @@ public class SystemTests {
 
         //day 1
         teller.createSavingsAccount("1111111111", 400, "password", .25);
+        teller.confirmCredentials("1111111111", "password");
         teller.deposit("1111111111", 100);
         teller.withdraw("1234567890", 100);
         teller.transfer("0987654321", "1111111111", 50);

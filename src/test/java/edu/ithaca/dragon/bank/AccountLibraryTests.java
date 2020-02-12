@@ -43,22 +43,26 @@ public class AccountLibraryTests {
         AccountLibrary al = new AccountLibrary();
 
         BankAccount ba = new CheckingAccount("0000000000", 100, "password");
+        ba.confirmCredentials("password");
         ba.deposit(100);
         ba.withdraw(100);
         al.accounts.put("0000000000", ba);
 
         // Too big - withdrawl
         ba = new CheckingAccount("0000000001", 10000000, "password");
+        ba.confirmCredentials("password");
         ba.withdraw(1001);
         al.accounts.put("0000000001", ba);
 
         // Too big - deposit
         ba = new CheckingAccount("0000000002", 300, "password");
+        ba.confirmCredentials("password");
         ba.deposit(1001);
         al.accounts.put("0000000002", ba);
 
         // Too many
         ba = new CheckingAccount("0000000003", 300, "password");
+        ba.confirmCredentials("password");
         ba.withdraw(10);
         ba.withdraw(10);
         ba.withdraw(10);
@@ -70,6 +74,7 @@ public class AccountLibraryTests {
 
         // Too big over smaller transactions
         ba = new CheckingAccount("0000000004", 300, "password");
+        ba.confirmCredentials("password");
         ba.deposit(201);
         ba.deposit(201);
         ba.deposit(201);
@@ -100,14 +105,14 @@ public class AccountLibraryTests {
     }
 
     @Test
-    public void unfreezeAccountTest(){
+    public void unfreezeAccountTest() throws AccountFrozenException{
         AccountLibrary al = new AccountLibrary();
         BankAccount ba = new CheckingAccount("0123456789", 10, "password");
-
+        ba.confirmCredentials("password");
         ba.freezeAccount();
         al.accounts.put("0123456789", ba);
         al.unfreezeAccount("0123456789");
-
+        ba.confirmCredentials("password");
         try{
             ba.deposit(10);
         }catch (AccountFrozenException a){

@@ -12,7 +12,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
-    public boolean confirmCredentials(String acctId, String password) {
+    public boolean confirmCredentials(String acctId, String password) throws AccountFrozenException{
         return al.confirmCredentials(acctId, password);
     }
 

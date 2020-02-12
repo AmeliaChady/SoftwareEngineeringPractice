@@ -14,7 +14,7 @@ public class AccountLibrary {
         lastCheckedHistory = new TreeMap<String, Integer>();
     }
 
-    public boolean confirmCredentials(String acctId, String password) {
+    public boolean confirmCredentials(String acctId, String password) throws AccountFrozenException{
         BankAccount ba = accounts.get(acctId);
         return ba.confirmCredentials(password);
     }

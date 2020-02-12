@@ -5,7 +5,7 @@ import java.util.List;
 //API to be used by ATMs
 public interface BasicAPI {
 
-    boolean confirmCredentials(String acctId, String password);
+    boolean confirmCredentials(String acctId, String password) throws AccountFrozenException;
 
     double checkBalance(String acctId);
 

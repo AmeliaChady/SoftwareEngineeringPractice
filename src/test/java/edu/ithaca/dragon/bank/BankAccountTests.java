@@ -13,9 +13,11 @@ class BankAccountTests {
     void getBalanceTest() throws InsufficientFundsException, AccountFrozenException{
         // Valid Tests
         BankAccount bankAccount = new CheckingAccount("0123456789", .01, "password");
+        bankAccount.confirmCredentials("password");
         assertEquals(.01, bankAccount.getBalance()); // Boundary
 
         BankAccount bankAccount2 = new CheckingAccount("0123456789", 200, "password");
+        bankAccount2.confirmCredentials("password");
         assertEquals(200, bankAccount2.getBalance()); // Equivalence
 
         bankAccount2.withdraw(200);
@@ -23,7 +25,7 @@ class BankAccountTests {
     }
 
     @Test
-    void confirmCredentialsTest() {
+    void confirmCredentialsTest() throws AccountFrozenException{
         BankAccount bankAccount = new CheckingAccount("1234567890", 100, "abcde");
         assertEquals(false, bankAccount.loggedIn);
         assertTrue(bankAccount.confirmCredentials("abcde"));
@@ -42,19 +44,23 @@ class BankAccountTests {
     void withdrawTest() throws InsufficientFundsException, AccountFrozenException{
         // Basic Testing
         BankAccount tester = new CheckingAccount("0000000000", 100, "password");
+        tester.confirmCredentials("password");
         tester.withdraw(.01);
         assertEquals(99.99, tester.getBalance());
 
         tester = new CheckingAccount("0000000000", 100, "password");
+        tester.confirmCredentials("password");
         tester.withdraw(50);
         assertEquals(50, tester.getBalance());
 
         tester = new CheckingAccount("0000000000", 100, "password");
+        tester.confirmCredentials("password");
         tester.withdraw(100);
         assertEquals(0, tester.getBalance());
 
         // Decimal Tests
         BankAccount tester_ef = new CheckingAccount("0000000000", 100, "password");
+        tester_ef.confirmCredentials("password");
         assertThrows(IllegalArgumentException.class, () -> tester_ef.withdraw(.001));
         assertThrows(IllegalArgumentException.class, () -> tester_ef.withdraw(.0001));
 
@@ -81,6 +87,7 @@ class BankAccountTests {
 
         // Balance 0 Testing
         BankAccount tester_0 = new CheckingAccount("0000000000", 1, "password");
+        tester_0.confirmCredentials("password");
         tester_0.withdraw(1);
 
         assertThrows(IllegalArgumentException.class, () -> tester_0.withdraw(0));
@@ -97,7 +104,7 @@ class BankAccountTests {
         // All tests that would go with isAmountValid are assumed to be correct as we are showing we are using
 
         BankAccount ba = new CheckingAccount("0000000000", 100, "password");
-
+        ba.confirmCredentials("password");
         ba.deposit(1);
         assertEquals(101, ba.getBalance()); // Equivalence
         ba.deposit(.01);
@@ -118,7 +125,9 @@ class BankAccountTests {
 
         // NORMAL TESTS
         BankAccount fromAccount = new CheckingAccount("0000000000", 1000, "password");
+        fromAccount.confirmCredentials("password");
         BankAccount toAccount = new CheckingAccount("0000000000", 1000, "password");
+        toAccount.confirmCredentials("password");
 
         fromAccount.transfer(toAccount, .01); // Boundary
         assertEquals(999.99, fromAccount.getBalance());
@@ -134,6 +143,7 @@ class BankAccountTests {
 
         // BANK ACCOUNT INVALID
         BankAccount ef = new CheckingAccount("0000000000", 1000, "password");
+        ef.confirmCredentials("password");
         assertThrows(IllegalArgumentException.class, () -> ef.transfer(null, 100));
         assertThrows(IllegalArgumentException.class, () -> ef.transfer(ef, 100));
 
@@ -154,8 +164,9 @@ class BankAccountTests {
     }
 
     @Test
-    void updateHistoryTest(){
+    void updateHistoryTest() throws AccountFrozenException{
         BankAccount ba =  new CheckingAccount("0000000000", 100, "password");
+        ba.confirmCredentials("password");
         assertEquals(0, ba.getHistory().size());
 
         ba.updateHistory(10.0, true);
@@ -184,6 +195,7 @@ class BankAccountTests {
     @Test
     void historyTest() throws AccountFrozenException{
         BankAccount ba = new CheckingAccount("0000000000", 1000, "password");
+        ba.confirmCredentials("password");
 
         // No History
         assertEquals(0, ba.getHistory().size());
@@ -203,8 +215,9 @@ class BankAccountTests {
     }
 
     @Test
-    public void frozenBankAccountTest() throws InsufficientFundsException{
+    public void frozenBankAccountTest() throws InsufficientFundsException, AccountFrozenException{
         BankAccount ba = new CheckingAccount("0123456789", 100, "password");
+        ba.confirmCredentials("password");
 
         // Accounts don't start frozen
         assertEquals(false, ba.isAccountFrozen());
@@ -217,6 +230,7 @@ class BankAccountTests {
         assertThrows(AccountFrozenException.class, () -> ba.withdraw(10));
         assertThrows(AccountFrozenException.class, () -> ba.deposit(10));
         BankAccount ba2 = new CheckingAccount("0123456789", 100, "password");
+        ba2.confirmCredentials("password");
         // Throws when transferring to unfrozen account
         assertThrows(AccountFrozenException.class, () -> ba.transfer(ba2, 10));
         // Throws when transferring to frozen account
@@ -227,6 +241,7 @@ class BankAccountTests {
         ba.unfreezeAccount();
         assertEquals(false, ba.isAccountFrozen());
 
+        ba.confirmCredentials("password");
         // Can Withdraw or Deposit
         try{
             ba.withdraw(10);
@@ -242,6 +257,7 @@ class BankAccountTests {
 
 
         BankAccount ba3 = new CheckingAccount("0123456789", 100, "password");
+        ba3.confirmCredentials("password");
         try{
             ba.transfer(ba3, 10);
         }catch (AccountFrozenException afe){
@@ -259,7 +275,7 @@ class BankAccountTests {
     // Checking Account Tests
     // Only testing constructor & overridden methods
     @Test
-    void constructorCheckingAccountTest() {
+    void constructorCheckingAccountTest() throws AccountFrozenException{
         // PLEASE NOTE:
         // These tests assume that functions
         // isAccountID & isAmountValid
@@ -271,12 +287,15 @@ class BankAccountTests {
 
         // Correct
         CheckingAccount numberAccount = new CheckingAccount("0000000000", .01, "password");
+        numberAccount.confirmCredentials("password");
         assertEquals("0000000000", numberAccount.getAccountID()); // Boundary
         assertEquals(.01, numberAccount.getBalance()); // Boundary
         numberAccount = new CheckingAccount("0123456789", 1, "password");
+        numberAccount.confirmCredentials("password");
         assertEquals("0123456789", numberAccount.getAccountID()); // Boundary
         assertEquals(1, numberAccount.getBalance()); // Equivalence
         numberAccount = new CheckingAccount("0102030405", 1, "password");
+        numberAccount.confirmCredentials("password");
         assertEquals("0102030405", numberAccount.getAccountID()); // Equivalence
 
 
