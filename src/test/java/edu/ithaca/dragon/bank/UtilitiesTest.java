@@ -51,7 +51,24 @@ public class UtilitiesTest {
         assertEquals(false, isAccountIDValid("01f3456789")); // Equivalence
         assertEquals(false, isAccountIDValid("01f34.6789")); // Equivalence
 
+    }
 
+    @Test
+    void isPasswordValidTest(){
+        //Length Tests
+        assertFalse(isPasswordValid("aaww")); //Boundary (Smaller)
+        assertFalse(isPasswordValid("asdfghjklasdfgh")); //Boundary (Larger)
+        assertFalse(isPasswordValid("a")); //Equivalence (Smaller)
+        assertFalse(isPasswordValid("asdfghjklkjhgfdsasdfghjkl")); //Equivalence (Larger)
+
+        //Character Tests
+        assertFalse(isPasswordValid("asdfghjkl")); //No number or special character
+        assertFalse(isPasswordValid("asdfghjkl2")); //Number but no special character
+        assertFalse(isPasswordValid("asdfghjkl@"));//Special character but no number
+
+        //Valid
+        assertTrue(isPasswordValid("asdfghjkl2!"));
+        assertTrue(isPasswordValid("edrftygbj3j3&@"));
     }
 
 

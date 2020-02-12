@@ -30,15 +30,16 @@ public class Utilities {
     }
 
     public static boolean isPasswordValid(String password){
-        if(password.length() < 5 || password.length() < 15){
+        if(password.length() < 5 || password.length() > 15){
             return false;
         }
         int numCount = 0;
         int specialCharCount = 0;
         int letterCount = 0;
         String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String numbers = "1234567890";
         for (int i = 0; i < password.length(); i++){
-            if(i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 7 || i == 8 || i == 9 || i == 0){
+            if(numbers.contains(String.valueOf(password.charAt(i)))){
                 numCount+=1;
             }
             if(password.charAt(i) == '!' || password.charAt(i) == '@' || password.charAt(i) == '#' || password.charAt(i) == '$' ||
