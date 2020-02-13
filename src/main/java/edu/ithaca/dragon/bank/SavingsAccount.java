@@ -21,11 +21,15 @@ public class SavingsAccount extends BankAccount{
      * @throws IllegalArgumentException if accountID or balance is invalid
      */
     SavingsAccount(Map<String, String> arguments){
-        String accountID = arguments.get("accountID");
-        double startingBalance = Double.parseDouble(arguments.get("startingBalance"));
-        String password = arguments.get("password");
-        double interest = Double.parseDouble(arguments.get("interest"));
-        innerConstruction(accountID,startingBalance,password, interest);
+        try {
+            String accountID = arguments.get("accountID");
+            double startingBalance = Double.parseDouble(arguments.get("startingBalance"));
+            String password = arguments.get("password");
+            double interest = Double.parseDouble(arguments.get("interest"));
+            innerConstruction(accountID, startingBalance, password, interest);
+        }catch (NullPointerException e){
+            throw new IllegalArgumentException("Did not pass all needed arguments");
+        }
     }
 
     private void innerConstruction(String accountid, double startingBalance, String password, double interest){
