@@ -30,6 +30,9 @@ public class BankAccountMapConstructorTests {
         // Works
         Map<String, String> map = CheckingAccount.makeCheckingMap("0000000000", 1012, "password!2");
         CheckingAccount c = new CheckingAccount(map);
+        assertEquals("0000000000", c.getAccountID());
+        assertEquals(1012, c.getBalance());
+        assertEquals("password!2", c.password);
 
         // Doesn't work
         // AccountID invalid
@@ -69,7 +72,11 @@ public class BankAccountMapConstructorTests {
 
         // Works
         Map<String, String> map = SavingsAccount.makeSavingsMap("0000000000", 1012, "password!2", .01);
-        SavingsAccount c = new SavingsAccount(map);
+        SavingsAccount s = new SavingsAccount(map);
+        assertEquals("0000000000", s.getAccountID());
+        assertEquals(1012, s.getBalance());
+        assertEquals("password!2", s.password);
+        assertEquals(.01, s.getInterest());
 
         // Doesn't work
         // AccountID invalid
@@ -87,6 +94,6 @@ public class BankAccountMapConstructorTests {
         // interest invalid
         Map<String, String> map4 = SavingsAccount.makeSavingsMap("0123456789",1, "password!1", -.01);
         assertThrows(IllegalArgumentException.class,
-                () -> new SavingsAccount(map3));
+                () -> new SavingsAccount(map4));
     }
 }
