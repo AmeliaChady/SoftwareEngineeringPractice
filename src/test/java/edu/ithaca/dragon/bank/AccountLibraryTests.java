@@ -164,6 +164,10 @@ public class AccountLibraryTests {
         assertNotNull(al.accounts.get("0000000002"));
         Map<String, String> argsSFail = SavingsAccount.makeSavingsMap("0000000002", 100, "password!2", -5);
         assertThrows(IllegalArgumentException.class, () -> al.createAccount(argsSFail));
+
+        // No reusing accountID
+        Map<String,String> argsIDFail = SavingsAccount.makeSavingsMap("0000000002", 100, "password!2", 10);
+        assertThrows(IllegalArgumentException.class, () ->al.createAccount(argsIDFail));
     }
 
     @Test

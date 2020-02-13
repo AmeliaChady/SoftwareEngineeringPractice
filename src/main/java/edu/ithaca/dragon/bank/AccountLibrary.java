@@ -32,13 +32,17 @@ public class AccountLibrary {
     /**
      * Creates an account based off of a map.
      * Needs keys: 'accountType', 'accountID' + that corresponding accounts keys
-     * @throws IllegalArgumentException if keys are not there or are wrong.
+     * @throws IllegalArgumentException if keys are not there or are wrong or accountID is already in use
      */
     public void createAccount(Map<String, String> args){
         String type = args.get("accountType");
+        String id = args.get("accountID");
 
         if(type == null){
             throw new IllegalArgumentException("accountType key cannot have null value!");
+        }
+        else if(accounts.containsKey(id)){
+            throw new IllegalArgumentException("accountID value already in use!");
         }
         else if(type.equalsIgnoreCase("savings")){
             accounts.put(args.get("accountID"), new SavingsAccount(args));
