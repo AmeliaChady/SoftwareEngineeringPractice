@@ -18,12 +18,12 @@ public class SystemTests {
 
         //account creation
         CentralBank centralBank = new CentralBank();
-        centralBank.createCheckingAccount("1234567890", 190, "password!1");
-        centralBank.createCheckingAccount("4567890123", 230.60, "password!1");
-        centralBank.createCheckingAccount("7890123456", 509.23, "password!1");
+        centralBank.createAccount(CheckingAccount.makeCheckingMap("1234567890", 190, "password!1"));
+        centralBank.createAccount(CheckingAccount.makeCheckingMap("4567890123", 230.60, "password!1"));
+        centralBank.createAccount(CheckingAccount.makeCheckingMap("7890123456", 509.23, "password!1"));
 
         //account login
-        centralBank.confirmCredentials("1234567890", "password!1");
+        centralBank.confirmCredentials("123 4567890", "password!1");
         centralBank.confirmCredentials("4567890123", "password!1");
         centralBank.confirmCredentials("7890123456", "password!1");
 
@@ -89,10 +89,10 @@ public class SystemTests {
 
         CentralBank cb = new CentralBank();
         // Pretend Beforehand
-        cb.createCheckingAccount("4528177224", 171, "password!1");
-        cb.createCheckingAccount("5712345456", 172, "password!1");
-        cb.createCheckingAccount("2222222222", 220, "password!1");
-        cb.createCheckingAccount("7824247312", 345, "password!1");
+        cb.createAccount(CheckingAccount.makeCheckingMap("4528177224", 171, "password!1"));
+        cb.createAccount(CheckingAccount.makeCheckingMap("5712345456", 172, "password!1"));
+        cb.createAccount(CheckingAccount.makeCheckingMap("2222222222", 220, "password!1"));
+        cb.createAccount(CheckingAccount.makeCheckingMap("7824247312", 345, "password!1"));
 
         //login
         cb.confirmCredentials("4528177224", "password!1");
@@ -176,9 +176,9 @@ public class SystemTests {
     public void fullDaySavingsTest() throws InsufficientFundsException, AccountFrozenException{
         CentralBank cBank = new CentralBank();
 
-        cBank.createSavingsAccount("0000000000", 100, "password!1", 0.1);
-        cBank.createSavingsAccount("1234567890", 500.50, "password!1", 0.05);
-        cBank.createSavingsAccount("0987654321", 1000, "password!1", .2);
+        cBank.createAccount(SavingsAccount.makeSavingsMap("0000000000", 100, "password!1", 0.1));
+        cBank.createAccount(SavingsAccount.makeSavingsMap("1234567890", 500.50, "password!1", 0.05));
+        cBank.createAccount(SavingsAccount.makeSavingsMap("0987654321", 1000, "password!1", .2));
 
         //login
         cBank.confirmCredentials("0000000000","password!1");

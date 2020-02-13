@@ -30,6 +30,33 @@ public class AccountLibrary {
     }
 
     /**
+     * Creates an account based off of a map.
+     * Needs keys: 'accountType', 'accountID' + that corresponding accounts keys
+     * @throws IllegalArgumentException if keys are not there or are wrong or accountID is already in use
+     */
+    public void createAccount(Map<String, String> args){
+        String type = args.get("accountType");
+        String id = args.get("accountID");
+
+        if(type == null){
+            throw new IllegalArgumentException("accountType key cannot have null value!");
+        }
+        else if(accounts.containsKey(id)){
+            throw new IllegalArgumentException("accountID value already in use!");
+        }
+        else if(type.equalsIgnoreCase("savings")){
+            accounts.put(args.get("accountID"), new SavingsAccount(args));
+        }
+        else if(type.equalsIgnoreCase("checking")){
+            accounts.put(args.get("accountID"), new CheckingAccount(args));
+        }
+        else{
+            throw new IllegalArgumentException("accountType key matches no legal value!");
+        }
+    }
+
+    @Deprecated
+    /**
      * Creates a checking account with accountID and starting balance given and adds it to account list
      * @param accountID
      * @param startingBalance
@@ -39,6 +66,7 @@ public class AccountLibrary {
         accounts.put(ca.getAccountID(), ca);
     }
 
+    @Deprecated
     /**
      * Creates a savings account with accountID, starting balance, and interest rate given and adds it to account list
      * @param accountID
@@ -56,7 +84,7 @@ public class AccountLibrary {
      */
     public void closeAccount(String accountID){
         accounts.remove(accountID);
-        //lastCheckedHistory.remove(accountID);
+        lastCheckedHistory.remove(accountID);
     }
 
     /**

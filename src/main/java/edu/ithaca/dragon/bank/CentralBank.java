@@ -2,6 +2,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
     AccountLibrary al;
@@ -38,11 +39,16 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
 
 
     //----------------- AdvancedAPI methods -------------------------//
+    public void createAccount(Map<String, String> args){
 
+    }
+
+    @Deprecated
     public void createCheckingAccount(String acctId, double startingBalance, String password) {
         al.createCheckingAccount(acctId, startingBalance, password);
     }
 
+    @Deprecated
     public void createSavingsAccount(String acctId, double startingBalance, String password, double interestRate) {
         al.createSavingsAccount(acctId, startingBalance, password, interestRate);
     }
