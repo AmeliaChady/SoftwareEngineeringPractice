@@ -18,6 +18,7 @@ public class SavingsAccount extends BankAccount{
     }
 
     /** Makes a savings account based off named arguments in the map
+     * Needs keys 'accountID', 'startingBalance', 'password', 'interest'
      * @throws IllegalArgumentException if accountID or balance is invalid
      */
     SavingsAccount(Map<String, String> arguments){

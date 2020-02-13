@@ -17,6 +17,7 @@ public class CheckingAccount extends BankAccount{
     }
 
     /** Makes a checking account based off named arguments in the map
+     * Needs keys 'accountID', 'startingBalance', 'password'
      * @throws IllegalArgumentException if accountID or balance is invalid
      */
     public CheckingAccount(Map<String, String> arguments){
