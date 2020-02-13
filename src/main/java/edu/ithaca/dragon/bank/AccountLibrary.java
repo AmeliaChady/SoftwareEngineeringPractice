@@ -30,6 +30,16 @@ public class AccountLibrary {
     }
 
     /**
+     * Creates an account based off of a map.
+     * Needs keys: 'accountType' + that corresponding accounts keys
+     * @throws IllegalArgumentException if keys are not there or are wrong
+     */
+    public void createAccount(){
+
+    }
+
+    @Deprecated
+    /**
      * Creates a checking account with accountID and starting balance given and adds it to account list
      * @param accountID
      * @param startingBalance
@@ -39,6 +49,7 @@ public class AccountLibrary {
         accounts.put(ca.getAccountID(), ca);
     }
 
+    @Deprecated
     /**
      * Creates a savings account with accountID, starting balance, and interest rate given and adds it to account list
      * @param accountID
