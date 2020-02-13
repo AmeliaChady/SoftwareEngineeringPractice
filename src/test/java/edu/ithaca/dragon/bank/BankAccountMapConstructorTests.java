@@ -36,17 +36,31 @@ public class BankAccountMapConstructorTests {
 
         // Doesn't work
         // AccountID invalid
-        Map<String, String> map1 = CheckingAccount.makeCheckingMap("0",1, "password!1");
+        Map<String, String> map1a = CheckingAccount.makeCheckingMap("0",1, "password!1");
         assertThrows(IllegalArgumentException.class,
-                () -> new CheckingAccount(map1));
+                () -> new CheckingAccount(map1a));
+        Map<String, String> map1b = CheckingAccount.makeCheckingMap("0",1, "password!1");
+        map1b.remove("accountID");
+        assertThrows(IllegalArgumentException.class,
+                () -> new CheckingAccount(map1b));
+
         // startingBalance invalid
-        Map<String, String> map2 = CheckingAccount.makeCheckingMap("0123456789", -1, "password!1");
+        Map<String, String> map2a = CheckingAccount.makeCheckingMap("0123456789", -1, "password!1");
         assertThrows(IllegalArgumentException.class,
-                () -> new CheckingAccount(map2));
+                () -> new CheckingAccount(map2a));
+        Map<String, String> map2b = CheckingAccount.makeCheckingMap("0123456789", -1, "password!1");
+        map2b.remove("startingBalance");
+        assertThrows(IllegalArgumentException.class,
+                () -> new CheckingAccount(map2b));
+
         // password invalid
-        Map<String, String> map3 = CheckingAccount.makeCheckingMap("0123456789",1, "p");
+        Map<String, String> map3a = CheckingAccount.makeCheckingMap("0123456789",1, "p");
         assertThrows(IllegalArgumentException.class,
-                () -> new CheckingAccount(map3));
+                () -> new CheckingAccount(map3a));
+        Map<String, String> map3b = CheckingAccount.makeCheckingMap("0123456789",1, "p");
+        map3b.remove("password");
+        assertThrows(IllegalArgumentException.class,
+                () -> new CheckingAccount(map3b));
     }
 
     @Test
@@ -80,20 +94,39 @@ public class BankAccountMapConstructorTests {
 
         // Doesn't work
         // AccountID invalid
-        Map<String, String> map1 = SavingsAccount.makeSavingsMap("0",1, "password!1", .01);
+        Map<String, String> map1a = SavingsAccount.makeSavingsMap("0",1, "password!1", .01);
         assertThrows(IllegalArgumentException.class,
-                () -> new SavingsAccount(map1));
+                () -> new SavingsAccount(map1a));
+        Map<String, String> map1b = SavingsAccount.makeSavingsMap("0",1, "password!1", .01);
+        map1b.remove("accountID");
+        assertThrows(IllegalArgumentException.class,
+                () -> new SavingsAccount(map1b));
+
         // startingBalance invalid
-        Map<String, String> map2 = SavingsAccount.makeSavingsMap("0123456789", -1, "password!1", .01);
+        Map<String, String> map2a = SavingsAccount.makeSavingsMap("0123456789", -1, "password!1", .01);
         assertThrows(IllegalArgumentException.class,
-                () -> new SavingsAccount(map2));
+                () -> new SavingsAccount(map2a));
+        Map<String, String> map2b = SavingsAccount.makeSavingsMap("0123456789", -1, "password!1", .01);
+        map2b.remove("startingBalance");
+        assertThrows(IllegalArgumentException.class,
+                () -> new SavingsAccount(map2b));
+
         // password invalid
-        Map<String, String> map3 = SavingsAccount.makeSavingsMap("0123456789",1, "p", .01);
+        Map<String, String> map3a = SavingsAccount.makeSavingsMap("0123456789",1, "p", .01);
         assertThrows(IllegalArgumentException.class,
-                () -> new SavingsAccount(map3));
+                () -> new SavingsAccount(map3a));
+        Map<String, String> map3b = SavingsAccount.makeSavingsMap("0123456789",1, "p", .01);
+        map3b.remove("password");
+        assertThrows(IllegalArgumentException.class,
+                () -> new SavingsAccount(map3b));
+
         // interest invalid
-        Map<String, String> map4 = SavingsAccount.makeSavingsMap("0123456789",1, "password!1", -.01);
+        Map<String, String> map4a = SavingsAccount.makeSavingsMap("0123456789",1, "password!1", -.01);
         assertThrows(IllegalArgumentException.class,
-                () -> new SavingsAccount(map4));
+                () -> new SavingsAccount(map4a));
+        Map<String, String> map4b = SavingsAccount.makeSavingsMap("0123456789",1, "password!1", -.01);
+        map4b.remove("interest");
+        assertThrows(IllegalArgumentException.class,
+                () -> new SavingsAccount(map4b));
     }
 }
