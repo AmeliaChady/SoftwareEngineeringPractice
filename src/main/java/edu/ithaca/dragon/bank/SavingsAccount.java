@@ -82,6 +82,6 @@ public class SavingsAccount extends BankAccount{
      * @returns a map
      */
     public static Map<String, String> makeSavingsMap(String accountid, double startingBalance, String password, double interest){
-
+        return null;
     }
 }

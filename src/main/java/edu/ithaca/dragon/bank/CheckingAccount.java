@@ -48,7 +48,7 @@ public class CheckingAccount extends BankAccount{
      * @returns a map
      */
     public static Map<String, String> makeCheckingMap(String accountID, double startingBalance, String password){
-
+        return null;
     }
 }
 
