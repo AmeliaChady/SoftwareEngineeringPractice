@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import java.util.LinkedList;
+import java.util.Map;
 
 import static edu.ithaca.dragon.bank.Utilities.*;
 
@@ -12,6 +13,17 @@ public class SavingsAccount extends BankAccount{
      * @throws IllegalArgumentException if accountID, interest or balance is invalid
      */
     SavingsAccount(String accountid, double startingBalance, String password, double interest){
+        innerConstruction(accountid, startingBalance, password, interest);
+    }
+
+    /** Makes a savings account based off named arguments in the map
+     * @throws IllegalArgumentException if accountID or balance is invalid
+     */
+    SavingsAccount(Map<String, String> arguments){
+
+    }
+
+    private void innerConstruction(String accountid, double startingBalance, String password, double interest){
         if(!isAccountIDValid(accountid)){
             throw new IllegalArgumentException("Account ID invalid");
         }else if(!isAmountValid(startingBalance)){
@@ -63,5 +75,13 @@ public class SavingsAccount extends BankAccount{
             return false;
         }
         return true;
+    }
+
+    /**
+     * Creates a map to use with the map constructor
+     * @returns a map
+     */
+    public static Map<String, String> makeSavingsMap(String accountid, double startingBalance, String password, double interest){
+
     }
 }
