@@ -51,16 +51,16 @@ public class BankAccountMapConstructorTests {
         Map<String, String> args = SavingsAccount.makeSavingsMap("0123456789", .01, "password!1", .05);
         assertEquals("savings", args.get("accountType"));
         assertEquals("0123456789", args.get("accountID"));
-        assertEquals(".01", args.get("startingBalance"));
+        assertEquals("0.01", args.get("startingBalance"));
         assertEquals("password!1", args.get("password"));
-        assertEquals(".05", args.get("interest"));
+        assertEquals("0.05", args.get("interest"));
 
         args = SavingsAccount.makeSavingsMap("0000000000", 1012, "password!2", 1);
         assertEquals("savings", args.get("accountType"));
         assertEquals("0000000000", args.get("accountID"));
-        assertEquals("1012", args.get("startingBalance"));
+        assertEquals("1012.0", args.get("startingBalance"));
         assertEquals("password!2", args.get("password"));
-        assertEquals("1", args.get("interest"));
+        assertEquals("1.0", args.get("interest"));
     }
 
     @Test
