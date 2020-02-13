@@ -11,11 +11,13 @@ public class BankAccountMapConstructorTests {
     @Test
     void makeMapCheckingAccountTest(){
         Map<String, String> args = CheckingAccount.makeCheckingMap("0123456789", .01, "password!1");
+        assertEquals("checking", args.get("accountType"));
         assertEquals("0123456789", args.get("accountID"));
         assertEquals(".01", args.get("startingBalance"));
         assertEquals("password!1", args.get("password"));
 
         args = CheckingAccount.makeCheckingMap("0000000000", 1012, "password!2");
+        assertEquals("checking", args.get("accountType"));
         assertEquals("0000000000", args.get("accountID"));
         assertEquals("1012", args.get("startingBalance"));
         assertEquals("password!2", args.get("password"));
@@ -47,12 +49,14 @@ public class BankAccountMapConstructorTests {
     @Test
     void makeMapSavingsAccountTest(){
         Map<String, String> args = SavingsAccount.makeSavingsMap("0123456789", .01, "password!1", .05);
+        assertEquals("savings", args.get("accountType"));
         assertEquals("0123456789", args.get("accountID"));
         assertEquals(".01", args.get("startingBalance"));
         assertEquals("password!1", args.get("password"));
         assertEquals(".05", args.get("interest"));
 
         args = SavingsAccount.makeSavingsMap("0000000000", 1012, "password!2", 1);
+        assertEquals("savings", args.get("accountType"));
         assertEquals("0000000000", args.get("accountID"));
         assertEquals("1012", args.get("startingBalance"));
         assertEquals("password!2", args.get("password"));
