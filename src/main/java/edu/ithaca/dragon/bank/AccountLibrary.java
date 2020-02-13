@@ -31,11 +31,24 @@ public class AccountLibrary {
 
     /**
      * Creates an account based off of a map.
-     * Needs keys: 'accountType' + that corresponding accounts keys
-     * @throws IllegalArgumentException if keys are not there or are wrong
+     * Needs keys: 'accountType', 'accountID' + that corresponding accounts keys
+     * @throws IllegalArgumentException if keys are not there or are wrong.
      */
     public void createAccount(Map<String, String> args){
+        String type = args.get("accountType");
 
+        if(type == null){
+            throw new IllegalArgumentException("accountType key cannot have null value!");
+        }
+        else if(type.equalsIgnoreCase("savings")){
+            accounts.put(args.get("accountID"), new SavingsAccount(args));
+        }
+        else if(type.equalsIgnoreCase("checking")){
+            accounts.put(args.get("accountID"), new CheckingAccount(args));
+        }
+        else{
+            throw new IllegalArgumentException("accountType key matches no legal value!");
+        }
     }
 
     @Deprecated
