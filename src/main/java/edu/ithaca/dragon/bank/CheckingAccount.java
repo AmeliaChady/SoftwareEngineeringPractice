@@ -3,6 +3,7 @@ package edu.ithaca.dragon.bank;
 
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.TreeMap;
 
 import static edu.ithaca.dragon.bank.Utilities.*;
 
@@ -18,7 +19,12 @@ public class CheckingAccount extends BankAccount{
     /** Makes a checking account based off named arguments in the map
      * @throws IllegalArgumentException if accountID or balance is invalid
      */
-    public CheckingAccount(Map<String, String> arguments){}
+    public CheckingAccount(Map<String, String> arguments){
+        String accountID = arguments.get("accountID");
+        double startingBalance = Double.parseDouble(arguments.get("startingBalance"));
+        String password = arguments.get("password");
+        innerConstruction(accountID,startingBalance,password);
+    }
 
     private void innerConstruction(String accountID, double startingBalance, String password){
         if(!isAccountIDValid(accountID)){
@@ -48,7 +54,12 @@ public class CheckingAccount extends BankAccount{
      * @returns a map
      */
     public static Map<String, String> makeCheckingMap(String accountID, double startingBalance, String password){
-        return null;
+        Map<String, String> args = new TreeMap<String, String>();
+        args.put("accountType", "checking");
+        args.put("accountID", accountID);
+        args.put("startingBalance", ""+startingBalance);
+        args.put("password", password);
+        return args;
     }
 }
 

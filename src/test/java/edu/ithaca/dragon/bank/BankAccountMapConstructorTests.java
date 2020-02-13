@@ -13,13 +13,13 @@ public class BankAccountMapConstructorTests {
         Map<String, String> args = CheckingAccount.makeCheckingMap("0123456789", .01, "password!1");
         assertEquals("checking", args.get("accountType"));
         assertEquals("0123456789", args.get("accountID"));
-        assertEquals(".01", args.get("startingBalance"));
+        assertEquals("0.01", args.get("startingBalance"));
         assertEquals("password!1", args.get("password"));
 
         args = CheckingAccount.makeCheckingMap("0000000000", 1012, "password!2");
         assertEquals("checking", args.get("accountType"));
         assertEquals("0000000000", args.get("accountID"));
-        assertEquals("1012", args.get("startingBalance"));
+        assertEquals("1012.0", args.get("startingBalance"));
         assertEquals("password!2", args.get("password"));
     }
 
