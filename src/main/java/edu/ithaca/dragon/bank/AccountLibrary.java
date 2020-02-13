@@ -56,7 +56,7 @@ public class AccountLibrary {
      */
     public void closeAccount(String accountID){
         accounts.remove(accountID);
-        //lastCheckedHistory.remove(accountID);
+        lastCheckedHistory.remove(accountID);
     }
 
     /**
