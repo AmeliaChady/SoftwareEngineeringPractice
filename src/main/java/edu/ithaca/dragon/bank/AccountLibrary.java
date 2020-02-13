@@ -34,7 +34,7 @@ public class AccountLibrary {
      * Needs keys: 'accountType' + that corresponding accounts keys
      * @throws IllegalArgumentException if keys are not there or are wrong
      */
-    public void createAccount(){
+    public void createAccount(Map<String, String> args){
 
     }
 

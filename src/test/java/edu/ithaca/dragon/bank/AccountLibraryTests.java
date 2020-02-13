@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -146,11 +147,23 @@ public class AccountLibraryTests {
 
     @Test
     public void createAccountTest(){
-        // Checking
+        AccountLibrary al = new AccountLibrary();
+        Map<String, String> args;
 
+        // Checking
+        args = CheckingAccount.makeCheckingMap("0000000001", 100, "password!1");
+        al.createAccount(args);
+        assertNotNull(al.accounts.get("0000000001"));
+        Map<String, String> argsCFail = CheckingAccount.makeCheckingMap("0000000001", -1,"password!1");
+        assertThrows(IllegalArgumentException.class, () -> al.createAccount(argsCFail));
 
 
         // Savings
+        args = SavingsAccount.makeSavingsMap("0000000002", 100, "password!2", 10);
+        al.createAccount(args);
+        assertNotNull(al.accounts.get("0000000002"));
+        Map<String, String> argsSFail = SavingsAccount.makeSavingsMap("0000000002", 100, "password!2", -5);
+        assertThrows(IllegalArgumentException.class, () -> al.createAccount(argsSFail));
     }
 
     @Test
