@@ -78,6 +78,11 @@ public class AccountLibrary {
         accounts.put(sa.getAccountID(), sa);
     }
 
+    public void createCDAccount(String accountID, double startingBalance, String password, double interest, int days){
+        CDAccount cda = new CDAccount(accountID, startingBalance, password, interest, days);
+        accounts.put(cda.getAccountID(), cda);
+    }
+
     /**
      * Deletes account associated with accountID given from account list
      * @param accountID

@@ -55,4 +55,17 @@ public class Utilities {
         }
         else{return true;}
     }
+
+    /**
+     * Takes an int and checks to make sure it is a valid amount
+     * Patrons must wait at least 10 days and cannot set a limit longer than a year
+     * @param days
+     * @return
+     */
+    public static boolean isDaysValid(int days){
+        if (days < 10 || days > 365){
+            return false;
+        }
+        else{return true;}
+    }
 }

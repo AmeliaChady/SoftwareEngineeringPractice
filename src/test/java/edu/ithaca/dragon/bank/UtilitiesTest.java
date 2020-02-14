@@ -71,6 +71,16 @@ public class UtilitiesTest {
         assertTrue(isPasswordValid("edrftygbj3j3&@"));
     }
 
+    @Test
+    void isDaysValidTest(){
+        assertFalse(isDaysValid(-1));
+        assertFalse(isDaysValid(-10));
+        assertFalse(isDaysValid(366));
+        assertFalse(isDaysValid(1000));
+        assertTrue(isDaysValid(11));
+        assertTrue(isDaysValid(50));
+        assertTrue(isDaysValid(365));
+    }
 
 }
 

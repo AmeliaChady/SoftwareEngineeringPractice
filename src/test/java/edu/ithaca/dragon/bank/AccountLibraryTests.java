@@ -189,6 +189,13 @@ public class AccountLibraryTests {
         assertNotNull(al.accounts.get("0000000000"));
     }
 
+
+    @Test
+    public void createCDAccountTest() {
+        AccountLibrary al = new AccountLibrary();
+        al.createCDAccount("0000000000", 100, "password!1", 0.1, 50);
+        assertNotNull(al.accounts.get("0000000000"));
+    }
     @Test
     public void closeAccountTest() {
         AccountLibrary al = new AccountLibrary();
