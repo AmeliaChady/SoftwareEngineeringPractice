@@ -23,7 +23,7 @@ public class SystemTests {
         centralBank.createAccount(CheckingAccount.makeCheckingMap("7890123456", 509.23, "password!1"));
 
         //account login
-        centralBank.confirmCredentials("123 4567890", "password!1");
+        centralBank.confirmCredentials("1234567890", "password!1");
         centralBank.confirmCredentials("4567890123", "password!1");
         centralBank.confirmCredentials("7890123456", "password!1");
 

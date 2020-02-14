@@ -40,7 +40,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
 
     //----------------- AdvancedAPI methods -------------------------//
     public void createAccount(Map<String, String> args){
-
+        al.createAccount(args);
     }
 
     @Deprecated
