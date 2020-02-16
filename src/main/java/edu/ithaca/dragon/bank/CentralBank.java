@@ -82,4 +82,24 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
         al.updateAccounts();
     }
 
+    public static CentralBank testBank(){
+        CentralBank cb = new CentralBank();
+        cb.createAccount(SavingsAccount.makeSavingsMap(
+                "0011223344",
+                100,
+                "!n0Thinking",
+                .05));
+        cb.createAccount(CheckingAccount.makeCheckingMap(
+                "0123456789",
+                100,
+                "Sparkling@3"));
+        cb.createAccount(CheckingAccount.makeCheckingMap(
+                "0102030405",
+                100,
+                "3atPassword!"
+        ));
+        cb.freezeAccount("0102030405");
+        return cb;
+    }
+
 }
