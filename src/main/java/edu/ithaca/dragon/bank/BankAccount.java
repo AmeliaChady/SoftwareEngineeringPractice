@@ -77,9 +77,6 @@ public abstract class BankAccount {
         if(!Utilities.isAmountValid(amount)){
             throw new IllegalArgumentException("ERROR: invalid amount");
         }
-        if(!loggedIn){
-            throw new IllegalArgumentException("ERROR: must be logged in");
-        }
         balance += amount;
         balance = Math.round(balance *100.0)/100.0;
         updateHistory(amount, true);

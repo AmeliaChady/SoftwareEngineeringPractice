@@ -449,7 +449,7 @@ class BankAccountTests {
     void loginLogoutFreezeUnfreezeTest() throws AccountFrozenException{
         BankAccount ba = new CheckingAccount("1234567890",150,  "Pass123!");
         //not logged in yet
-        assertThrows(IllegalArgumentException.class, () ->ba.deposit(10));
+        assertThrows(IllegalArgumentException.class, () ->ba.withdraw(10));
         assertEquals(150, ba.balance);
 
         ba.confirmCredentials("Pass123!");
@@ -466,17 +466,17 @@ class BankAccountTests {
         //now unfrozen, should be logged out from freeze
         ba.unfreezeAccount();
         assertThrows(IllegalArgumentException.class, () ->ba.deposit(10));
-        assertEquals(160, ba.balance);
+        assertEquals(170, ba.balance);
 
         //incorrect login
         ba.confirmCredentials("pass");
-        assertThrows(IllegalArgumentException.class, () ->ba.deposit(10));
-        assertEquals(160, ba.balance);
+        assertThrows(IllegalArgumentException.class, () ->ba.withdraw(10));
+        assertEquals(170, ba.balance);
 
         //correct login
         ba.confirmCredentials("Pass123!");
         ba.deposit(10);
-        assertEquals(170, ba.balance);
+        assertEquals(180, ba.balance);
 
 
     }
