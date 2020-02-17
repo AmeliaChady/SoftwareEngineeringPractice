@@ -13,6 +13,9 @@ Kerry Anne's: https://drive.google.com/file/d/1NxUagKy9gujcRqrQnJN-cxKxp9fTZP7o/
 
 Jolie's: https://drive.google.com/file/d/1iz8IxWVHExHY8XBb0ZVIwj9OUq78AQFX/view?usp=sharing
 
+## Testing
+UI Testing Script: https://docs.google.com/document/d/1WQ-3iHQSltufINOuLQnLYfDob7b_qlEOB8RQLjOiq6c/edit?usp=sharing
+
 ## Upcoming Changes
 **Completed** Amelia -> Changes Account Library with condensing create account functions
 
