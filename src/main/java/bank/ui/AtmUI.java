@@ -4,6 +4,7 @@ import edu.ithaca.dragon.bank.AccountFrozenException;
 import edu.ithaca.dragon.bank.BasicAPI;
 import edu.ithaca.dragon.bank.CentralBank;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -49,9 +50,9 @@ public class AtmUI {
                     break;
 
                 case LOGGEDIN:
-                    System.out.println("Available Commands:" +
+                    System.out.println("\n\nAvailable Commands:" +
                             "\n logout, withdraw, deposit, transfer" +
-                            "\n Current Balance: " + api.checkBalance(currentAccount));
+                            "\n\nCurrent Balance: " + api.checkBalance(currentAccount));
                     System.out.print(" > ");
                     String command = user.nextLine().trim();
 
@@ -71,14 +72,31 @@ public class AtmUI {
                     else{
                         System.out.println("Invalid Command");
                     }
-
-
                     break;
 
                 case DEPOSIT:
                     System.out.print("Amount to Deposit: ");
-
-                    state = AtmState.LOGGEDIN;
+                    try {
+                        double amount = user.nextDouble();
+                        api.deposit(currentAccount, amount);
+                        state = AtmState.LOGGEDIN;
+                    }
+                    catch (AccountFrozenException e){
+                        System.out.println("Account "+currentAccount+" is FROZEN. " +
+                                "\n Contact Customer Services at " +
+                                "\n ~~ 1-888-555-1212 ~~");
+                        currentAccount = null;
+                        state = AtmState.WAITING;
+                    }
+                    catch (IllegalArgumentException e){
+                        System.out.print("Invalid Amount");
+                        state = AtmState.LOGGEDIN;
+                    }
+                    catch (InputMismatchException e){
+                        System.out.print("Invalid Amount");
+                        state = AtmState.LOGGEDIN;
+                    }
+                    user.nextLine();
                     break;
 
                 case WITHDRAW:
