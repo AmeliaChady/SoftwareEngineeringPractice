@@ -122,8 +122,45 @@ public class AtmUI {
                     break;
 
                 case TRANSACTION:
-                    System.out.print("Amount to Transfer: ");
-                    state = AtmState.LOGGEDIN;
+
+                    try {
+                        System.out.print("Amount to Transfer: ");
+                        double amount = user.nextDouble();
+                        user.nextLine();
+                        System.out.print("Account to Transfer to: ");
+                        String otherAcctID = user.nextLine().trim();
+                        api.transfer(currentAccount, otherAcctID, amount);
+                        state = AtmState.LOGGEDIN;
+
+                    }
+                    catch (InsufficientFundsException e){
+                        System.out.println("Not Enough Funds");
+                        state = AtmState.LOGGEDIN;
+                    }
+                    catch (AccountFrozenException e){
+                        if(e.getMessage().equalsIgnoreCase("Cannot transfer from frozen account")){
+                            System.out.println("Account "+currentAccount+" is FROZEN. " +
+                                    "\n Contact Customer Services at " +
+                                    "\n ~~ 1-888-555-1212 ~~");
+                            currentAccount = null;
+                            state = AtmState.WAITING;
+                        }else{
+                            System.out.println("Unable to Transfer to Frozen Account");
+                            state = AtmState.LOGGEDIN;
+                        }
+                    }
+                    catch (IllegalArgumentException e){
+                        if(e.getMessage().equalsIgnoreCase("ERROR: Invalid amount")){
+                            System.out.println("Invalid Amount");
+                        }
+                        else if(e.getMessage().equalsIgnoreCase("ERROR: Must pass bank account")){
+                            System.out.println("Invalid Account");
+                        }
+                        else{
+                            System.out.println("Unknown Error: \n" + e.getMessage());
+                        }
+                        state = AtmState.LOGGEDIN;
+                    }
                     break;
             }
         }

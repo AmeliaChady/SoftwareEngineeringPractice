@@ -169,9 +169,9 @@ public abstract class BankAccount {
         if(!Utilities.isAmountValid(amount)){
             throw new IllegalArgumentException("ERROR: invalid amount");
         }
-        if(!loggedIn){
-            throw new IllegalArgumentException("ERROR: must be logged in");
-        }
+        //if(!loggedIn){
+        //    throw new IllegalArgumentException("ERROR: must be logged in");
+        //}
         if (isDeposit){
             history.add(amount);
         }
