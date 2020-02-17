@@ -11,9 +11,9 @@ public class AtmUI {
     private enum AtmState{
         WAITING,
         LOGGEDIN,
-        DEPOSIT_INPUT,
-        WITHDRAW_INPUT,
-        TRANSACTION_INPUT
+        DEPOSIT,
+        WITHDRAW,
+        TRANSACTION
     }
 
     public static void main(String[] args) {
@@ -34,6 +34,8 @@ public class AtmUI {
                         if (api.confirmCredentials(acctID.trim(), pass.trim())) {
                             currentAccount = acctID;
                             state = AtmState.LOGGEDIN;
+                        }else{
+                            System.out.println("Error Logging In");
                         }
                     }
                     catch (AccountFrozenException e){
@@ -41,16 +43,53 @@ public class AtmUI {
                                 "\n Contact Customer Services at " +
                                 "\n ~~ 1-888-555-1212 ~~");
                     }
+                    catch (NullPointerException e){
+                        System.out.println("Error Logging In");
+                    }
                     break;
 
                 case LOGGEDIN:
-                    System.out.println("HERE");
+                    System.out.println("Available Commands:" +
+                            "\n logout, withdraw, deposit, transfer" +
+                            "\n Current Balance: " + api.checkBalance(currentAccount));
+                    System.out.print(" > ");
+                    String command = user.nextLine().trim();
 
-                case DEPOSIT_INPUT:
+                    if(command.equalsIgnoreCase("logout")){
+                        state = AtmState.WAITING;
+                        currentAccount = null;
+                    }
+                    else if(command.equalsIgnoreCase("deposit")){
+                        state = AtmState.DEPOSIT;
+                    }
+                    else if(command.equalsIgnoreCase("withdraw")){
+                        state = AtmState.WITHDRAW;
+                    }
+                    else if(command.equalsIgnoreCase("transfer")){
+                        state = AtmState.TRANSACTION;
+                    }
+                    else{
+                        System.out.println("Invalid Command");
+                    }
 
-                case WITHDRAW_INPUT:
 
-                case TRANSACTION_INPUT:
+                    break;
+
+                case DEPOSIT:
+                    System.out.print("Amount to Deposit: ");
+
+                    state = AtmState.LOGGEDIN;
+                    break;
+
+                case WITHDRAW:
+                    System.out.print("Amount to Withdraw: ");
+                    state = AtmState.LOGGEDIN;
+                    break;
+
+                case TRANSACTION:
+                    System.out.print("Amount to Transfer: ");
+                    state = AtmState.LOGGEDIN;
+                    break;
             }
         }
     }
