@@ -53,6 +53,11 @@ public class CentralBank implements AdvancedAPI, AdminAPI, DaemonAPI {
         al.createSavingsAccount(acctId, startingBalance, password, interestRate);
     }
 
+    @Deprecated
+    public void createLoanAccount(String acctId, double startingBalance, String password, double interestRate) {
+        al.createLoanAccount(acctId, startingBalance, password, interestRate);
+    }
+
     public void closeAccount(String acctId) {
         al.closeAccount(acctId);
     }

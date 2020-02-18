@@ -50,6 +50,9 @@ public class AccountLibrary {
         else if(type.equalsIgnoreCase("checking")){
             accounts.put(args.get("accountID"), new CheckingAccount(args));
         }
+        else if(type.equalsIgnoreCase("loan")){
+            accounts.put(args.get("accountID"), new LoanAccount(args));
+        }
         else{
             throw new IllegalArgumentException("accountType key matches no legal value!");
         }
@@ -76,6 +79,11 @@ public class AccountLibrary {
     public void createSavingsAccount(String accountID, double startingBalance, String password, double interest){
         SavingsAccount sa = new SavingsAccount(accountID, startingBalance, password, interest);
         accounts.put(sa.getAccountID(), sa);
+    }
+
+    public void createLoanAccount(String acctId, double startingBalance, String password, double interestRate) {
+        LoanAccount la = new LoanAccount(acctId, startingBalance, password, interestRate);
+        accounts.put(la.getAccountID(), la);
     }
 
     /**

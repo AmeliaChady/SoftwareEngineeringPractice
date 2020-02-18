@@ -222,4 +222,53 @@ public class SystemTests {
         assertNull(cBank.al.accounts.get("1234567890"));
 
     }
+
+    @Test
+    public void fullDayLoanTest() throws InsufficientFundsException, AccountFrozenException{
+        CentralBank cBank = new CentralBank();
+
+        cBank.createAccount(LoanAccount.makeLoanMap("0000000000", -100, "password!1", 0.1));
+        cBank.createAccount(LoanAccount.makeLoanMap("1234567890", -500.50, "password!1", 0.05));
+        cBank.createAccount(LoanAccount.makeLoanMap("0987654321", -1000, "password!1", .2));
+
+        //login
+        cBank.confirmCredentials("0000000000","password!1");
+        cBank.confirmCredentials("1234567890", "password!1");
+        cBank.confirmCredentials("0987654321","password!1");
+
+        BasicAPI atm = cBank;
+        AdvancedAPI teller = cBank;
+        AdminAPI central = cBank;
+        DaemonAPI auto = cBank;
+
+        //day 1
+        teller.createLoanAccount("1111111111", -400, "password!1", .25);
+        teller.confirmCredentials("1111111111", "password!1");
+        teller.deposit("1111111111", 100);
+        teller.withdraw("1234567890", 100);
+        assertEquals(-100, teller.checkBalance("0000000000"));
+        assertEquals(-605.50, teller.checkBalance("1234567890"));
+        assertEquals(-1000, teller.checkBalance("0987654321"));
+        assertEquals(-300, teller.checkBalance("1111111111"));
+        atm.withdraw("0000000000", 100);
+        atm.deposit("0000000000", 300);
+        assertEquals(90, teller.checkBalance("0000000000"));
+        assertEquals(-605.5, teller.checkBalance("1234567890"));
+        assertEquals(-1000, teller.checkBalance("0987654321"));
+        assertEquals(-300, teller.checkBalance("1111111111"));
+
+        //update
+        auto.accountUpdate();
+
+        //interest update check
+        assertEquals(99, teller.checkBalance("0000000000"));
+        assertEquals(-635.77, teller.checkBalance("1234567890"));
+        assertEquals(-1200, teller.checkBalance("0987654321"));
+        assertEquals(-375, teller.checkBalance("1111111111"));
+
+        //close account check
+        teller.closeAccount("1234567890");
+        assertNull(cBank.al.accounts.get("1234567890"));
+
+    }
 }
